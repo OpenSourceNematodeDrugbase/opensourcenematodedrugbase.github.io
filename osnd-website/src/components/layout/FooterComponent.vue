@@ -1,9 +1,20 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <a href="https://www.westminster.ac.uk/" target="_blank">
-        <img class="UoWLogo" src="@/assets/UoW_Logo.png" alt="UoW">
-      </a>
+      <!-- Left-aligned Logos -->
+      <div class="footer-logos">
+        <a href="https://www.westminster.ac.uk/" target="_blank">
+          <img class="UoWLogo" src="@/assets/UoW_Logo.png" alt="UoW">
+        </a>
+        <a href="https://quintinhoggtrust.org/" target="_blank">
+          <img class="QHTLogo" src="@/assets/QHT_Logo.png" alt="QHT">
+        </a>
+        <a href="https://africaresearchexcellencefund.org.uk/" target="_blank">
+          <img class="AREFLogo" src="@/assets/AREF_Logo.png" alt="AREF">
+        </a>
+      </div>
+
+      <!-- Right-aligned Social Icons -->
       <div class="socials">
         <a href="https://www.facebook.com/" target="_blank">
           <img class="social-logo" src="@/assets/Facebook_logo_(square).png" alt="Facebook_Logo">
@@ -28,6 +39,7 @@
   </footer>
 </template>
 
+
 <script>
 export default {
   name: 'FooterComponent',
@@ -44,21 +56,37 @@ export default {
 
 .container {
   display: flex;
-  justify-content: space-between; /* Align items at both ends */
+  justify-content: space-between; /* Align logos on the left and socials on the right */
   align-items: center;
-  flex-wrap: nowrap; /* Keep everything on one line */
+  flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+.footer-logos {
+  display: flex;
+  gap: 20px; /* Space between the main logos */
+  justify-content: flex-start; /* Align logos to the left */
+}
+
+.socials {
+  display: flex;
+  gap: 30px; /* Space between social logos */
+  justify-content: flex-end; /* Align socials to the right */
+}
+
+.social-logo {
+  max-width: 60px; /* Adjust size of social logos */
 }
 
 .UoWLogo {
   max-width: 350px; /* Adjust size if needed */
 }
 
-.socials {
-  display: flex;
-  gap: 30px; /* Space between social logos */
+.QHTLogo {
+  max-width: 180px; /* Adjust size if needed */
 }
 
-.social-logo {
-  max-width: 60px; /* Adjust size of social logos */
+.AREFLogo {
+  max-width: 150px; /* Adjust size if needed */
+  padding-top: 10px;
 }
 </style>

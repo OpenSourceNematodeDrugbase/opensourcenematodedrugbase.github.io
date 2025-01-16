@@ -1,78 +1,43 @@
 <template>
-  <div class="home">
+  <div class="intro-banner">
     <h1>About</h1>
-    <p>The ‘Nematode Drugbase’ is a platform to tackle neglected diseases caused by parasitic worms (nematodes).  </p>
+    <p class="intro-text">Learn more about the Open-Source Nematode DrugBase Project</p>
   </div>
   <section class="header-section">
+    <h2>Project Overview</h2>
+    <p class="section-text">The Open-source Nematode DrugBase project is taking a novel approach to tackle neglected diseases caused by parasitic worms (nematodes).  It is guided by open-source principles so everything is open and anyone can contribute.  Parasitic nematodes infect around 1 billion people often causing severe debilitating disease, but treatment options are limited.  Our ambition is to create a platform to look for new medicines.</p>
     <h2>The Team</h2>
     <!--Will need to ask each of the team members the email they want to be shown and their role-->
-    <p>The open-source nematode drub-based project team is comprised of students and academics from the University of Westminster. Our ambition is to create a platform that is open access that enables the advancement of research regarding diseases caused by nematodes.</p>
+    <p class="section-text">The ONDB project team is comprised of students and academics from the University of Westminster.</p>
     <ul>
-        <li>Alastair Barr – a.barr1@westminster.ac.uk</li>
-        <li>Freddie Patridge - f.partridge@westminster.ac.uk</li>
-        <li>Dipankar Sengupta - D.Sengupta@westminster.ac.uk</li>
-        <li>Teddy Seyoum - T.Seyoum@westminster.ac.uk</li>
-        <li>Polly Hayes - P.Hayes@westminster.ac.uk</li>
-        <li>David Guiliano - D.Guiliano@westminster.ac.uk</li>
         <br>
-        <li>Gabriela Mondini Moraes - </li>
-        <li>Magdalena Ruiz Perez - </li>
-        <li>Oliver Guy – Website Developer – o.guy@westminster.ac.uk</li>
-        <li>Azam Farooqui – Website Developer – A.Farooqui@westminster.ac.uk </li>
-        <li>Mateo Batol - batolm2@westminster.ac.uk</li>
-        <li>Paule Abrutyte -</li>
+        <li class="item-text">Gabriela Mondini Moraes - Scientist</li>
+        <li class="item-text">Magdalena Ruiz Perez - Scientist</li>
+        <li class="item-text">Oliver Guy – Website Developer</li>
+        <li class="item-text">Azam Farooqui – Website Developer</li>
+        <li class="item-text">Mateo Batol - Marketing & Outreach</li>
+        <li class="item-text">Paule Abrutyte - Marketing & Outreach</li>
+        <br>
+        <h2>Academic Partners</h2>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/barr-alastair" target="_blank">Alastair Barr</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/partridge-freddie" target="_blank">Freddie Patridge</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/sengupta-dipankar" target="_blank">Dipankar Sengupta</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/seyoum-teddy" target="_blank">Teddy Seyoum</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/hayes-polly" target="_blank">Polly Hayes</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/guiliano-david" target="_blank">David Guiliano</a></li>
     </ul>
   </section>
 </template>
 
 <style scoped>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f7f6;
-  color: #333;
-}
 
-h1, h2 {
-  color: #2a2a2a;
-  font-weight: 600;
-  line-height: 1.4;
-}
-.home {
-  text-align: center;
-  padding: 3rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #ddd;
-}
-.header-section {
-  padding: 2rem 2rem;
-  margin: 0 auto;
-  max-width: 900px;
-}
-
-.header-section h2 {
-  font-size: 42px;
-  margin-bottom: 1rem;
-}
-.header-section ul {
-  font-size: 24px;
-  
-}
-p {
-  font-size: 24px;
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-ul {
-  list-style: none; 
+.item-text {
+  font-size: 28px;
+  line-height: 0.7;
+  margin-bottom: 1.5rem;
+  list-style: none;
+  color:black;
+  text-decoration: underline;
+  padding: 15px;
 }
 </style>
