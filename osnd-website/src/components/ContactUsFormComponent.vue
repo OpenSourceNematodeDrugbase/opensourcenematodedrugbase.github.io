@@ -1,80 +1,150 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div class="form-group">
-      <input type="text" v-model="name" placeholder="Name" required />
-      <input type="text" v-model="email" placeholder="Email" required />
-      <textarea v-model="userMessage" placeholder="Message" required></textarea>
-    </div>
-    <div class="form-group">
-      <button type="submit">Send Message</button>
-    </div>
-  </form>
+  <div class="contact-container">
+    <h1>Contact Form</h1>
+    <form class="contact-form" @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="form.name" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="form.email" placeholder="Your Email" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" v-model="form.message" placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit" class="submit-button">Send</button>
+    </form>
+    <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      formData: {
-        name: '',
-        email: '',
-        userMessage: 'Empty',
+      form: {
+        name: "",
+        email: "",
+        message: "",
       },
+      successMessage: "",
     };
   },
   methods: {
-    handleSubmit() {
-      console.log('Form submitted:', this.name, this.email, this.userMessage);
-      this.name = '';
-      this.email = '';
-      this.userMessage = '';
-    },
+    async submitForm() {
+      try {
+        const response = await fetch("https://formspree.io/f/mjkkdekr", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.form),
+        });
 
-    submitForm(){
-      this.handleSubmit();
-    }
+        if (response.ok) {
+          this.successMessage = "Thank you for your message! We'll get back to you soon.";
+          this.form = { name: "", email: "", message: "" };
+        } else {
+          throw new Error("Failed to send the message.");
+        }
+      } catch (error) {
+        this.successMessage = "An error occurred. Please try again.";
+        console.error(error);
+      }
+    },
   },
 };
 </script>
 
-<style scoped>
-
-.form-group{
-    margin-bottom: 10px;
-    padding: 10px;
+<style>
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
 }
 
-.form-group label{
-    margin-right: 20px;
-    margin-left: 20px;
-    font-size: 18px;
+/* Contact Form Container */
+.contact-container {
+  max-width: 800px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.form-group button{
-  padding: 15px;
-  width: 25%;
-  margin-top: 0px;
-}
-
-input[type=text] {
-  width: 25%;
-  padding: 20px 20px;
-  margin-top: 20px;
+.contact-container h1 {
   margin-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
-  box-sizing: border-box;
-  font-size: 15px;
+  color: #333333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Form Styling */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555555;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 25px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #333333;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #bad1ce;
+  outline: none;
+  box-shadow: 0 0 5px #91a3a0;
 }
 
 textarea {
-  width: 52%;
-  height: 300px;
-  padding: 12px 20px;
-  margin-top: 20px;
-  box-sizing: border-box;
   resize: none;
-  color:rgb(125, 125, 125);
+  min-height: 600px;
 }
 
+/* Submit Button */
+.submit-button {
+  padding: 10px 20px;
+  background-color: #bad1ce;
+  color: #353535;
+  font-size: 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #7a9490;
+}
+
+/* Success Message */
+.success-message {
+  margin-top: 20px;
+  color: #1b1b1b;
+  font-size: 28px;
+}
 </style>
