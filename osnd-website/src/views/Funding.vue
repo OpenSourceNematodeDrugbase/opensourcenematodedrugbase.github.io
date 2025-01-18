@@ -1,14 +1,18 @@
 <template>
     <div class="intro-banner">
-      <h1>Funding</h1>
-      <p class="intro-text">The Open-Source Nematode DrugBase Project are generously funded by</p>
+      <h1>Funding Partners</h1>
+      <p class="intro-text">The Nematode DrugBase Project is generously funded by</p>
     </div>
     <section class="header-section">
-        <a href="https://quintinhoggtrust.org/"><h2>Quintin Hog Trust</h2></a>
-        <a href="https://quintinhoggtrust.org/"><img src="../assets/QHT_Logo.png"></a>
-        <a href="https://africaresearchexcellencefund.org.uk/"><h2>Africa Research Excellence Fund</h2></a>
-        <a href="https://africaresearchexcellencefund.org.uk/"><img src ="../assets//AREF_Logo.png"></a>
-      
+        <div class = "logoSection" style="background-color: wheat;">
+            <a href="https://quintinhoggtrust.org/" class="OrgName"><h2>Quintin Hog Trust</h2></a>
+            <a href="https://quintinhoggtrust.org/"><img src="../assets/QHT_Logo.png"></a>
+        </div>
+        <br>
+        <div class= "logoSection" style="background-color: rgb(176, 238, 47)">
+            <a href="https://africaresearchexcellencefund.org.uk/" class="OrgName"><h2>Africa Research Excellence Fund</h2></a>
+            <a href="https://africaresearchexcellencefund.org.uk/"><img src ="../assets//AREF_Logo.png"></a>
+        </div>
     </section>
   </template>
   
@@ -23,4 +27,16 @@
     text-decoration: underline;
     padding: 15px;
   }
+    .logoSection {
+        display: flex;
+        flex-direction: row;
+        margin-left: 20%;
+        border-radius: 13px;
+    }
+    img {
+        width: 500px;
+    }
+    h2 {
+        margin-top: 50%;
+    }
   </style>
