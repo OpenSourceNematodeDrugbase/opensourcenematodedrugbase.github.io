@@ -7,6 +7,7 @@ import BlogPage from '@/views/BlogView.vue'
 import LoginPage from '@/views/LoginView.vue'
 import BlogPost from '@/views/BlogPostView.vue'
 import UserDashboard from '@/views/UserDashboard.vue'
+import Funding from '@/views/Funding.vue'
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
@@ -16,6 +17,7 @@ const routes = [
   { path: '/blog/:id', name: 'BlogPost', component: BlogPost, props: true },
   { path: '/login', name: 'LoginView', component: LoginPage },
   { path: '/user-dashboard', name: 'UserDashboard', component: UserDashboard },
+  {path : '/funding', name: 'Funding', component : Funding}
 ]
 
 const router = createRouter({
