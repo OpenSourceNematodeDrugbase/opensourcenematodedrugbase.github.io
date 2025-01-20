@@ -30,7 +30,8 @@
     .logoSection {
         display: flex;
         flex-direction: row;
-        margin-left: 20%;
+        margin-left: 10%;
+        margin-right: 10%;
         border-radius: 13px;
     }
     img {
