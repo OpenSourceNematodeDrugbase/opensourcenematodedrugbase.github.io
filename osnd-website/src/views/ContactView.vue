@@ -14,4 +14,6 @@ export default {
     <p class="intro-text">Thank you for your interest in the Open-source Nematode DrugBase Project.</p>
   </div>
     <ContactUsFormComponent/>
+
+    <p class="intro-text">For additional enquiries, please contact: ondb@westminster.ac.uk </p>
 </template>

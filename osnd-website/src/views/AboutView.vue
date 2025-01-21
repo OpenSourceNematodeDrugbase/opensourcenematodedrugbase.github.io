@@ -25,6 +25,9 @@
         <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/seyoum-teddy" target="_blank">Teddy Seyoum</a></li>
         <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/hayes-polly" target="_blank">Polly Hayes</a></li>
         <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/guiliano-david" target="_blank">David Guiliano</a></li>
+
+        <p class="section-text">Additionally, Dr Abdulhakeem Sulyman will be joining in 2025 supported by an Africa Research Excellence Fund Research Development Fellowship.</p>
+
     </ul>
   </section>
 </template>

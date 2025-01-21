@@ -1,7 +1,7 @@
 <template>
     <div class="intro-banner">
       <h1>Funding Partners</h1>
-      <p class="intro-text">The Nematode DrugBase Project is generously funded by</p>
+      <p class="intro-text">The Open-Source Nematode DrugBase Project is generously funded by the Quintin Hogg Trust (QHT) and the Africa Research Excellence Fund (AREF). </p>
     </div>
     <section class="header-section">
         <div class = "logoSection" style="background-color: wheat;">
