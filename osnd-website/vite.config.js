@@ -6,9 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production'
-    ? '/opensourcenematodedrugbase.github.io/'
-    : '/',
+  base: '/opensourcenematodedrugbase.github.io/',
   plugins: [
     vue(),
     vueDevTools(),
