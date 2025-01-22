@@ -40,15 +40,17 @@
   
   .nav ul{
     gap: 30px;
+    display: flex;
     list-style: none;
-   
+    justify-content: center;
+    align-items: center;
   }
   
   .nav a {
     color: rgb(0, 0, 0);
     text-decoration: none;
     font-weight:bold;
-    font-size: 24px;
+    font-size: 17px
   }
   
   .nav a:hover {
@@ -64,13 +66,16 @@
     padding-top: 15px;
   }
  
-  @media screen and (min-width:1100px) {
+  @media screen and (min-width:1100px) { /*Seen on Laptop*/
     .nav ul {
-    display: flex;
+    
     align-items: center;
   }
   li {
     padding-bottom: 0%; /*Remove Spacing */
+  }
+  .nav a{
+    font-size: 24px;
   }
   .container {
     display: flex;
@@ -82,6 +87,11 @@
     position: absolute;
     left: 150px;
   }
+  }
+  @media screen and (max-width:400px) { /*Seen on smaller screens*/
+    .nav ul{
+      display: initial  ;
+    }
   }
 
 </style>  
