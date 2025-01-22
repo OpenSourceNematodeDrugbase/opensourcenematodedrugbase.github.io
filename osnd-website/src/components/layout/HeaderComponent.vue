@@ -17,7 +17,7 @@
       </div>
     </header>
   </template>
-  
+
   <script>
   export default {
     name: 'HeaderComponent',
@@ -31,24 +31,14 @@
     color: white;
     border-radius: 20px;
   }
-  
-  .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
   .logo {
     font-size: 1.5em;
     font-weight: bold;
-    position: absolute;
-    left: 150px;
     color: #000000;
     text-shadow: 0.75px 0.75px 0.75px rgb(255, 255, 255), -0.75px -0.75px 0px rgb(255, 255, 255), 0.75px -0.75px 0px rgb(255, 255, 255), -0.75px 0.75px 0px rgb(255, 255, 255);
   }
   
-  .nav ul {
-    display: flex;
+  .nav ul{
     gap: 30px;
     list-style: none;
   }
@@ -67,6 +57,30 @@
   .header-logo {
     width: 100px; /* Sets the width to 100px */
     height: auto; /* Maintains the aspect ratio */
+  }
+
+  li {
+    padding-bottom: 15px;
+  }
+ 
+  @media screen and (min-width:1100px) {
+    .nav ul {
+    display: flex;
+    align-items: center;
+  }
+  li {
+    padding-bottom: 0%; /*Remove Spacing */
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo
+  {
+    position: absolute;
+    left: 150px;
+  }
   }
 
 </style>  

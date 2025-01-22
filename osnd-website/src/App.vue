@@ -35,6 +35,7 @@
   </div>
 </template>
 
+
 <style>
   /* Global styles can go here */
   #app {
@@ -45,5 +46,12 @@
   
   main {
     padding: 20px;
+  }
+
+  @media screen and (max-width:1000px) {
+    .section-text
+    {
+      font-size: 22px !important;
+    }
   }
 </style>
