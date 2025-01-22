@@ -4,7 +4,7 @@
         <router-link to="/">
           <img class="header-logo" src="@/assets/OSNDB avatar_7.png" alt="Logo">
         </router-link>
-        <h1 class="logo">Open-Source Nematode DrugBase Project</h1>
+        <h1 class="logo">Open-Source Nematode Drug Base Project</h1>
         <nav class="nav">
           <ul>
             <li><router-link to="/">Home</router-link></li>

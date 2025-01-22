@@ -9,8 +9,9 @@
   </section>
   <section class="header-section">
     <h2>The Platform</h2>
+    <button @click="navigateToDatabase" type="submit" class="submit-button">OPEN DATABASE</button>
     <p class="section-text">The open-access project aims to enable discovery of medicines for neglected diseases caused by nematodes (parasitic worms).</p>
-    <p class="section-text">The project will launch here in 2025.</p>
+    <hr>
   </section>
   <section class="header-section">
     <h2>Mission Statement</h2>
@@ -27,6 +28,16 @@
     <p class="section-text">If you are interested in the project's developments, or would like to provide insight/expertise, we would be delighted to hear from you. Please see our <router-link to="/contact">contact</router-link> page for details.</p>
   </section>
 </template>
+
+<script>
+export default {
+  methods: {
+    navigateToDatabase() {
+      this.$router.push('/nematode-drugbase'); // Navigate to the "About" page
+    },
+  },
+};
+</script>
 
 <style>
 
@@ -110,5 +121,27 @@ h1, h2 {
   padding-bottom: 50px;
 }
 
+
+</style>
+
+<style scoped>
+
+.submit-button {
+  padding: 20px 200px;
+  background-color: #CEE1F2;
+  color: #F2B872; /* Text color */
+  text-shadow: 0.75px 0.75px 0.75px #593C23, -0.75px -0.75px 0px #593C23, 0.75px -0.75px 0px #593C23, -0.75px 0.75px 0px #593C23;
+  font-size: 42px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: 4px solid rgb(255, 255, 255); /* Correct outline format */
+}
+
+
+.submit-button:hover {
+  background-color: #adc0d0;
+}
 
 </style>
