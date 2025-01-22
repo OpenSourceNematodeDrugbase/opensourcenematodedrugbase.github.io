@@ -19,12 +19,11 @@
   <style scoped>
   
   .item-text {
-    font-size: 28px;
+    font-size: 24px;
     line-height: 0.7;
     margin-bottom: 1.5rem;
     list-style: none;
     color:black;
-    text-decoration: underline;
     padding: 15px;
   }
     .logoSection {
@@ -39,5 +38,14 @@
     }
     h2 {
         margin-top: 50%;
+    }
+    .OrgName {
+      font-size: 24px;
+      line-height: 0.7;
+      margin-bottom: 1.5rem;
+      list-style: none;
+      color:black;
+      padding: 15px;
+      text-decoration-line: none;
     }
   </style>

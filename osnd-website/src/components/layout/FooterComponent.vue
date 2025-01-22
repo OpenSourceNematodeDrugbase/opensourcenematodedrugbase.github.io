@@ -15,7 +15,8 @@
       </div>
 
       <!-- Right-aligned Social Icons -->
-      <div class="socials">
+
+      <!-- <div class="socials">
         <a href="https://www.facebook.com/" target="_blank">
           <img class="social-logo" src="@/assets/Facebook_logo_(square).png" alt="Facebook_Logo">
         </a>
@@ -34,7 +35,8 @@
         <a href="https://github.com/OpenSourceNematodeDrugbase" target="_blank">
           <img class="social-logo" src="@/assets/GitHub_Logo.png" alt="GitHub_Logo">
         </a>
-      </div>
+      </div>-->
+      
     </div>
   </footer>
 </template>
@@ -48,7 +50,7 @@ export default {
 
 <style scoped>
 .footer {
-  background-color: #bad1ce;
+  background-color: #CEE1F2;
   color: white;
   padding: 20px;
   border-radius: 20px;

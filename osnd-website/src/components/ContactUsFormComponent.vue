@@ -14,7 +14,7 @@
         <label for="message">Message:</label>
         <textarea id="message" v-model="form.message" placeholder="Your Message" required></textarea>
       </div>
-      <button type="submit" class="submit-button">Send</button>
+      <button type="submit" class="submit-button">SEND</button>
     </form>
     <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
   </div>
@@ -115,9 +115,9 @@ body {
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #bad1ce;
+  border-color: #adc0d0;
   outline: none;
-  box-shadow: 0 0 5px #91a3a0;
+  box-shadow: 0 0 5px #adc0d0;
 }
 
 textarea {
@@ -128,9 +128,10 @@ textarea {
 /* Submit Button */
 .submit-button {
   padding: 10px 20px;
-  background-color: #bad1ce;
+  background-color: #CEE1F2;
   color: #353535;
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -138,7 +139,7 @@ textarea {
 }
 
 .submit-button:hover {
-  background-color: #7a9490;
+  background-color: #adc0d0;
 }
 
 /* Success Message */

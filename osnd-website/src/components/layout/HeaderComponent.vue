@@ -26,7 +26,7 @@
   
   <style scoped>
   .header {
-    background-color: #465956;
+    background-color: hsla(207, 95%, 85%, 0.671);
     padding: 20px;
     color: white;
     border-radius: 20px;
@@ -43,7 +43,8 @@
     font-weight: bold;
     position: absolute;
     left: 150px;
-    color: white;
+    color: #000000;
+    text-shadow: 0.75px 0.75px 0.75px rgb(255, 255, 255), -0.75px -0.75px 0px rgb(255, 255, 255), 0.75px -0.75px 0px rgb(255, 255, 255), -0.75px 0.75px 0px rgb(255, 255, 255);
   }
   
   .nav ul {
@@ -53,10 +54,10 @@
   }
   
   .nav a {
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
+    font-weight:bold;
     font-size: 24px;
-    
   }
   
   .nav a:hover {
