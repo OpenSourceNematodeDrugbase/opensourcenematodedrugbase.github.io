@@ -41,6 +41,7 @@
   .nav ul{
     gap: 30px;
     list-style: none;
+   
   }
   
   .nav a {
@@ -60,7 +61,7 @@
   }
 
   li {
-    padding-bottom: 15px;
+    padding-top: 15px;
   }
  
   @media screen and (min-width:1100px) {
