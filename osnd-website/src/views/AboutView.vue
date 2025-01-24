@@ -33,6 +33,11 @@
 </template>
 
 <style scoped>
+ul{
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
 
 .item-text {
   font-size: 28px;
@@ -42,5 +47,10 @@
   color:black;
   text-decoration: underline;
   padding: 15px;
+}
+@media screen and (max-width:1000px) {  
+  .item-text{
+    line-height: 1.5;
+  }
 }
 </style>
