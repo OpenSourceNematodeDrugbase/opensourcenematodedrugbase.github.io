@@ -53,5 +53,9 @@
     {
       font-size: 22px !important;
     }
+    .image 
+    {
+      width: 80% !important;
+    }
   }
 </style>

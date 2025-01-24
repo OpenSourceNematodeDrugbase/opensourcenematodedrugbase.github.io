@@ -111,6 +111,9 @@ export default {
   padding-top: 10px;
    /* Adjust size of social logos */
 }
+.UoWLogo {
+  width: 80%;
+}
 
 }
 
