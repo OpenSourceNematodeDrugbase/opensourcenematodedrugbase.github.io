@@ -32,15 +32,18 @@
         margin-left: 10%;
         margin-right: 10%;
         border-radius: 13px;
+        align-items: center; /* Centres vertically */
     }
     img {
         width: 500px;
+      
+     
     }
     h2 {
         margin-top: 50%;
+        font-size: 48px;
     }
     .OrgName {
-      font-size: 24px;
       line-height: 0.7;
       margin-bottom: 1.5rem;
       list-style: none;
@@ -48,4 +51,15 @@
       padding: 15px;
       text-decoration-line: none;
     }
+    @media screen and (max-width:1000px) {
+      img {
+        width:80%;
+        height: auto;
+      }
+      h2{
+        font-size: 6vw;
+      }
+      
+    }
+
   </style>
