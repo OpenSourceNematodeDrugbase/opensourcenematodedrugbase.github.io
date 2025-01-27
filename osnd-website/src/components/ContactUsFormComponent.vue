@@ -14,8 +14,22 @@
         <label for="message">Message:</label>
         <textarea id="message" v-model="form.message" placeholder="Your Message" required></textarea>
       </div>
-      <button type="submit" class="submit-button">SEND</button>
+      
+      <!-- Privacy Policy Agreement Checkbox -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" v-model="form.agreed" />
+          I agree to the <a href="/privacy-policy" target="_blank">Privacy Policy</a>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-button" :disabled="!form.agreed">
+        SEND
+      </button>
     </form>
+
+    <!-- Success Message -->
     <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
   </div>
 </template>
@@ -28,6 +42,7 @@ export default {
         name: "",
         email: "",
         message: "",
+        agreed: false, // Store the agreement state
       },
       successMessage: "",
     };
@@ -45,7 +60,7 @@ export default {
 
         if (response.ok) {
           this.successMessage = "Thank you for your message! We'll get back to you soon.";
-          this.form = { name: "", email: "", message: "" };
+          this.form = { name: "", email: "", message: "", agreed: false }; // Reset form and agreement state
         } else {
           throw new Error("Failed to send the message.");
         }
@@ -140,6 +155,11 @@ textarea {
 
 .submit-button:hover {
   background-color: #adc0d0;
+}
+
+.submit-button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
 }
 
 /* Success Message */

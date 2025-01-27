@@ -15,6 +15,8 @@
         </a>
       </div>
       </div>
+      
+      
 
       <!-- Right-aligned Social Icons -->
 <!--
@@ -41,7 +43,14 @@
     -->
       
     </div>
+
+    <div class="links">
+    <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
+  </div>
   </footer>
+
+  
+
 </template>
 
 
@@ -57,9 +66,16 @@ export default {
   color: white;
   padding: 20px;
   border-radius: 20px;
+  position: relative;
 }
 
-
+.links {
+  position: absolute;
+  top: 150px;
+  right: 20px;
+  margin: 10px; /* Adjusts spacing from the edges */
+  list-style-type: none;
+}
 
 .social-logo {
   max-width: 60px; /* Adjust size of social logos */
