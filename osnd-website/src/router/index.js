@@ -11,6 +11,7 @@ import Funding from '@/views/Funding.vue'
 import DatabaseHome from '@/views/DatabaseHome.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import SignUp from '@/views/SignUp.vue'
+import BlogEditor from '@/views/BlogEditor.vue'
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
@@ -23,7 +24,8 @@ const routes = [
   {path : '/funding', name: 'Funding', component : Funding},
   {path : '/nematode-drugbase', name: 'DatabaseHome', component: DatabaseHome},
   {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy},
-  {path : '/sign-up', name: 'SignUp', component : SignUp}
+  {path : '/sign-up', name: 'SignUp', component : SignUp},
+  {path : '/blog-editor', name: 'BlogEditor', component : BlogEditor}
 ]
 
 const router = createRouter({

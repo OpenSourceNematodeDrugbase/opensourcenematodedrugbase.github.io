@@ -1,60 +1,72 @@
 <script>
 import { firestore } from '@/main.js'; // Assuming firebase is set up and exported from here
 import { doc, getDoc } from 'firebase/firestore';
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
-  data() {
-    return {
-      blog: null, // Store the specific blog post
-      loading: true, // Show a loading indicator while fetching the blog post
-      error: null, // Store error message if something goes wrong
-    };
-  },
-  created() {
-    // Fetch blog data when the component is created
-    this.fetchBlogPost();
-  },
-  methods: {
-    async fetchBlogPost() {
-      const blogId = this.$route.params.id; // Get the id from the route params
-      try {
-        // Access the specific blog document from Firestore
-        const blogDoc = doc(firestore, 'blog-collection', blogId);
-        const docSnap = await getDoc(blogDoc);
+  setup() {
+    const route = useRoute();
+    const blog = ref(null);
+    const blogId = route.params.id;
 
-        if (docSnap.exists()) {
-          // Set the blog data if it exists
-          this.blog = { id: docSnap.id, ...docSnap.data() };
+    const fetchBlog = async () => {
+      try {
+        const blogDoc = await getDoc(doc(firestore, 'blog-collection', blogId));
+        if (blogDoc.exists()) {
+          blog.value = blogDoc.data();
         } else {
-          this.error = 'Blog not found';
+          console.error('No such document!');
         }
       } catch (error) {
-        this.error = 'Error fetching blog post: ' + error.message;
-      } finally {
-        this.loading = false;
+        console.error('Error fetching blog:', error);
       }
-    },
-  },
+    };
+
+    onMounted(() => {
+      fetchBlog();
+    });
+
+    return {
+      blog
+    };
+  }
 };
 </script>
 
 <template>
-  <div class="blog-post">
-    <h1 v-if="loading">Loading...</h1>
-    <div v-if="error">{{ error }}</div>
-
-    <div v-if="blog">
-      <h2>{{ blog.title }}</h2>
-      <div v-html="blog.textcontent"></div>
+  <div v-if="blog" class="blog-post">
+    <h1>{{ blog.title }}</h1>
+    <p><strong>Author:</strong> {{ blog.author }}</p>
+    <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
+    <div class="blog-content">
+      <p>{{ blog.content }}</p>
     </div>
-
+  </div>
+  <div v-else>
+    <p>Loading...</p>
   </div>
 </template>
 
-<style>
+<style scoped>
 .blog-post {
-  padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post h1 {
+  margin-bottom: 20px;
+}
+
+.blog-post p {
+  margin: 10px 0;
+}
+
+.blog-content {
+  margin-top: 20px;
 }
 </style>

@@ -33,17 +33,21 @@ export default {
 </script>
 
 <template>
-  <div class="home">
-    <h1>This is the blog page</h1>
-
-    <div v-for="blog in blogs" :key="blog.id">
-      <router-link :to="'/blog/' + blog.id">
-        <button>{{ blog.title }}</button>
-      </router-link>
-    </div>
-
+  <div class="intro-banner">
+    <h1>Blog</h1>
+    <p class="intro-text">Find out updates and important announcements for the Open-Source Nematode Drub Base Project!</p>
   </div>
-
+  <div class="blog-list">
+    <ul>
+      <li v-for="blog in blogs" :key="blog.id">
+        <h3>{{ blog.title }}</h3>
+        <p><strong>Author:</strong> {{ blog.author }}</p>
+        <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
+        <p>{{ blog.content }}</p>
+        <router-link :to="`/blog/${blog.id}`">Read more</router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style>
@@ -53,5 +57,39 @@ export default {
     display: flex;
     align-items: center;
   }
+}
+
+.blog-list {
+  margin-top: 20px;
+}
+
+.blog-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.blog-list li {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.blog-list h3 {
+  margin: 0 0 10px;
+}
+
+.blog-list p {
+  margin: 5px 0;
+}
+
+.blog-list a {
+  text-decoration: none;
+  color: #2196F3;
+}
+
+.blog-list a:hover {
+  text-decoration: underline;
 }
 </style>
