@@ -1,12 +1,12 @@
 <script>
 
-  import LoginFormComponent from '../components/LoginFormComponent.vue'
+  import SignUpFormComponent from '../components/SignUpFormComponent.vue'
 
   export default 
   {
     components:
     {
-      LoginFormComponent
+        SignUpFormComponent
     },
   }
 
@@ -15,12 +15,12 @@
 <template>
 
 <div class="intro-banner">
-    <h1>Sign In</h1>
-    <p class="intro-text">Sign in to access more of the site's functionality.</p>
+    <h1>Sign Up</h1>
+    <p class="intro-text">Sign up to access more of the site's functionality.</p>
 </div>
 
   <div class="home">
-    <LoginFormComponent />
+    <SignUpFormComponent />
   </div>
 
 </template>

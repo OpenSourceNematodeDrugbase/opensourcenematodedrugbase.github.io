@@ -10,6 +10,7 @@ import UserDashboard from '@/views/UserDashboard.vue'
 import Funding from '@/views/Funding.vue'
 import DatabaseHome from '@/views/DatabaseHome.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
+import SignUp from '@/views/SignUp.vue'
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
@@ -17,11 +18,12 @@ const routes = [
   { path: '/contact', name: 'ContactView', component: ContactPage },
   { path: '/blog', name: 'BlogView', component: BlogPage },
   { path: '/blog/:id', name: 'BlogPost', component: BlogPost, props: true },
-  { path: '/login', name: 'LoginView', component: LoginPage },
+  { path: '/sign-in', name: 'LoginView', component: LoginPage },
   { path: '/user-dashboard', name: 'UserDashboard', component: UserDashboard },
   {path : '/funding', name: 'Funding', component : Funding},
   {path : '/nematode-drugbase', name: 'DatabaseHome', component: DatabaseHome},
-  {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy}
+  {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy},
+  {path : '/sign-up', name: 'SignUp', component : SignUp}
 ]
 
 const router = createRouter({

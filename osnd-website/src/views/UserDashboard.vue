@@ -1,32 +1,40 @@
 <template>
-  <div class="home">
-    <h1>This is the user dashboard page</h1>
-    <p v-if="userEmail">Welcome, {{ userEmail }}</p>
-  </div>
+
+<div class="intro-banner">
+    <h1>User Dashboard</h1>
+    <p class="intro-text" v-if="username">Welcome, {{ username }}</p>
+</div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default {
   name: 'UserDashboard',
   setup() {
-    const userEmail = ref(null);
+    const username = ref(null);
     const auth = getAuth();
+    const db = getFirestore();
 
     onMounted(() => {
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
-          userEmail.value = user.email;
+          const userDoc = await getDoc(doc(db, 'user-collection', user.uid));
+          if (userDoc.exists()) {
+            username.value = userDoc.data().username;
+          } else {
+            username.value = 'Unknown User';
+          }
         } else {
-          userEmail.value = null;
+          username.value = null;
         }
       });
     });
 
     return {
-      userEmail,
+      username,
     };
   },
 };
