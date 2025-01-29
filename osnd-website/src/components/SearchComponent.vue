@@ -13,7 +13,6 @@
 </template>
 
 <style scoped>
-/* Styling for the header image and its container */
 .header-img {
   width: 100%;
   height: 500px; /* Adjust height as needed */
@@ -30,7 +29,7 @@
   top: 50%; /* Center the overlay vertically */
   left: 50%; /* Center the overlay horizontally */
   transform: translate(-50%, -50%); /* Adjust for exact centering */
-  width: 80%; /* Set the width of the search box */
+  width: 100%; /* Set the width of the search box */
   text-align: center; /* Center the content of the overlay */
   display: flex;
   flex-direction: column; /* Stack the text and input vertically */
@@ -55,7 +54,7 @@
   padding: 10px 20px;
   font-size: 32px;
   width: 100%; /* Full width of the search overlay */
-  max-width: 1500px; /* You can adjust the max width as needed */
+  max-width: 1500px;
   border: 2px solid #fff;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.8); /* Transparent background */

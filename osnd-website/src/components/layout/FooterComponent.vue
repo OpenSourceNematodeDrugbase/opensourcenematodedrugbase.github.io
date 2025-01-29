@@ -45,8 +45,10 @@
     </div>
 
     <div class="links">
-    <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
-  </div>
+      <li v-if="!isAuthenticated"><router-link to="/login">Sign In</router-link></li>
+      <li v-else><a href="#" @click="signOut">Sign Out</a></li>
+      <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
+    </div>
   </footer>
 
   
@@ -55,8 +57,38 @@
 
 
 <script>
+import { ref, onMounted } from 'vue';
+import { getAuth, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
+import { useRouter } from "vue-router";
+
 export default {
   name: 'FooterComponent',
+  setup() {
+    const isAuthenticated = ref(false);
+    const auth = getAuth();
+    const router = useRouter();
+
+    onMounted(() => {
+      onAuthStateChanged(auth, (user) => {
+        isAuthenticated.value = !!user;
+      });
+    });
+
+    const signOut = async () => {
+      try {
+        await firebaseSignOut(auth);
+        isAuthenticated.value = false;
+        router.push({ path: '/' });
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    };
+
+    return {
+      isAuthenticated,
+      signOut,
+    };
+  },
 };
 </script>
 
@@ -75,6 +107,8 @@ export default {
   right: 20px;
   margin: 10px; /* Adjusts spacing from the edges */
   list-style-type: none;
+  padding: 10px, 10px;
+  text-align: right; /* Right justify the text */
 }
 
 .social-logo {
@@ -93,46 +127,18 @@ export default {
   max-width: 150px; /* Adjust size if needed */
   padding-top: 5px;
 }
+
 @media screen and (min-width:1100px) { /*When viewed on Laptop */
   .footer-logos {
-  display: flex;
-  gap: 20px; /* Space between the main logos */
-  justify-content: flex-start; /* Align logos to the left */
-}
-.container {
-  display: flex;
-  justify-content: space-between; /* Align logos on the left and socials on the right */
-  align-items: center;
-  flex-wrap: nowrap; /* Prevent wrapping */
-}
-.socials {
-  display: flex;
-  gap: 30px; /* Space between social logos */
-  justify-content: flex-end; /* Align socials to the right */
-}
-
-}
-
-@media screen and (max-width:1100px) /*When viewed on Phone */
-{
-  #FundingPartners{
     display: flex;
     gap: 20px; /* Space between the main logos */
     justify-content: flex-start; /* Align logos to the left */
   }
-  .social-logo {
-  max-width: 45px;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-top: 10px;
-   /* Adjust size of social logos */
+  .container {
+    display: flex;
+    justify-content: space-between; /* Align logos on the left and socials on the right */
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent wrapping */
+  }
 }
-.UoWLogo {
-  width: 80%;
-}
-
-}
-
-
-
 </style>

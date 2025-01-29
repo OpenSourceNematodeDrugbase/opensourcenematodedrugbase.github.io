@@ -13,8 +13,13 @@
 </script>
 
 <template>
-  <div class="home">
+
+<div class="intro-banner">
     <h1>Login</h1>
+    <p class="intro-text">Login to access more of the site's functionality.</p>
+</div>
+
+  <div class="home">
     <LoginFormComponent />
   </div>
 

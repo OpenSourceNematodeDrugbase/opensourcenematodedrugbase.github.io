@@ -72,45 +72,79 @@ export default {
 </script>
 
 <style scoped>
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
 .form-group {
   margin-bottom: 10px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .form-group label {
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-bottom: 5px;
   font-size: 18px;
 }
 
 .form-group button {
-  padding: 15px;
-  width: 10%;
-  margin-top: -87px;
-  margin-bottom: 2px;
-  margin-left: 100px;
-  margin-right: 0px;
-  position: absolute;
+  padding: 10px 20px;
+  width: auto;
+  margin-top: 10px;
+  align-self: center;
 }
 
-input[type="text"] {
-  width: 20%;
-  padding: 20px 20px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 20px;
-  margin-right: 400px;
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
   box-sizing: border-box;
   font-size: 15px;
 }
 
 textarea {
-  width: 53.5%;
+  width: 100%;
+  max-width: 400px;
   height: 150px;
   padding: 12px 20px;
-  margin-top: 20px;
+  margin-top: 10px;
   box-sizing: border-box;
   resize: none;
   color: rgb(125, 125, 125);
+}
+
+@media (min-width: 768px) {
+  .form-group {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .form-group label {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .form-group button {
+    margin-left: 20px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  textarea {
+    margin-left: 20px;
+  }
 }
 </style>
