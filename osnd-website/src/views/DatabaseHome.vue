@@ -6,6 +6,13 @@
 
   <SearchComponent/>
 
+  <button id="FilterButton"><img src="../assets/Filter Button.png"></button> <!--Replace when new design available-->
+  <select id="SortBy">
+    <option value="1">Featured</option> 
+    <option value="2">Recently Added</option> 
+    <option value="3">Option 3</option> 
+  </select>
+
   <div class="database-home-container">
     <DatabaseEntry v-for="entry in entries" :key="entry.id" :entry="entry" />
   </div>
@@ -53,7 +60,27 @@ export default {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-
   max-width: fit-content;
 }
+#FilterButton {
+  float: left;
+  width: 5%;
+}
+#FilterButton img{
+  width: 100%;
+}
+#SortBy{
+  width: 10%;
+  font-size: 25px;
+ }
+@media screen and (max-width:1000px) { 
+  #FilterButton {
+  float: none;
+}
+#SortBy{ 
+ padding-right: 1px;
+ font-size: 3vw;
+} 
+}
+
 </style>

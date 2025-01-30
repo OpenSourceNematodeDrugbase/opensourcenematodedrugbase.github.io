@@ -12,16 +12,20 @@
 
 </template>
 
+<script>
+//Some kind of Search code here
+</script>
 <style scoped>
 .header-img {
   width: 100%;
   height: 500px; /* Adjust height as needed */
   object-fit: cover; /* Crop the image to cover the area */
 }
-
 .search-container {
   position: relative; /* This allows positioning of elements inside it */
   height: 500px; /* Keep the search container height consistent with the image height */
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .search-overlay {
@@ -58,5 +62,17 @@
   border: 2px solid #fff;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.8); /* Transparent background */
+}
+@media screen and (max-width:1000px) { 
+  .search-overlay {
+    width: 100%;
+  }
+  .search-box {
+    width: 80%; /* Full width of the search overlay */
+    font-size: 4vw;
+  }
+  .search-text{
+    font-size: 3vw;
+  }
 }
 </style>
