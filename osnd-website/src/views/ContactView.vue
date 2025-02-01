@@ -3,7 +3,7 @@ import ContactUsFormComponent from '../components/ContactUsFormComponent.vue'; /
 
 export default {
   components: {
-    ContactUsFormComponent
+    ContactUsFormComponent,
   }
 };
 </script>
@@ -17,3 +17,4 @@ export default {
 
     <p class="intro-text">For additional enquiries, please contact: ondb@westminster.ac.uk </p>
 </template>
+

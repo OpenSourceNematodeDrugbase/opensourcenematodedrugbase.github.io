@@ -69,10 +69,8 @@ export default {
   position: relative;
 }
 
-.links {
-  position: absolute;
-  top: 150px;
-  right: 20px;
+.links
+{
   margin: 10px; /* Adjusts spacing from the edges */
   list-style-type: none;
 }
@@ -109,6 +107,12 @@ export default {
   display: flex;
   gap: 30px; /* Space between social logos */
   justify-content: flex-end; /* Align socials to the right */
+}
+.links {
+position: absolute;
+top: 150px;
+left: 20px;
+
 }
 
 }

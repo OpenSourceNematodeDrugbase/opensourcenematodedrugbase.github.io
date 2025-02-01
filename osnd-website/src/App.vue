@@ -3,6 +3,7 @@
 
   import HeaderComponent from './components/layout/HeaderComponent.vue'
   import FooterComponent from './components/layout/FooterComponent.vue'
+  import BackToTop from './components/layout/BackToTop.vue';
   
   export default 
   {
@@ -10,7 +11,8 @@
     components: 
     {
       HeaderComponent,
-      FooterComponent
+      FooterComponent,
+      BackToTop
     },
   }
 
@@ -32,12 +34,14 @@
       <footer>
         <FooterComponent />
       </footer>
+      <BackToTop/>
   </div>
 </template>
 
 
 <style>
   /* Global styles can go here */
+
   #app {
     font-family: Arial, sans-serif;
     color: #333;
@@ -47,6 +51,63 @@
   main {
     padding: 20px;
   }
+
+  body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6;
+  color: #333;
+  text-wrap: balance;
+}
+
+h1, h2 {
+  color: #2a2a2a;
+  font-weight: 600;
+  line-height: 1.4;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.intro-banner {
+  text-align: center;
+  padding: 3rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.intro-text {
+  font-size: 24px;
+  max-width: 950px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Header section styling */
+.header-section {
+  margin: 0 auto;
+  max-width: 1050px;
+}
+
+.header-section h2 {
+  font-size: 42px;
+  margin: 25px, 0px;
+}
+
+.section-text {
+  font-size: 32px;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Image styling */
+.image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+}
 
   @media screen and (max-width:1000px) {
     .section-text
