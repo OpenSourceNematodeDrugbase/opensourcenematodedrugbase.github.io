@@ -1,3 +1,25 @@
+
+
+<script setup lang="ts">
+//https://www.youtube.com/watch?v=Jqo79GG5ONE Link to video tutorial 
+import { computed } from 'vue';
+const props = defineProps<{
+  InputValue: string;
+}>();
+
+const emit = defineEmits(["update:InputValue"]); //Is this like an event listener 
+
+const InputValueValue = computed({ //So this is like get set in c#
+  get() {
+    return props.InputValue;
+  },
+  set(value) {
+    emit("update:InputValue", value);
+  }
+});
+
+</script>
+
 <template>
 
 <div class="search-container">
@@ -5,16 +27,15 @@
     <div class="search-overlay">
       <p class="search-text">Browse 999 Proteins, 999 Diseases</p>
       <div class="search-box-container">
-        <input type="text" class="search-box" placeholder="Search..." />
+        <input type="text" 
+        id="search-box" 
+        placeholder="Search..."
+        v-model="InputValueValue" />
       </div>
     </div>
   </div>
 
 </template>
-
-<script>
-//Some kind of Search code here
-</script>
 <style scoped>
 .header-img {
   width: 100%;
@@ -54,7 +75,7 @@
 }
 
 /* Styling for the search box */
-.search-box {
+#search-box {
   padding: 10px 20px;
   font-size: 32px;
   width: 100%; /* Full width of the search overlay */

@@ -4,9 +4,10 @@
     <p class="intro-text">A comprehensive resource for researchers, healthcare professionals, and policymakers focused on understanding the critical role that nematodes play in neglected diseases.</p>
   </div>
 
-  <SearchComponent/>
+  <SearchComponent v-model="InputValueValue"/>
 
-  <button id="FilterButton"><img src="../assets/Filter Button.png"></button> <!--Replace when new design available-->
+  <button  @click="handleClick" id="FilterButton"><img src="../assets/Filter Button.png"></button> <!--Replace when new design available-->
+  <Filter/> <!--Should be visibule only when button is pressed-->
   <select id="SortBy">
     <option value="1">Featured</option> 
     <option value="2">Recently Added</option> 
@@ -23,12 +24,20 @@ import { ref, onMounted } from 'vue';
 import { getFirestore, collection, getDocs } from 'firebase/firestore'; // Firestore imports
 import SearchComponent from '@/components/SearchComponent.vue';
 import DatabaseEntry from '@/components/DatabaseEntry.vue';
+import Filter from '@/components/filter.vue';
 
 export default {
   components: {
     SearchComponent,
     DatabaseEntry,
+    Filter,
   },
+  methods:{
+      handleClick()
+      {
+        
+      }
+    },
   setup() {
     const db = getFirestore(); // Initialize Firestore
     const entries = ref([]); // Reactive variable to store Firestore entries
@@ -40,7 +49,7 @@ export default {
         entries.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       } catch (error) {
         console.error('Error fetching Firestore data:', error);
-      }
+      } 
     };
 
     onMounted(() => {
@@ -50,6 +59,7 @@ export default {
     return {
       entries,
     };
+   
   },
 };
 </script>
