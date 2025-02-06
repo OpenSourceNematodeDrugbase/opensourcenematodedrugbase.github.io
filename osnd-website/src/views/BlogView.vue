@@ -35,16 +35,20 @@ export default {
 <template>
   <div class="intro-banner">
     <h1>Blog</h1>
-    <p class="intro-text">Find out updates and important announcements for the Open-Source Nematode Drub Base Project!</p>
+    <p class="intro-text">Find out updates and important announcements for the Open-Source Nematode Drug Base Project!</p>
   </div>
   <div class="blog-list">
     <ul>
       <li v-for="blog in blogs" :key="blog.id">
         <h3>{{ blog.title }}</h3>
-        <p><strong>Author:</strong> {{ blog.author }}</p>
-        <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
-        <p>{{ blog.content }}</p>
-        <router-link :to="`/blog/${blog.id}`">Read more</router-link>
+        <div class="sub-text">
+          <p><strong>Author:</strong> {{ blog.author }}</p>
+          <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
+        </div>
+        
+        <div class="blog-link">
+        <router-link :to="`/blog/${blog.id}`">View Blog</router-link>
+        </div>
       </li>
     </ul>
   </div>
@@ -68,12 +72,23 @@ export default {
   padding: 0;
 }
 
+.blog-link {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
 .blog-list li {
   margin-bottom: 20px;
-  padding: 20px;
+  padding: 50px;
+  width: 800px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f9f9f9;
+  font-size: 32px;
+}
+
+.sub-text {
+  font-size: 18px;
 }
 
 .blog-list h3 {

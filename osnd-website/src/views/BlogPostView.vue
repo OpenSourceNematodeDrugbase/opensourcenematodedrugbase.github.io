@@ -35,17 +35,20 @@ export default {
 </script>
 
 <template>
-  <div v-if="blog" class="blog-post">
+  <div v-if="blog" class="intro-banner">
     <h1>{{ blog.title }}</h1>
     <p><strong>Author:</strong> {{ blog.author }}</p>
     <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
-    <div class="blog-content">
-      <p>{{ blog.content }}</p>
-    </div>
   </div>
   <div v-else>
     <p>Loading...</p>
   </div>
+
+  <div v-if="blog" class="blog-content">
+      <p>{{ blog.content }}</p>
+  </div>
+
+  <button class="back-button" @click="$router.push('/blog')">RETURN</button>
 </template>
 
 <style scoped>
@@ -56,6 +59,25 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-content {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 625px;
 }
 
 .blog-post h1 {
