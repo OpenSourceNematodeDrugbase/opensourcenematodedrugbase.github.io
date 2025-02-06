@@ -12,6 +12,7 @@ import DatabaseHome from '@/views/DatabaseHome.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import SignUp from '@/views/SignUp.vue'
 import BlogEditor from '@/views/BlogEditor.vue'
+import ErrorView from '@/views/ErrorView.vue'
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
@@ -25,7 +26,8 @@ const routes = [
   {path : '/nematode-drugbase', name: 'DatabaseHome', component: DatabaseHome},
   {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy},
   {path : '/sign-up', name: 'SignUp', component : SignUp},
-  {path : '/blog-editor', name: 'BlogEditor', component : BlogEditor}
+  {path : '/blog-editor', name: 'BlogEditor', component : BlogEditor},
+  {path : '/error', name: 'ErrorView', component : ErrorView}
 ]
 
 const router = createRouter({
