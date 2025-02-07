@@ -15,7 +15,7 @@
   </select>
 
   <div class="database-home-container">
-    <DatabaseEntry v-for="entry in entries" :key="entry.id" :entry="entry" />
+    <DatabaseEntry v-for="entry in filteredEntries" :key="entry.id" :entry="entry" /> <!--Outputs filtered data onto the screen-->
   </div>
 </template>
 
@@ -26,6 +26,7 @@ import SearchComponent from '@/components/SearchComponent.vue';
 import DatabaseEntry from '@/components/DatabaseEntry.vue';
 import Filter from '@/components/filter.vue';
 
+const InputValueValue = ref("");  // This is bound to the child component's input
 export default {
   components: {
     SearchComponent,
@@ -35,7 +36,7 @@ export default {
   methods:{
       handleClick()
       {
-        
+        console.log(InputValueValue.value); //Outputs value of search bar in console
       }
     },
   setup() {
@@ -58,9 +59,18 @@ export default {
 
     return {
       entries,
+      searchString: '1', // The string to match
     };
-   
+    
   },
+  computed: { //Filter out specific results to only show what is in the search
+    filteredEntries() {
+      console.debug(InputValueValue);
+      return this.entries.filter(entry => {
+        return entry.entry && entry.entry.includes(this.searchString);
+      });
+    }
+  }
 };
 </script>
 
