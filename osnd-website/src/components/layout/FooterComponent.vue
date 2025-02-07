@@ -18,29 +18,31 @@
       
       
 
-      <!-- Right-aligned Social Icons -->
-<!--
+       <!-- Right-aligned Social Icons -->
+
        <div class="socials">
-        <a href="https://www.facebook.com/" target="_blank">
+        <a href="https://www.facebook.com/profile.php?id=61572548505626" target="_blank">
           <img class="social-logo" src="@/assets/Facebook_logo_(square).png" alt="Facebook_Logo">
         </a>
-        <a href="https://www.instagram.com/" target="_blank">
+        <a href="https://www.youtube.com/channel/UC5s6DPuDbR0sbBaKA92wj8w" target="_blank">
+          <img class="social-logo" src="@\assets\Youtube_logo.png" alt="YouTube Logo">
+        </a>
+        <a href="https://www.instagram.com/ondbuniwestminster/" target="_blank">
           <img class="social-logo" src="@/assets/Instagram_Logo.png" alt="Instagram_Logo">
         </a>
         <a href="https://www.linkedin.com/" target="_blank">
           <img class="social-logo" src="@/assets/LinkedIn_Logo.png" alt="LinkedIn_Logo">
         </a>
-        <a href="https://x.com/" target="_blank">
+        <a href="https://x.com/ONDBwestminster" target="_blank">
           <img class="social-logo" src="@/assets/X_logo.jpg" alt="X_Logo">
         </a>
-        <a href="https://www.tiktok.com/" target="_blank">
+        <a href="https://www.tiktok.com/@ondb6?_t=ZG-8tiW8Gi20cy&_r=1" target="_blank">
           <img class="social-logo" src="@/assets/TikTok_Logo.png" alt="TikTok_Logo">
         </a>
         <a href="https://github.com/OpenSourceNematodeDrugbase" target="_blank">
           <img class="social-logo" src="@/assets/GitHub_Logo.png" alt="GitHub_Logo">
         </a>
       </div>
-    -->
       
     </div>
 
