@@ -27,7 +27,7 @@
         <input
           v-model="password"
           placeholder="Password"
-          type="text"
+          type="password"
           id="password"
           required
         />
