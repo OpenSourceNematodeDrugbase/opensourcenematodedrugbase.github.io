@@ -3,10 +3,16 @@
     <h1>Blog Editor</h1>
     <p class="intro-text">Welcome, admin blogs here.</p>
   </div>
+
+  <BlogPropertiesComponent/>
+  <BlogBlockComponent/>
+
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import BlogPropertiesComponent from '../components/BlogPropertiesComponent.vue';
+import BlogBlockComponent from '../components/BlogBlockComponent.vue';
 
 export default {
   methods: {
@@ -22,5 +28,9 @@ export default {
       }
     });
   },
+  components: {
+    BlogPropertiesComponent,
+    BlogBlockComponent
+  }
 };
 </script>
