@@ -4,7 +4,7 @@
     <p class="intro-text">A comprehensive resource for researchers, healthcare professionals, and policymakers focused on understanding the critical role that nematodes play in neglected diseases.</p>
   </div>
 
-  <SearchComponent v-model="InputValueValue"/>
+  <SearchComponent @textchanged="updatedValue"/>
 
   <button  @click="handleClick" id="FilterButton"><img src="../assets/Filter Button.png"></button> <!--Replace when new design available-->
   <Filter/> <!--Should be visibule only when button is pressed-->
@@ -15,11 +15,12 @@
   </select>
 
   <div class="database-home-container">
-    <DatabaseEntry v-for="entry in filteredEntries" :key="entry.id" :entry="entry" /> <!--Outputs filtered data onto the screen-->
+    <DatabaseEntry v-for="entry in entries" :key="entry.id" :entry="entry" /> <!--Outputs filtered data onto the screen-->
   </div>
 </template>
 
 <script>
+////
 import { ref, onMounted } from 'vue';
 import { getFirestore, collection, getDocs } from 'firebase/firestore'; // Firestore imports
 import SearchComponent from '@/components/SearchComponent.vue';
@@ -37,12 +38,19 @@ export default {
       handleClick()
       {
         console.log(InputValueValue.value); //Outputs value of search bar in console
+      },
+      updatedValue(event)
+      {
+        console.log("Update Recieved");
+        console.log(event);
+        fetchEntries(event)
       }
     },
   setup() {
     const db = getFirestore(); // Initialize Firestore
     const entries = ref([]); // Reactive variable to store Firestore entries
 
+  
     // Fetch data from Firestore
     const fetchEntries = async () => {
       try {
@@ -63,15 +71,10 @@ export default {
     };
     
   },
-  computed: { //Filter out specific results to only show what is in the search
-    filteredEntries() {
-      console.debug(InputValueValue);
-      return this.entries.filter(entry => {
-        return entry.entry && entry.entry.includes(this.searchString);
-      });
-    }
-  }
+  
 };
+
+////
 </script>
 
 <style scoped>
