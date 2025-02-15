@@ -23,7 +23,7 @@ export default {
 
   methods: {
     navigateToBlogEditor() {
-      this.$router.push('/blog-editor');
+      this.$router.push('/blog-select');
     },
   },
 

@@ -13,6 +13,7 @@ import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import SignUp from '@/views/SignUp.vue'
 import BlogEditor from '@/views/BlogEditor.vue'
 import ErrorView from '@/views/ErrorView.vue'
+import BlogSelect from '@/views/BlogSelectView.vue'
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
@@ -27,7 +28,8 @@ const routes = [
   {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy},
   {path : '/sign-up', name: 'SignUp', component : SignUp},
   {path : '/blog-editor', name: 'BlogEditor', component : BlogEditor},
-  {path : '/error', name: 'ErrorView', component : ErrorView}
+  {path : '/error', name: 'ErrorView', component : ErrorView},
+  {path : '/blog-select', name:BlogSelect, component: BlogSelect}
 ]
 
 const router = createRouter({

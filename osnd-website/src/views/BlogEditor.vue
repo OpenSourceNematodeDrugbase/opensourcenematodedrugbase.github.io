@@ -1,18 +1,17 @@
 <template>
   <div class="intro-banner">
     <h1>Blog Editor</h1>
-    <p class="intro-text">Welcome, admin blogs here.</p>
+    <p class="intro-text">Editing: 'BLOG TITLE'</p>
   </div>
 
   <BlogPropertiesComponent/>
-  <BlogBlockComponent/>
 
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import BlogPropertiesComponent from '../components/BlogPropertiesComponent.vue';
-import BlogBlockComponent from '../components/BlogBlockComponent.vue';
+import BlogPropertiesComponent from '../BlogEditor/BlogPropertiesComponent.vue';
+import BlogBlockComponent from '../BlogEditor/BlockTextComponent.vue';
 
 export default {
   methods: {

@@ -1,7 +1,8 @@
 <template>
 
+<button class="button" @click="deleteBlock">-</button>
+
 <div class="block-items">
-    <button class="button" @click="deleteBlock">-</button>
     <h4 class="item-label">Header Text</h4>
     <textarea v-model="text" id="block-text" class="block-header-text"></textarea>
     <h4 class="item-label">Text Content</h4>
@@ -11,7 +12,14 @@
 </template>
 
 <script>
-
+export default {
+  props: ['block'],
+  methods: {
+    deleteBlock() {
+      this.$emit('delete-block', this.block);
+    }
+  }
+};
 </script>
 
 <style>
@@ -32,6 +40,7 @@
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    resize: vertical; /* Allow only vertical resizing */
 }
 
 .block-header-text {
@@ -39,6 +48,7 @@
     min-height: 10px;
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
+    resize: vertical; /* Allow only vertical resizing */
 }
 
 .item-label {
