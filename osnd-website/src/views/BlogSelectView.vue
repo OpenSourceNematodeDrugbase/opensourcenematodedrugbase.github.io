@@ -5,37 +5,37 @@
     </div>
 
     <div>
-        <button @click="editBlog(0)" type="submit" class="button">New Blog</button>
+    <button @click="editBlog('')" type="submit" class="button">New Blog</button>
+</div>
+
+<div class="blog-list">
+<ul>
+  <li v-for="blog in blogs" :key="blog.id">
+    <h3>{{ blog.title }}</h3>
+    <div class="sub-text">
+      <p><strong>Author:</strong> {{ blog.author }}</p>
+      <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
+    </div>
+    
+    <div class="blog-link">
+        <button @click="editBlog(blog.id)" type="submit" class="blog-option-button">Edit Blog</button>
     </div>
 
-    <div class="blog-list">
-    <ul>
-      <li v-for="blog in blogs" :key="blog.id">
-        <h3>{{ blog.title }}</h3>
-        <div class="sub-text">
-          <p><strong>Author:</strong> {{ blog.author }}</p>
-          <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
-        </div>
-        
-        <div class="blog-link">
-            <button @click="editBlog(index)" type="submit" class="blog-option-button">Edit Blog</button>
-        </div>
-
-        <div class="blog-link">
-            <button @click="editBlog(index)" type="submit" class="blog-option-button">Delete Blog</button>
-        </div>
-      </li>
-    </ul>
+    <div class="blog-link">
+        <button @click="deleteBlog(blog.id)" type="submit" class="blog-option-button">Delete Blog</button>
+    </div>
+  </li>
+</ul>
   </div>
 </template>
   
 <script>
 import { firestore } from '@/main.js'; // Assuming firebase is set up and exported from here
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { reactive } from 'vue';
 
 export const state = reactive({
-  blogIndex: 0
+  blogIndex: ""
 });
 
 export default {
@@ -71,6 +71,16 @@ export default {
     editBlog(index) {
         state.blogIndex = index;
         this.$router.push('/blog-editor');
+    },
+    async deleteBlog(index) {
+      try {
+        // Delete the blog document from Firestore
+        await deleteDoc(doc(firestore, 'blog-collection', index));
+        // Remove the blog from the local array
+        this.blogs = this.blogs.filter(blog => blog.id !== index);
+      } catch (error) {
+        console.error("Error deleting blog:", error);
+      }
     },
   },
 };

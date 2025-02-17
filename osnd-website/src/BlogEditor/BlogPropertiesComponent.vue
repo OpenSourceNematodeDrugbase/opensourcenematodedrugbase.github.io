@@ -11,14 +11,16 @@
     <button class="button" @click="preview">Preview</button>
   </div>
   <div>
-    <input v-model="text" placeholder="Blog Title" id="block-text" class="blog-properties-text"></input>
-    <input v-model="text" placeholder="Blog Author" id="block-text" class="blog-properties-text"></input>
+    <input v-model="blogData.title" placeholder="Blog Title" id="block-text" class="blog-properties-text"></input>
+  </div>
+  <div>
+    <input v-model="blogData.author" placeholder="Blog Author" id="block-text" class="blog-properties-text"></input>
   </div>
   <label class="date-text">Publish Date</label>
-  <input class="date-box" type="date" v-model="selectedDate" date id="date"></input>
+  <input class="date-box" type="date" v-model="blogData.publishDate" date id="date"></input>
   <div class="blocks">
     <component
-      v-for="(block, index) in blocks"
+      v-for="(block, index) in blogData.blocks"
       :key="index"
       :is="getComponentType(block.type)"
       :block="block"
@@ -31,6 +33,9 @@
 import BlogTextComponent from '../BlogEditor/BlockTextComponent.vue';
 import BlockImageComponent from '../BlogEditor/BlockImageComponent.vue';
 import BlockVideoComponent from '../BlogEditor/BlockVideoComponent.vue';
+import { state } from '../views/BlogSelectView.vue';
+import { firestore } from '@/main.js';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export default {
   components: {
@@ -41,33 +46,70 @@ export default {
   data() {
     return {
       selectedBlockType: 'text',
-      blocks: []
+      blogData: {
+        title: '',
+        author: '',
+        publishDate: '',
+        blocks: []
+      }
     };
   },
   methods: {
+    async fetchBlogData() {
+      if (state.blogIndex !== undefined) {
+        try {
+          const blogDoc = await getDoc(doc(firestore, 'blog-collection', state.blogIndex));
+          if (blogDoc.exists()) {
+            this.blogData = blogDoc.data();
+          } else {
+            console.error('No such document! Creating new blog!');
+            this.createNewBlog();
+          }
+        } catch (error) {
+          console.error('Error fetching blog data:', error);
+          this.createNewBlog();
+        }
+      } else {
+        console.error('blogIndex is undefined');
+      }
+    },
+    createNewBlog() {
+      const newDocRef = doc(firestore, 'blog-collection');
+      state.blogIndex = newDocRef.id;
+      this.blogData = {
+        title: 'New Blog Title',
+        author: 'Author Name',
+        publishDate: new Date().toISOString().split('T')[0],
+        blocks: []
+      };
+      this.save();
+    },
     addBlock() {
       if (['text', 'image', 'video'].includes(this.selectedBlockType)) {
-        this.blocks.push({ type: this.selectedBlockType });
+        this.blogData.blocks.push({ type: this.selectedBlockType });
       }
     },
     deleteBlock(index) {
-      this.blocks.splice(index, 1);
+      this.blogData.blocks.splice(index, 1);
     },
-    save() {
-      const blogData = {
-        title: this.text,
-        author: this.text,
-        publishDate: this.selectedDate,
-        blocks: this.blocks
-      };
+    async save() {
+      if (state.blogIndex !== undefined && state.blogIndex.trim() !== '') {
+        const blogData = {
+          title: this.blogData.title,
+          author: this.blogData.author,
+          publishDate: this.blogData.publishDate,
+          blocks: this.blogData.blocks
+        };
 
-      database.ref('blogs').push(blogData)
-        .then(() => {
-          alert('Blog saved successfully!');
-        })
-        .catch((error) => {
-          console.error('Error saving blog:', error);
-        });
+        try {
+          await setDoc(doc(firestore, 'blog-collection', state.blogIndex), blogData);
+          console.log('Blog data saved successfully');
+        } catch (error) {
+          console.error('Error saving blog data:', error);
+        }
+      } else {
+        console.error('blogIndex is undefined or invalid');
+      }
     },
     publish() {
       // Publish logic here
@@ -85,6 +127,9 @@ export default {
           return 'BlogTextComponent';
       }
     }
+  },
+  created() {
+    this.fetchBlogData();
   }
 };
 </script>
