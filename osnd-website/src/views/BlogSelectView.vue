@@ -1,10 +1,10 @@
 <template>
-    <div class="intro-banner">
-      <h1>Blog Editor Selection</h1>
-      <p class="intro-text">Select a Blog to Edit</p>
-    </div>
+<div class="intro-banner">
+    <h1>Blog Editor Selection</h1>
+    <p class="intro-text">Select a Blog to Edit</p>
+</div>
 
-    <div>
+<div>
     <button @click="editBlog('')" type="submit" class="button">New Blog</button>
 </div>
 
@@ -50,37 +50,15 @@ export default {
   },
   methods: {
     async fetchBlogs() {
-      try {
-        // Access the 'blogs' collection in Firestore
-        const blogsCollection = collection(firestore, 'blog-collection');
-        const querySnapshot = await getDocs(blogsCollection);
-
-        // Map Firestore docs to the blogs array
-        this.blogs = querySnapshot.docs.map(doc => ({
-          id: doc.id, // Store the document ID
-          ...doc.data(), // Store the blog data
-        }));
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    },
-    navigateToError() {
-    this.$router.push('/error');
+      
+      this.$router.push('/error');
     },
 
     editBlog(index) {
-        state.blogIndex = index;
         this.$router.push('/blog-editor');
     },
     async deleteBlog(index) {
-      try {
-        // Delete the blog document from Firestore
-        await deleteDoc(doc(firestore, 'blog-collection', index));
-        // Remove the blog from the local array
-        this.blogs = this.blogs.filter(blog => blog.id !== index);
-      } catch (error) {
-        console.error("Error deleting blog:", error);
-      }
+      
     },
   },
 };

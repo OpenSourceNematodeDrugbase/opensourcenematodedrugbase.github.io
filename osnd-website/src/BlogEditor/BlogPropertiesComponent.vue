@@ -6,15 +6,15 @@
       <option value="image">Image</option>
       <option value="video">Video</option>
     </select>
-    <button class="button" @click="save">Save</button>
+    <button class="button" @click="saveBlog">Save</button>
     <button class="button" @click="publish">Publish</button>
     <button class="button" @click="preview">Preview</button>
   </div>
   <div>
-    <input v-model="blogData.title" placeholder="Blog Title" id="block-text" class="blog-properties-text"></input>
+    <input v-model="blogData.title" placeholder="Blog Title" id="blog-title" class="blog-properties-text"></input>
   </div>
   <div>
-    <input v-model="blogData.author" placeholder="Blog Author" id="block-text" class="blog-properties-text"></input>
+    <input v-model="blogData.author" placeholder="Blog Author" id="blog-author" class="blog-properties-text"></input>
   </div>
   <label class="date-text">Publish Date</label>
   <input class="date-box" type="date" v-model="blogData.publishDate" date id="date"></input>
@@ -23,23 +23,21 @@
       v-for="(block, index) in blogData.blocks"
       :key="index"
       :is="getComponentType(block.type)"
-      :block="block"
-      @delete-block="deleteBlock(index)"
     />
   </div>
 </template>
 
 <script>
-import BlogTextComponent from '../BlogEditor/BlockTextComponent.vue';
+import BlockTextComponent from '../BlogEditor/BlockTextComponent.vue';
 import BlockImageComponent from '../BlogEditor/BlockImageComponent.vue';
 import BlockVideoComponent from '../BlogEditor/BlockVideoComponent.vue';
-import { state } from '../views/BlogSelectView.vue';
+
+import { collection, addDoc } from 'firebase/firestore';
 import { firestore } from '@/main.js';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export default {
   components: {
-    BlogTextComponent,
+    BlockTextComponent,
     BlockImageComponent,
     BlockVideoComponent
   },
@@ -55,35 +53,6 @@ export default {
     };
   },
   methods: {
-    async fetchBlogData() {
-      if (state.blogIndex !== undefined) {
-        try {
-          const blogDoc = await getDoc(doc(firestore, 'blog-collection', state.blogIndex));
-          if (blogDoc.exists()) {
-            this.blogData = blogDoc.data();
-          } else {
-            console.error('No such document! Creating new blog!');
-            this.createNewBlog();
-          }
-        } catch (error) {
-          console.error('Error fetching blog data:', error);
-          this.createNewBlog();
-        }
-      } else {
-        console.error('blogIndex is undefined');
-      }
-    },
-    createNewBlog() {
-      const newDocRef = doc(firestore, 'blog-collection');
-      state.blogIndex = newDocRef.id;
-      this.blogData = {
-        title: 'New Blog Title',
-        author: 'Author Name',
-        publishDate: new Date().toISOString().split('T')[0],
-        blocks: []
-      };
-      this.save();
-    },
     addBlock() {
       if (['text', 'image', 'video'].includes(this.selectedBlockType)) {
         this.blogData.blocks.push({ type: this.selectedBlockType });
@@ -92,31 +61,6 @@ export default {
     deleteBlock(index) {
       this.blogData.blocks.splice(index, 1);
     },
-    async save() {
-      if (state.blogIndex !== undefined && state.blogIndex.trim() !== '') {
-        const blogData = {
-          title: this.blogData.title,
-          author: this.blogData.author,
-          publishDate: this.blogData.publishDate,
-          blocks: this.blogData.blocks
-        };
-
-        try {
-          await setDoc(doc(firestore, 'blog-collection', state.blogIndex), blogData);
-          console.log('Blog data saved successfully');
-        } catch (error) {
-          console.error('Error saving blog data:', error);
-        }
-      } else {
-        console.error('blogIndex is undefined or invalid');
-      }
-    },
-    publish() {
-      // Publish logic here
-    },
-    preview() {
-      // Preview logic here
-    },
     getComponentType(type) {
       switch (type) {
         case 'image':
@@ -124,12 +68,20 @@ export default {
         case 'video':
           return 'BlockVideoComponent';
         default:
-          return 'BlogTextComponent';
+          return 'BlockTextComponent';
+      }
+    },
+    async saveBlog() {
+      try {
+        const docRef = await addDoc(collection(firestore, 'blogs'), this.blogData);
+        console.log('Document written with ID: ', docRef.id);
+      } catch (e) {
+        console.error('Error adding document: ', e);
       }
     }
   },
   created() {
-    this.fetchBlogData();
+    
   }
 };
 </script>

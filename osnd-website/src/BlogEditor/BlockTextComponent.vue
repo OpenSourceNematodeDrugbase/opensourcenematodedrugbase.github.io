@@ -1,22 +1,23 @@
 <template>
 
-<button class="button" @click="deleteBlock">-</button>
+<div>
+  <button class="button" @click="deleteBlock">-</button>
+</div>
 
 <div class="block-items">
     <h4 class="item-label">Header Text</h4>
-    <textarea v-model="text" id="block-text" class="block-header-text"></textarea>
+    <textarea id="header-text" class="block-header-text"></textarea>
     <h4 class="item-label">Text Content</h4>
-    <textarea v-model="text" id="block-text" class="block-textarea"></textarea>
+    <textarea id="content-text" class="block-textarea"></textarea>
 </div>
 
 </template>
 
 <script>
 export default {
-  props: ['block'],
   methods: {
     deleteBlock() {
-      this.$emit('delete-block', this.block);
+      
     }
   }
 };

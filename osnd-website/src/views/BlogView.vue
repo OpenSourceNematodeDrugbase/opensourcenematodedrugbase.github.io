@@ -1,6 +1,4 @@
 <script>
-import { firestore } from '@/main.js'; // Assuming firebase is set up and exported from here
-import { collection, getDocs } from 'firebase/firestore';
 
 export default {
   data() {
@@ -14,19 +12,7 @@ export default {
   },
   methods: {
     async fetchBlogs() {
-      try {
-        // Access the 'blogs' collection in Firestore
-        const blogsCollection = collection(firestore, 'blog-collection');
-        const querySnapshot = await getDocs(blogsCollection);
-
-        // Map Firestore docs to the blogs array
-        this.blogs = querySnapshot.docs.map(doc => ({
-          id: doc.id, // Store the document ID
-          ...doc.data(), // Store the blog data
-        }));
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
+      
     },
   },
 };

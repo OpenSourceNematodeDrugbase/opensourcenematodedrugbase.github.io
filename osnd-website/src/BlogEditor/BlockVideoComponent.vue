@@ -1,24 +1,27 @@
 <template>
 
+<div>
     <button class="button" @click="deleteBlock">-</button>
-        <div class="block-items">
-            <input v-model="text" placeholder="Video URL" id="block-text" class="block-textarea"></input>
-        </div>
+</div>
+
+<div class="block-items">
+    <input placeholder="Video URL" id="block-text" class="block-textarea"></input>
+</div>
+
+</template>
         
-        </template>
-        
-    <script>
+<script>
     export default {
       props: ['block'],
       methods: {
         deleteBlock() {
-          this.$emit('delete-block', this.block);
+          
         }
       }
     };
-    </script>
+</script>
         
-        <style>
+<style>
         
         .block-items {
             margin-top: 20px;
@@ -54,4 +57,4 @@
             margin-top: 40px;
         }
         
-        </style>
+</style>

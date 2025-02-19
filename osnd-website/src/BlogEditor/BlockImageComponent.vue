@@ -1,11 +1,14 @@
 <template>
 
-<button class="button" @click="deleteBlock">-</button>
-    <div class="block-items">
-        <input v-model="text" placeholder="Image URL" id="block-text" class="block-textarea"></input>
-    </div>
+<div>
+    <button class="button" @click="deleteBlock">-</button>
+</div>
+
+<div class="block-items">
+    <input placeholder="Image URL" id="block-text" class="block-textarea"></input>
+</div>
     
-    </template>
+</template>
     
 <script>
 export default {
