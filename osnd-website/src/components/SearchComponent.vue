@@ -1,12 +1,26 @@
 <script>
+import { ref } from 'vue';
+
 export default {
   methods: {
-    //Sends text to database home by presing enter
-    sendChange(event)  /*Might need compute to make it automatic */ 
-    {
-      console.log('Hi');
-      console.log(event.target.value);
-      this.$emit("textchanged",event.target.value)
+    // //Sends text to database home by presing enter
+    // sendChange(event)  /*Might need compute to make it automatic */ 
+    // {
+    //   console.log('Hi');
+    //   console.log(event.target.value);
+    //   this.$emit("textchanged",event.target.value)
+    // }
+  },
+  props:{
+    tValue : String
+  },
+  setup(props, {emit})
+  {
+    const newTextProp = (event) =>{
+      emit("text-changed", event.target.value)
+    }
+    return {
+       newTextProp,
     }
   }
 
@@ -23,9 +37,8 @@ export default {
         <input type="text" 
         id="search-box" 
         placeholder="Search..."
-        @change="sendChange" > <!--Variable-->
+        @change="newTextProp" > <!--Variable-->
       </div>
-      <button @click="sendChange" style="width: 20%; height: 20%; font-size: 2vw;">Search!</button> <!--Not working yet-->
   </div>
 </div>
 
