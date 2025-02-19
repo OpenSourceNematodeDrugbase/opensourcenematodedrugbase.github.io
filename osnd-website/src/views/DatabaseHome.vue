@@ -7,7 +7,7 @@
   <SearchComponent @text-changed="updatedValue"/>
 
   <button  @click="handleClick" id="FilterButton"><img src="../assets/Filter Button.png"></button> <!--Replace when new design available-->
-  <Filter/> <!--Should be visibule only when button is pressed-->
+  <Filter v-if="filterActivated"/> <!--Should be visibule only when button is pressed-->
   <select id="SortBy">
     <option value="1">Featured</option> 
     <option value="2">Recently Added</option> 
@@ -21,7 +21,7 @@
 
 <script>
 ////
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, toValue } from 'vue';
 import { getFirestore, collection, getDocs, query } from 'firebase/firestore'; // Firestore imports
 import SearchComponent from '@/components/SearchComponent.vue';
 import DatabaseEntry from '@/components/DatabaseEntry.vue';
@@ -33,10 +33,17 @@ export default {
     DatabaseEntry,
     Filter,
   },
+  data () {
+    return {
+      filterActivated : false
+    }
+  },
+
   methods:{
       handleClick()
       {
-         //Open and close Filter Field
+         console.log("hi")
+         this.filterActivated = !this.filterActivated;
       },
       updatedValue(event)
       {
@@ -47,7 +54,7 @@ export default {
   setup() {
     const db = getFirestore(); // Initialize Firestore
     const entries = ref([]); // Reactive variable to store Firestore entries
-    const search = ref();
+
     const fetchEntries = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'test-collection')); // Replace 'entries' with your Firestore collection name
@@ -65,7 +72,7 @@ export default {
 
     return {
       entries,
-      search
+
     };
     
   },
