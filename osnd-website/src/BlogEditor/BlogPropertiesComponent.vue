@@ -11,13 +11,21 @@
     <button class="button" @click="preview">Preview</button>
   </div>
   <div>
-    <input v-model="blogData.title" placeholder="Blog Title" id="block-text" class="blog-properties-text"></input>
-  </div>
-  <div>
-    <input v-model="blogData.author" placeholder="Blog Author" id="block-text" class="blog-properties-text"></input>
-  </div>
+  <input
+    v-model="blogData.title"
+    :placeholder="blogData.title || 'Untitled Blog'"
+    id="block-text"
+    class="blog-properties-text" />
+</div>
+<div>
+  <input
+    v-model="blogData.author"
+    :placeholder="blogData.author || 'Unknown Author'"
+    id="block-text"
+    class="blog-properties-text" />
+</div>
   <label class="date-text">Publish Date</label>
-  <input class="date-box" type="date" v-model="blogData.publishDate" date id="date"></input>
+  <input class="date-box" type="date" v-model="blogData.publishDate" id="date"></input>
   <div class="blocks">
     <component
       v-for="(block, index) in blogData.blocks"
@@ -55,82 +63,85 @@ export default {
     };
   },
   methods: {
-    async fetchBlogData() {
-      if (state.blogIndex !== undefined) {
-        try {
-          const blogDoc = await getDoc(doc(firestore, 'blog-collection', state.blogIndex));
-          if (blogDoc.exists()) {
-            this.blogData = blogDoc.data();
-          } else {
-            console.error('No such document! Creating new blog!');
-            this.createNewBlog();
-          }
-        } catch (error) {
-          console.error('Error fetching blog data:', error);
+  /**
+   * Fetch existing blog data from Firestore and update the component state
+   */
+  async fetchBlogData() {
+    console.log('Fetching blog data...');
+    if (state.blogIndex !== undefined) {
+      try {
+        const blogDoc = await getDoc(doc(firestore, 'blog-collection', state.blogIndex));
+
+        if (blogDoc.exists()) {
+          const data = blogDoc.data();
+
+          // Load data into blogData, with fallback defaults
+          this.blogData = {
+            title: data.title || 'Untitled Blog',
+            author: data.author || 'Unknown Author',
+            publishDate: data.publishDate || new Date().toISOString().split('T')[0],
+            blocks: Array.isArray(data.blocks) ? data.blocks : []
+          };
+
+          console.log('Blog data successfully fetched!');
+
+        } else {
+          console.error('No such document! Creating a new blog entry.');
           this.createNewBlog();
         }
-      } else {
-        console.error('blogIndex is undefined');
+      } catch (error) {
+        console.error('Error fetching blog data:', error);
+        this.createNewBlog();
       }
-    },
-    createNewBlog() {
-      const newDocRef = doc(firestore, 'blog-collection');
-      state.blogIndex = newDocRef.id;
-      this.blogData = {
-        title: 'New Blog Title',
-        author: 'Author Name',
-        publishDate: new Date().toISOString().split('T')[0],
-        blocks: []
-      };
-      this.save();
-    },
-    addBlock() {
-      if (['text', 'image', 'video'].includes(this.selectedBlockType)) {
-        this.blogData.blocks.push({ type: this.selectedBlockType });
-      }
-    },
-    deleteBlock(index) {
-      this.blogData.blocks.splice(index, 1);
-    },
-    async save() {
-      if (state.blogIndex !== undefined && state.blogIndex.trim() !== '') {
-        const blogData = {
-          title: this.blogData.title,
-          author: this.blogData.author,
-          publishDate: this.blogData.publishDate,
-          blocks: this.blogData.blocks
-        };
-
-        try {
-          await setDoc(doc(firestore, 'blog-collection', state.blogIndex), blogData);
-          console.log('Blog data saved successfully');
-        } catch (error) {
-          console.error('Error saving blog data:', error);
-        }
-      } else {
-        console.error('blogIndex is undefined or invalid');
-      }
-    },
-    publish() {
-      // Publish logic here
-    },
-    preview() {
-      // Preview logic here
-    },
-    getComponentType(type) {
-      switch (type) {
-        case 'image':
-          return 'BlockImageComponent';
-        case 'video':
-          return 'BlockVideoComponent';
-        default:
-          return 'BlogTextComponent';
-      }
+    } else {
+      console.error('blogIndex is undefined');
     }
   },
-  created() {
-    this.fetchBlogData();
+
+  /**
+   * Create a new blog with default properties if no document exists
+   */
+  createNewBlog() {
+  console.log('Creating new blog...');
+  const newDocRef = doc(firestore, 'blog-collection');
+  state.blogIndex = newDocRef.id;
+
+  // Set default blog data for a new blog
+  this.blogData = {
+    title: 'New Blog Title',
+    author: 'Author Name',
+    publishDate: new Date().toISOString().split('T')[0],
+    blocks: []
+  };
+
+  // Auto-save the newly created blog data to Firestore
+  this.save();
+},
+
+
+  /**
+   * Save current blog data to Firestore
+   */
+  async save() {
+    try {
+      if (state.blogIndex) {
+        const blogRef = doc(firestore, 'blog-collection', state.blogIndex);
+
+        // Save the current blogData state into Firestore
+        await setDoc(blogRef, this.blogData, { merge: true });
+
+        console.log('Blog data successfully saved!');
+      } else {
+        console.error('blogIndex is undefined. Cannot save blog data.');
+      }
+    } catch (error) {
+      console.error('Error saving blog data:', error);
+    }
+  },
+    created() {
+  this.fetchBlogData();
   }
+}
 };
 </script>
 

@@ -4,9 +4,9 @@
 
 <div class="block-items">
     <h4 class="item-label">Header Text</h4>
-    <textarea v-model="text" id="block-text" class="block-header-text"></textarea>
+    <textarea v-model="block.content" id="block-text" class="block-header-text"></textarea>
     <h4 class="item-label">Text Content</h4>
-    <textarea v-model="text" id="block-text" class="block-textarea"></textarea>
+    <textarea v-model="block.content" id="block-text" class="block-textarea"></textarea>
 </div>
 
 </template>

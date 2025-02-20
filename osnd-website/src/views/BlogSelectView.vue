@@ -31,7 +31,7 @@
   
 <script>
 import { firestore } from '@/main.js'; // Assuming firebase is set up and exported from here
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, setDoc, deleteDoc, doc, getFirestore } from 'firebase/firestore';
 import { reactive } from 'vue';
 
 export const state = reactive({
@@ -68,9 +68,33 @@ export default {
     this.$router.push('/error');
     },
 
-    editBlog(index) {
-        state.blogIndex = index;
+    async editBlog(index) {
+      try {
+        // Check if index is empty (user is creating a new blog)
+        if (index === '') {
+          // Generate a placeholder document ID or unique ID for the new blog
+          state.blogIndex = `${new Date().getTime()}`; // Use timestamp as a unique ID
+
+          // Create a new document in Firestore with predefined structure
+          await setDoc(doc(firestore, 'blog-collection', state.blogIndex), {
+            title: "Untitled Blog",       // Default title
+            author: "Unknown Author",    // Default author
+            content: "",                 // Initial empty content
+            lastUpdated: new Date().toISOString() // Current timestamp
+          });
+
+          console.log(`New blog created with ID: ${state.blogIndex}`);
+        } else {
+          // Otherwise, set the index for the existing blog
+          state.blogIndex = index;
+        }
+
+        // Navigate to the blog editor using Vue Router
         this.$router.push('/blog-editor');
+      } catch (error) {
+        console.error("Error creating or opening the blog:", error);
+        this.navigateToError(); // Navigate to error page
+      }
     },
     async deleteBlog(index) {
       try {

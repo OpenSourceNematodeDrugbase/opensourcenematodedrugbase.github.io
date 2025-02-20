@@ -1,7 +1,6 @@
 <template>
   <div class="intro-banner">
     <h1>Blog Editor</h1>
-    <p class="intro-text">Editing: 'BLOG TITLE'</p>
   </div>
 
   <BlogPropertiesComponent/>

@@ -1,20 +1,23 @@
 <script>
-import { firestore } from '@/main.js'; // Assuming firebase is set up and exported from here
+import { firestore } from '@/main.js'; // Firebase initiated here
 import { doc, getDoc } from 'firebase/firestore';
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 export default {
   setup() {
+    // Reactive references
     const route = useRoute();
     const blog = ref(null);
     const blogId = route.params.id;
 
+    // Method to fetch blog data
     const fetchBlog = async () => {
       try {
+        // Fetching the document from Firestore
         const blogDoc = await getDoc(doc(firestore, 'blog-collection', blogId));
         if (blogDoc.exists()) {
-          blog.value = blogDoc.data();
+          blog.value = blogDoc.data(); // Assign data to 'blog'
         } else {
           console.error('No such document!');
         }
@@ -23,31 +26,54 @@ export default {
       }
     };
 
+    // Computed property to parse blocks
+    const parsedBlocks = computed(() => {
+      if (!blog.value || !blog.value.blocks) {
+        return [];
+      }
+      return blog.value.blocks.map((block) => JSON.parse(block));
+    });
+
+    // Lifecycle hook triggers fetch on mount
     onMounted(() => {
       fetchBlog();
     });
 
     return {
-      blog
+      blog,
+      parsedBlocks,
     };
-  }
+  },
 };
 </script>
 
 <template>
+  <!-- If blog exists render the headline and details -->
   <div v-if="blog" class="intro-banner">
     <h1>{{ blog.title }}</h1>
     <p><strong>Author:</strong> {{ blog.author }}</p>
-    <p><strong>Last updated:</strong> {{ blog.lastUpdated }}</p>
+    <p><strong>Last updated:</strong> {{ blog.publishDate }}</p>
   </div>
+  <!-- Loading message -->
   <div v-else>
     <p>Loading...</p>
   </div>
 
+  <!-- Blog Content -->
   <div v-if="blog" class="blog-content">
-      <p>{{ blog.content }}</p>
+    <div v-for="(block, index) in parsedBlocks" :key="index">
+      <!-- Check type of block and render appropriately -->
+      <template v-if="block.type === 'text'">
+        <p>{{ block.content }}</p>
+      </template>
+      <!-- Extend to handle other block types if necessary -->
+      <template v-else>
+        <p>Unsupported block type: {{ block.type }}</p>
+      </template>
+    </div>
   </div>
 
+  <!-- Button to return to blog list -->
   <button class="back-button" @click="$router.push('/blog')">RETURN</button>
 </template>
 
