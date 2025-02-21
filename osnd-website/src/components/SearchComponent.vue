@@ -1,23 +1,30 @@
+<script>
+import { ref } from 'vue';
 
-
-<script setup lang="ts">
-//https://www.youtube.com/watch?v=Jqo79GG5ONE Link to video tutorial 
-import { computed } from 'vue';
-const props = defineProps<{
-  InputValue: string;
-}>();
-
-const emit = defineEmits(["update:InputValue"]); //Is this like an event listener 
-
-const InputValueValue = computed({ //So this is like get set in c#
-  get() {
-    return props.InputValue;
+export default {
+  methods: {
+    // //Sends text to database home by presing enter
+    // sendChange(event)  /*Might need compute to make it automatic */ 
+    // {
+    //   console.log('Hi');
+    //   console.log(event.target.value);
+    //   this.$emit("textchanged",event.target.value)
+    // }
   },
-  set(value) {
-    emit("update:InputValue", value);
+  props:{
+    tValue : String
+  },
+  setup(props, {emit})
+  {
+    const newTextProp = (event) =>{
+      emit("text-changed", event.target.value)
+    }
+    return {
+       newTextProp,
+    }
   }
-});
 
+};
 </script>
 
 <template>
@@ -30,10 +37,10 @@ const InputValueValue = computed({ //So this is like get set in c#
         <input type="text" 
         id="search-box" 
         placeholder="Search..."
-        v-model="InputValueValue" />
+        @change="newTextProp" > <!--Variable-->
       </div>
-    </div>
   </div>
+</div>
 
 </template>
 <style scoped>
