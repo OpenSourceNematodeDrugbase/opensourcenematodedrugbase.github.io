@@ -13,10 +13,11 @@
     "@heroicons/vue": "^1.0.6",
     "@vue-hero-icons/outline": "^1.7.2",
     "all": "^0.0.0",
-    "firebase": "^11.1.0",
+    "firebase": "^11.3.1",
     "nodemailer": "^6.9.16",
     "vue": "^3.5.13",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vuefire": "^3.2.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

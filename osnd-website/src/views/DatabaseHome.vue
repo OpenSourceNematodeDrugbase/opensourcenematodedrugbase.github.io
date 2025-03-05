@@ -26,56 +26,35 @@ import { getFirestore, collection, getDocs, query } from 'firebase/firestore'; /
 import SearchComponent from '@/components/SearchComponent.vue';
 import DatabaseEntry from '@/components/DatabaseEntry.vue';
 import Filter from '@/components/filter.vue';
+import { VueFire, VueFireAuth } from 'vuefire'
+import { useCollection } from 'vuefire'
+
+const entries = useCollection(collection(db, 'test-collection'))
 
 export default {
-  components: {
-    SearchComponent,
+  components: { //Components used
+    SearchComponent, 
     DatabaseEntry,
     Filter,
   },
   data () {
     return {
-      filterActivated : false
+      filterActivated : false //Is the filter page showing on the screen
     }
   },
 
   methods:{
-      handleClick()
+      handleClick() //Runs when the user presses the filter button
       {
          console.log("hi")
          this.filterActivated = !this.filterActivated;
       },
-      updatedValue(event)
+      updatedValue(event) //Runs when the text field has changed
       {
         console.log("Update Recieved");
         console.log(event);
       }
     },
-  setup() {
-    const db = getFirestore(); // Initialize Firestore
-    const entries = ref([]); // Reactive variable to store Firestore entries
-
-    const fetchEntries = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'test-collection')); // Replace 'entries' with your Firestore collection name
-        entries.value = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      } catch (error) {
-        console.error('Error fetching Firestore data:', error);
-      } 
-    };
-  
-    // Fetch data from Firestore
-
-    onMounted(() => {
-      fetchEntries(); // Fetch data when the component mounts
-    });
-
-    return {
-      entries,
-
-    };
-    
-  },
   
 };
 
