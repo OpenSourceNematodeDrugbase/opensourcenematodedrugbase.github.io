@@ -12,6 +12,8 @@ import SignUp from '@/views/SignUp.vue'
 import ErrorView from '@/views/ErrorView.vue'
 import BlogDashboard from '@/views/BlogDashboard.vue'
 
+import WelcomeBlog from '@/views/Blogs/WelcomeBlog.vue'
+
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
   { path: '/about', name: 'AboutView', component: AboutPage },
@@ -23,7 +25,9 @@ const routes = [
   {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy},
   {path : '/sign-up', name: 'SignUp', component : SignUp},
   {path : '/error', name: 'ErrorView', component : ErrorView},
-  {path : '/blog-dashboard', name: 'BlogDashboard', component : BlogDashboard}
+  {path : '/blog-dashboard', name: 'BlogDashboard', component : BlogDashboard},
+
+  {path: '/blog/welcome-blog', name: 'WelcomeBlog', component: WelcomeBlog}
 ]
 
 const router = createRouter({
