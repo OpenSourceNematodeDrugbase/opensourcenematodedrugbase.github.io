@@ -6,11 +6,8 @@
 
   <section class="user-dashboard">
     <section class="user-details-container">
-      <div class="admin-text" v-if="canEditBlog">Account Type: Admin</div>
-      <div class="admin-text" v-if="!canEditBlog">Account Type: Contributor</div>
       <div class="admin-text">Account Created: {{ formattedCreatedAt }}</div>
     </section>
-    <button @click="navigateToBlogEditor" v-if="canEditBlog" class="admin-button">Edit Blogs</button>
   </section>
 </template>
 

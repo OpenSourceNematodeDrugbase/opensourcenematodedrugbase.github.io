@@ -3,33 +3,27 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/views/HomeView.vue'
 import AboutPage from '@/views/AboutView.vue'
 import ContactPage from '@/views/ContactView.vue'
-import BlogPage from '@/views/BlogView.vue'
 import LoginPage from '@/views/LoginView.vue'
-import BlogPost from '@/views/BlogPostView.vue'
 import UserDashboard from '@/views/UserDashboard.vue'
 import Funding from '@/views/Funding.vue'
 import DatabaseHome from '@/views/DatabaseHome.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import SignUp from '@/views/SignUp.vue'
-import BlogEditor from '@/views/BlogEditor.vue'
 import ErrorView from '@/views/ErrorView.vue'
-import BlogSelect from '@/views/BlogSelectView.vue'
+import BlogDashboard from '@/views/BlogDashboard.vue'
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
   { path: '/about', name: 'AboutView', component: AboutPage },
   { path: '/contact', name: 'ContactView', component: ContactPage },
-  { path: '/blog', name: 'BlogView', component: BlogPage },
-  { path: '/blog/:id', name: 'BlogPost', component: BlogPost, props: true },
   { path: '/sign-in', name: 'LoginView', component: LoginPage },
   { path: '/user-dashboard', name: 'UserDashboard', component: UserDashboard },
   {path : '/funding', name: 'Funding', component : Funding},
   {path : '/nematode-drugbase', name: 'DatabaseHome', component: DatabaseHome},
   {path : '/privacy-policy', name: 'PrivacyPolicy', component : PrivacyPolicy},
   {path : '/sign-up', name: 'SignUp', component : SignUp},
-  {path : '/blog-editor', name: 'BlogEditor', component : BlogEditor},
   {path : '/error', name: 'ErrorView', component : ErrorView},
-  {path : '/blog-select', name:BlogSelect, component: BlogSelect}
+  {path : '/blog-dashboard', name: 'BlogDashboard', component : BlogDashboard}
 ]
 
 const router = createRouter({
