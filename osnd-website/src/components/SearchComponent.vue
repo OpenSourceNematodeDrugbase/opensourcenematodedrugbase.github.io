@@ -25,7 +25,7 @@ export default {
   <div class="search-container">
     <img class="image header-img" src="@/assets/joshua-sortino-LqKhnDzSF-8-unsplash.jpeg" alt="USND">
     <div class="search-overlay">
-      <p class="search-text">Browse 999 Proteins, 999 Diseases</p>
+      <p class="search-text">Browse Resources</p>
       <div class="search-box-container">
         <input
           type="text"

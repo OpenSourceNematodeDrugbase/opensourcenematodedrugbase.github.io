@@ -25,7 +25,7 @@
       </button>
 
       <!-- Nested loop: Iterate through authors for each entry -->
-      <p><strong>Authors:</strong></p>
+      <p class="authors"><strong>Authors:</strong></p>
       <ul>
         <li v-for="author in entry.authors || []" :key="author">
           {{ author }}
@@ -33,9 +33,7 @@
       </ul>
 
       <!-- Access Document Button -->
-      <button class="document-button" @click="downloadDocument(entry.documentPath)">
-        Access Document
-      </button>
+      <button class="document-button" @click="downloadDocument(entry.documentPath)" :disabled="!entry.documentPath">Access Document</button>
     </div>
   </div>
 </template>
@@ -142,17 +140,17 @@ export default {
 
 .entry-display-container {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap in smaller viewports */
+  flex-wrap: wrap; /* Ensure the entries wrap to the next line when there's not enough space */
   gap: 20px;
   justify-content: center;
   padding: 20px;
-  max-width: 500px;
-  min-width: 350px;
+  max-width: 900px;
+  width: 100%;
 }
 
 .entry-text {
   flex: 1 1 calc(33.33% - 20px); /* Three items per row on large screens */
-  min-width: 250px; /* Ensure items don't shrink too small on mobile */
+  min-width: 280px; /* Ensure items don't shrink too small on mobile */
   border: 1px solid #ccc;
   padding: 20px;
   box-sizing: border-box;
@@ -168,9 +166,17 @@ export default {
   overflow: hidden; /* Prevent content overflow */
 }
 
-.entry-text h3,
+.entry-text h3 {
+  font-size: 18px; /* Make titles slightly larger */
+  font-weight: 600; /* Make titles bolder */
+  margin: 10px 0;
+  word-wrap: break-word; /* Ensure long titles break correctly */
+}
+
 .entry-text p {
   margin: 10px 0;
+  font-size: 14px; /* Slightly smaller font for descriptions */
+  line-height: 1.6; /* Increase line-height for readability */
   word-wrap: break-word; /* Ensure long text breaks and stays within bounds */
 }
 
@@ -194,18 +200,41 @@ ul {
 
 li {
   padding: 4px 0;
+  font-size: 14px;
 }
 
 .document-button {
   background-color: #007bff;
   color: white;
   border: none;
-  margin-top: 30px; /* Increase spacing from the content */
+  margin-top: 20px; /* Adjust spacing to be more consistent */
   padding: 12px 25px; /* Increase button size for easier clickability */
   border-radius: 8px; /* Slightly rounder for better aesthetics */
   cursor: pointer;
   font-size: 16px; /* Button text is clearer */
   display: block; /* Make the button block-level to ensure centering */
+  width: 100%; /* Full width of the container */
+  text-align: center; /* Ensure text is centered in the button */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.document-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.document-button:disabled {
+  background-color: #858585;
+  color: white;
+  border: none;
+  margin-top: 20px; /* Adjust spacing to be more consistent */
+  padding: 12px 25px; /* Increase button size for easier clickability */
+  border-radius: 8px; /* Slightly rounder for better aesthetics */
+  cursor: pointer;
+  font-size: 16px; /* Button text is clearer */
+  display: block; /* Make the button block-level to ensure centering */
+  width: 100%; /* Full width of the container */
+  text-align: center; /* Ensure text is centered in the button */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
 .source-button {
@@ -217,6 +246,38 @@ li {
   font-size: 16px; /* Button text is clearer */
   display: block; /* Make the button block-level to ensure centering */
   color: blue;
+  width: 100%; /* Full width of the container */
+  text-align: center; /* Center the text */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
 }
-</style>
 
+.source-button:hover {
+  color: #0056b3; /* Darker shade on hover */
+}
+
+.authors {
+  text-align: left; /* Ensure the authors' text is aligned left */
+  width: 100%; /* Ensure it takes full width */
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left; /* Make sure the list itself is left-aligned */
+}
+
+li {
+  padding: 4px 0;
+  font-size: 14px;
+  text-align: left; /* Ensure each list item is aligned left */
+}
+
+/* Responsive Design for Mobile and Smaller Screens */
+@media (max-width: 768px) {
+  .entry-text {
+    flex: 1 1 100%; /* Each entry takes full width on smaller screens */
+  }
+}
+
+</style>
