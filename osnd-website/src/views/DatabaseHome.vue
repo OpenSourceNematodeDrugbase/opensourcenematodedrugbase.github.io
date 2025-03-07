@@ -25,7 +25,7 @@
       </button>
 
       <!-- Nested loop: Iterate through authors for each entry -->
-      <p class="authors"><strong>Authors:</strong></p>
+      <p class="authors"><strong>Authors</strong></p>
       <ul>
         <li v-for="author in entry.authors || []" :key="author">
           {{ author }}
@@ -142,28 +142,22 @@ export default {
   display: flex;
   flex-wrap: wrap; /* Ensure the entries wrap to the next line when there's not enough space */
   gap: 20px;
-  justify-content: center;
   padding: 20px;
   max-width: 900px;
   width: 100%;
+  margin: 0 auto; /* Center horizontally */
+  justify-content: center; /* Center the items horizontally within the container */
+  align-items: center; /* Center the items vertically within the container */
+  min-height: 100vh; /* Ensure the container takes at least the full height of the viewport */
+  box-sizing: border-box; /* Ensure padding is included in the width/height calculation */
 }
 
 .entry-text {
-  flex: 1 1 calc(33.33% - 20px); /* Three items per row on large screens */
-  min-width: 280px; /* Ensure items don't shrink too small on mobile */
   border: 1px solid #ccc;
   padding: 20px;
-  box-sizing: border-box;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
   flex-direction: column; /* Stack the content vertically */
-  align-items: flex-start; /* Left-align content */
-  justify-content: flex-start;
   text-align: left; /* Left-align all text inside the box */
-  height: 100%; /* Ensure height is not fixed */
-  overflow: hidden; /* Prevent content overflow */
 }
 
 .entry-text h3 {
@@ -188,19 +182,6 @@ export default {
 
 .entry-text a:hover {
   text-decoration: underline;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  justify-self: left;
-  position: sticky;
-}
-
-li {
-  padding: 4px 0;
-  font-size: 14px;
 }
 
 .document-button {
@@ -255,11 +236,6 @@ li {
   color: #0056b3; /* Darker shade on hover */
 }
 
-.authors {
-  text-align: left; /* Ensure the authors' text is aligned left */
-  width: 100%; /* Ensure it takes full width */
-}
-
 ul {
   margin: 0;
   padding: 0;
@@ -273,11 +249,8 @@ li {
   text-align: left; /* Ensure each list item is aligned left */
 }
 
-/* Responsive Design for Mobile and Smaller Screens */
-@media (max-width: 768px) {
-  .entry-text {
-    flex: 1 1 100%; /* Each entry takes full width on smaller screens */
-  }
+.authors {
+  justify-self: center;
 }
 
 </style>
