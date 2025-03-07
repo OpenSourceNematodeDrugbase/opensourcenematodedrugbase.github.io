@@ -9,7 +9,7 @@
   </section>
   <section class="header-section">
     <h2>The Platform</h2>
-    <!-- <button @click="navigateToDatabase" type="submit" class="submit-button">OPEN DATABASE</button> -->
+    <button @click="navigateToDatabase" type="submit" class="submit-button">OPEN DATABASE</button>
     <p class="section-text">The open-access project aims to enable discovery of medicines for neglected diseases caused by nematodes (parasitic worms).</p>
     <hr>
   </section>
