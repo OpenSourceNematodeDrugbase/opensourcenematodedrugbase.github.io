@@ -101,17 +101,31 @@ export default {
         console.error('Error fetching Firestore data:', error);
       }
     };
-
-    // Filtered computed property
+    
+    // Filtered computed property based on search query
     const filteredEntries = computed(() => {
       if (!searchQuery.value) {
-        return allEntries.value; // Show all entries if no search query
+        return allEntries.value; // Return all entries if no search query
       }
-      return allEntries.value.filter((entry) =>
-        entry.documentTitle?.toLowerCase().includes(searchQuery.value) ||
-        entry.abstract?.toLowerCase().includes(searchQuery.value)
-      );
-    });
+
+      const queryLower = searchQuery.value.toLowerCase(); // Normalize search query to lowercase
+
+      return allEntries.value.filter((entry) => {
+        return (
+          entry.documentTitle?.toLowerCase().includes(queryLower) ||
+          entry.abstract?.toLowerCase().includes(queryLower) ||
+          // Check if any element in the 'keywords' array matches the search query
+          (Array.isArray(entry.keywords) && entry.keywords.some(keyword =>
+            keyword.toLowerCase().includes(queryLower)
+          )) ||
+          // Check if any element in the 'authors' array matches the search query
+          (Array.isArray(entry.authors) && entry.authors.some(author =>
+            author.toLowerCase().includes(queryLower)
+          ))
+        );
+      });
+});
+
 
     // Fetch data on mount
     onMounted(fetchEntries);
