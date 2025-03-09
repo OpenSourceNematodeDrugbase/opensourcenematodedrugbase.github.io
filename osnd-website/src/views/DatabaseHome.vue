@@ -7,7 +7,9 @@
   </div>
 
   <SearchComponent @text-changed="updatedValue" />
+  <button  @click="handleClick" id="FilterButton"><img src="../assets/Filter Button.png"></button> <!--Replace when new design available-->
 
+  <Filter v-if="filterActivated"/>
   <!-- Entries Display -->
   <div class="entry-display-container">
     <div
@@ -42,17 +44,25 @@
 import { ref, onMounted, computed } from 'vue';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import SearchComponent from '@/components/SearchComponent.vue';
+import Filter from '@/components/filter.vue';
 
 export default {
   components: {
     SearchComponent,
+    Filter,
   },
   data() {
     return {
       searchQuery: '', // Store search input
+      filterActivated : false //Is the filter page showing on the screen
     };
   },
   methods: {
+    handleClick() //Runs when the user presses the filter button
+      {
+         console.log("hi")
+         this.filterActivated = !this.filterActivated;
+      },
     // Handle updates from SearchComponent
     updatedValue(event) {
       console.log('Update Received:', event);
@@ -146,7 +156,13 @@ export default {
   justify-content: center; /* Center the entries in the container */
   max-width: 100%; /* Ensure it takes up full width */
 }
-
+#FilterButton {
+width: 5%;
+height: 10%;
+}
+#FilterButton img{
+  width: 10%;
+}
 .intro-banner {
   text-align: center;
   margin-bottom: 20px;
