@@ -11,7 +11,9 @@ import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import SignUp from '@/views/SignUp.vue'
 import ErrorView from '@/views/ErrorView.vue'
 import BlogDashboard from '@/views/BlogDashboard.vue'
+
 import LiteratureDataView from "@/views/LiteratureDataView.vue";
+import ProteinDataView from "@/views/ProteinDataView.vue";
 
 import WelcomeBlog from '@/views/Blogs/WelcomeBlog.vue'
 
@@ -29,6 +31,7 @@ const routes = [
   {path : '/blog-dashboard', name: 'BlogDashboard', component : BlogDashboard},
 
   { path: '/literature-data-entry/:id', name: 'DataEntryView', component: LiteratureDataView, props: true },
+  { path: '/protein-data-entry/:id', name: 'ProteinDataView', component: ProteinDataView, props: true },
 
   {path: '/blog/welcome-blog', name: 'WelcomeBlog', component: WelcomeBlog},
 

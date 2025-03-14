@@ -45,7 +45,7 @@ export default {
     },
     viewDataEntry(entry) {
       router.push({
-        path: `/literature-data-entry/${entry.id}`,
+        path: `/protein-data-entry/${entry.id}`,
         state: { entry },
       });
     },

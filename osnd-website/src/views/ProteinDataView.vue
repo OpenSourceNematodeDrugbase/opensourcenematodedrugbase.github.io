@@ -1,0 +1,235 @@
+<template>
+  <div class="data-entry-container">
+    <div v-if="entry" class="content-wrapper">
+      <div class="text-content">
+        <h2 class="entry-title">{{ entry.geneName || "Name Unprovided" }}</h2>
+
+        <div class="card">
+          <p><strong>Gene Symbol: </strong> {{ entry.geneSymbol || "No Data" }}</p>
+          <p><strong>Length: </strong> {{ entry.length || "No Data" }}</p>
+          <p><strong>Molecular Weight: </strong> {{ entry.molecular_weight || "No Data" }}</p>
+          <p><strong>Organism: </strong> {{ entry.organism || "No Data" }}</p>
+          <p><strong>Protein ID: </strong> {{ entry.protein_id || "No Data" }}</p>
+          <p><strong>Resolution: </strong> {{ entry.resolution || "No Data" }}</p>
+          <p><strong>Tissue Specificity: </strong> {{ entry.tissue_specificity || "No Data" }}</p>
+          <p><strong>Ensembl ID: </strong> {{ entry.ensembl_id || "No Data" }}</p>
+        </div>
+
+        <div class="card">
+          <p><strong>Function: </strong> {{ entry.function || "No Data" }}</p>
+          <p><strong>Sequence: </strong> <span class="sequence">{{ entry.sequence || "No Data" }}</span></p>
+          <p>
+            <strong>Structure URL: </strong>
+            <a :href="entry.structure_url" target="_blank">{{ entry.structure_url || "No Data" }}</a>
+          </p>
+          <p><strong>Expression Level: </strong> {{ entry.expression_level || "No Data" }}</p>
+          <p><strong>PDB ID: </strong> {{ entry.pdb_id || "No Data" }}</p>
+          <p><strong>Alternative Names: </strong> {{ entry.alternative_names?.join(", ") || "None" }}</p>
+        </div>
+
+        <div class="card">
+          <h3>Diseases Associated</h3>
+          <ul>
+            <li v-for="(disease, index) in entry.name_diseases_associated || []" :key="index">
+              <strong>Disease Name:</strong> {{ disease }} <br />
+              <strong>OMIM ID:</strong> {{ entry.omim_id_diseases_associated[index] || "N/A" }} <br />
+              <strong>Mutation:</strong> {{ entry.mutation_diseases_associated[index] || "N/A" }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Interactions</h3>
+          <ul>
+            <li v-for="(interaction, index) in entry.interaction_type_interactions || []" :key="index">
+              <strong>Interaction Type:</strong> {{ interaction }} <br />
+              <strong>Description:</strong> {{ entry.description_interactions[index] || "N/A" }} <br />
+              <strong>Protein ID:</strong> {{ entry.protein_id_interactions[index] || "N/A" }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- NGL Viewer -->
+    <div v-if="entry && entry.pdb_id" id="ngl-container" class="ngl-viewer"></div>
+
+    <p v-else class="loading-message">Loading data...</p>
+  </div>
+</template>
+
+<script>
+import { ref, onMounted, watch, nextTick, onUnmounted, unref } from "vue";
+import { useRoute } from "vue-router";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import * as NGL from "ngl";
+
+export default {
+  setup() {
+    const route = useRoute();
+    const db = getFirestore();
+    const entry = ref(null);
+    const nglStage = ref(null);
+
+    // Fetch entry from Firestore
+    const fetchEntry = async () => {
+      const entryId = route.params.id;
+      if (!entryId) return;
+
+      try {
+        console.log(`Fetching data for entry ID: ${entryId}`);
+        const docRef = doc(db, "proteins-enzymes", entryId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          entry.value = { id: docSnap.id, ...docSnap.data() };
+        } else {
+          console.error("No such document found!");
+          entry.value = null;
+        }
+      } catch (error) {
+        console.error("Error fetching document:", error);
+      }
+    };
+
+    // Render NGL Viewer
+    const renderNGLViewer = async (pdbId) => {
+      await nextTick(); // Ensure DOM updates before rendering
+
+      const container = document.getElementById("ngl-container");
+      if (!container) return;
+
+      // Dispose of previous NGL stage (avoid memory leaks)
+      if (nglStage.value) {
+        nglStage.value.dispose();
+        nglStage.value = null;
+      }
+
+      // Initialize NGL Stage
+      nglStage.value = new NGL.Stage("ngl-container", { backgroundColor: "black" });
+
+      // Load PDB file with delay to fix modelViewMatrix issue
+      setTimeout(() => {
+        nglStage.value
+          .loadFile(`https://files.rcsb.org/download/${pdbId}.pdb`, { defaultRepresentation: true })
+          .then((component) => {
+            component.autoView(); // Center the view
+          })
+          .catch((err) => {
+            console.error("Error loading PDB file:", err);
+          });
+      }, 500); // Slight delay to ensure proper loading
+    };
+
+    // Watch for PDB ID changes
+    watch(
+    () => unref(entry)?.pdb_id,
+    async (newPdbId) => {
+      if (newPdbId) {
+        await nextTick(); // Ensure Vue updates first
+        renderNGLViewer(newPdbId);
+      }
+    }
+  );
+
+    onMounted(fetchEntry);
+
+    // Cleanup on unmount
+    onUnmounted(() => {
+      if (nglStage.value) {
+        nglStage.value.dispose();
+        nglStage.value = null;
+      }
+    });
+
+    return { entry };
+  },
+};
+</script>
+
+<style scoped>
+/* General Container */
+.data-entry-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Title */
+.entry-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Cards for Grouping Data */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 750px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.card p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #444;
+}
+
+.card h3 {
+  font-size: 20px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+/* Unordered Lists */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* NGL Viewer */
+.ngl-viewer {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  background: #000;
+}
+
+/* Loading Message */
+.loading-message {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666;
+}
+
+.sequence {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  display: block;
+}
+</style>
