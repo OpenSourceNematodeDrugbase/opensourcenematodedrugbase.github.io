@@ -1,6 +1,6 @@
 <template>
   <div class="intro-banner">
-    <h1>The Nematode Drug Base</h1>
+    <h1>The Nematode Drugbase</h1>
     <p class="intro-text">
       A comprehensive resource for researchers, healthcare professionals, and policymakers focused on understanding the critical role that nematodes play in neglected diseases.
     </p>
@@ -32,8 +32,10 @@
         </li>
       </ul>
 
+
+      <button class="document-button" @click="viewDataEntry(entry)">View Data</button>
       <!-- Access Document Button -->
-      <button class="document-button" @click="downloadDocument(entry.documentPath)" :disabled="!entry.documentPath">Access Document</button>
+      <button class="document-button" @click="downloadDocument(entry.documentPath)" :disabled="!entry.documentPath">Download Document</button>
     </div>
   </div>
 </template>
@@ -42,6 +44,7 @@
 import { ref, onMounted, computed, watch } from 'vue';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import SearchComponent from '@/components/SearchComponent.vue';
+import router from "@/router/index.js";
 
 export default {
   components: {
@@ -93,6 +96,14 @@ export default {
       link.download = path.split('/').pop();
       link.target = '_blank';
       link.click();
+    },
+
+    viewDataEntry(entry) {
+      console.log('Viewing data entry: ', entry.id);
+      router.push({
+        path: `/data-entry/${entry.id}`,
+        state: { entry }, // Send the full entry object via router state
+      });
     },
 
     accessSource(url) {

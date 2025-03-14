@@ -15,32 +15,27 @@
         </a>
       </div>
       </div>
-      
-      
 
-      <!-- Right-aligned Social Icons -->
-<!--
-       <div class="socials">
-        <a href="https://www.facebook.com/" target="_blank">
+      <div class="socials">
+        <a href="https://www.facebook.com/people/Open-source-Nematode-DrugBase/61572548505626/" target="_blank">
           <img class="social-logo" src="@/assets/Facebook_logo_(square).png" alt="Facebook_Logo">
         </a>
-        <a href="https://www.instagram.com/" target="_blank">
+        <a href="https://www.instagram.com/ondbuniwestminster/#" target="_blank">
           <img class="social-logo" src="@/assets/Instagram_Logo.png" alt="Instagram_Logo">
         </a>
-        <a href="https://www.linkedin.com/" target="_blank">
+        <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/about/" target="_blank">
           <img class="social-logo" src="@/assets/LinkedIn_Logo.png" alt="LinkedIn_Logo">
         </a>
-        <a href="https://x.com/" target="_blank">
+        <a href="https://x.com/ONDBwestminster" target="_blank">
           <img class="social-logo" src="@/assets/X_logo.jpg" alt="X_Logo">
         </a>
-        <a href="https://www.tiktok.com/" target="_blank">
+        <a href="https://www.tiktok.com/@ondb_uow" target="_blank">
           <img class="social-logo" src="@/assets/TikTok_Logo.png" alt="TikTok_Logo">
         </a>
         <a href="https://github.com/OpenSourceNematodeDrugbase" target="_blank">
           <img class="social-logo" src="@/assets/GitHub_Logo.png" alt="GitHub_Logo">
         </a>
       </div>
-    -->
       
     </div>
 
@@ -52,8 +47,6 @@
       <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
     </div>
   </footer>
-
-  
 
 </template>
 
@@ -115,6 +108,8 @@ export default {
 
 .social-logo {
   max-width: 60px; /* Adjust size of social logos */
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .UoWLogo {

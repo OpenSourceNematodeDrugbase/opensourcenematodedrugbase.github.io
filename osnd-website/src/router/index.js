@@ -11,6 +11,7 @@ import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import SignUp from '@/views/SignUp.vue'
 import ErrorView from '@/views/ErrorView.vue'
 import BlogDashboard from '@/views/BlogDashboard.vue'
+import DataEntryView from "@/views/DataEntryView.vue";
 
 import WelcomeBlog from '@/views/Blogs/WelcomeBlog.vue'
 
@@ -27,7 +28,11 @@ const routes = [
   {path : '/error', name: 'ErrorView', component : ErrorView},
   {path : '/blog-dashboard', name: 'BlogDashboard', component : BlogDashboard},
 
-  {path: '/blog/welcome-blog', name: 'WelcomeBlog', component: WelcomeBlog}
+  { path: '/data-entry/:id', name: 'DataEntryView', component: DataEntryView, props: true },
+
+  {path: '/blog/welcome-blog', name: 'WelcomeBlog', component: WelcomeBlog},
+
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: ErrorView }
 ]
 
 const router = createRouter({
