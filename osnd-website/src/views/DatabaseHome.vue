@@ -6,7 +6,7 @@
     </p>
   </div>
 
-  <SearchComponent @text-changed="updatedValue" />
+  <SearchComponent @text-changed="updatedValue" @filter-changed="updatedFilter" />
 
   <!-- Entries Display -->
   <div class="entry-display-container">
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import SearchComponent from '@/components/SearchComponent.vue';
 
@@ -50,16 +50,32 @@ export default {
   data() {
     return {
       searchQuery: '', // Store search input
+      filterSearch: 'document-collection', // Default Firestore path
     };
   },
   methods: {
-    // Handle updates from SearchComponent
+    // Handle search updates
     updatedValue(event) {
-      console.log('Update Received:', event);
-      this.searchQuery = event.toLowerCase(); // Convert search input to lowercase for case-insensitive filtering
+      console.log('Search Update Received:', event);
+      this.searchQuery = event.toLowerCase(); // Convert to lowercase for case-insensitive filtering
     },
 
-    // Helper method that limits text to the specified number of words
+    // Handle filter updates
+    updatedFilter(event) {
+      console.log('Filter Update Received:', event);
+
+      // Map UI filter options to Firestore collections
+      const filterMap = {
+        'Relevant Literature': 'document-collection',
+        'Proteins & Enzymes': 'proteins-enzymes',
+        'Drug & Chemical Data': 'drug-targets',
+      };
+
+      this.filterSearch = filterMap[event] || 'document-collection';
+      console.log('Updated Firestore Path:', this.filterSearch);
+    },
+
+    // Helper method that limits text to a specific number of words
     getShortenedText(text, wordLimit) {
       if (!text) return '';
       const words = text.split(' ');
@@ -80,63 +96,67 @@ export default {
     },
 
     accessSource(url) {
-      if(!url)
-      {
+      if (!url) {
         console.error('No source provided');
         return;
       }
       window.open(url, "_blank");
-    }
+    },
   },
   setup() {
     const db = getFirestore();
     const allEntries = ref([]); // Store all entries from Firestore
     const searchQuery = ref(''); // Store search input
+    const filterSearch = ref('document-collection'); // Default Firestore collection
 
+    // Fetch Firestore data
     const fetchEntries = async () => {
+      if (!filterSearch.value) return;
+
       try {
-        const querySnapshot = await getDocs(collection(db, 'document-collection'));
+        console.log(`Fetching data from Firestore: ${filterSearch.value}`);
+        const querySnapshot = await getDocs(collection(db, filterSearch.value)); // Use dynamic Firestore path
         allEntries.value = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        console.log(`Fetched ${allEntries.value.length} entries from ${filterSearch.value}`);
       } catch (error) {
         console.error('Error fetching Firestore data:', error);
       }
     };
-    
-    // Filtered computed property based on search query
+
+    // Re-fetch data when `filterSearch` changes
+    watch(filterSearch, fetchEntries);
+
+    // Computed property to filter entries by search query
     const filteredEntries = computed(() => {
-      if (!searchQuery.value) {
-        return allEntries.value; // Return all entries if no search query
-      }
-
-      const queryLower = searchQuery.value.toLowerCase(); // Normalize search query to lowercase
-
       return allEntries.value.filter((entry) => {
+        const queryLower = searchQuery.value.toLowerCase();
+
         return (
+          !searchQuery.value ||
           entry.documentTitle?.toLowerCase().includes(queryLower) ||
           entry.abstract?.toLowerCase().includes(queryLower) ||
-          // Check if any element in the 'keywords' array matches the search query
           (Array.isArray(entry.keywords) && entry.keywords.some(keyword =>
             keyword.toLowerCase().includes(queryLower)
           )) ||
-          // Check if any element in the 'authors' array matches the search query
           (Array.isArray(entry.authors) && entry.authors.some(author =>
             author.toLowerCase().includes(queryLower)
           ))
         );
       });
-});
+    });
 
-
-    // Fetch data on mount
+    // Fetch initial data when component mounts
     onMounted(fetchEntries);
 
     return {
       entries: filteredEntries,
       searchQuery,
+      filterSearch,
     };
   },
 };
 </script>
+
 
 <style scoped>
 .database-home-container {
