@@ -2,9 +2,11 @@
    <div id="FilterBackground" >
     <ul>
         <li>
-            <h3>Option One</h3>
+            <h3>Type</h3>
             <select name="Box">
-                <option value="1" >yes</option>
+                <option value="0" >all</option>
+                <option value="1" >Documents</option>
+                <option value="2" >Protiens</option>
             </select>
             
         </li>

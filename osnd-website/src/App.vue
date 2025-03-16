@@ -57,5 +57,9 @@
     {
       width: 80% !important;
     }
+    .intro-text{
+      text-align: center;
+      font-size: 5vw !important;
+    }
   }
 </style>

@@ -38,6 +38,7 @@ export default {
     },
     updatedFilter(event) {
       const filterMap = {
+        'Any': "Any-Data",
         'Relevant Literature': 'document-collection',
         'Proteins & Enzymes': 'proteins-enzymes',
         'Drug & Chemical Data': 'drug-targets',
