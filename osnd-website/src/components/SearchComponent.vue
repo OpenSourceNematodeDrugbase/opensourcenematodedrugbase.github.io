@@ -104,8 +104,7 @@ export default {
               v-for="(item, index) in items"
               :key="index"
               :class="{ 'selected': selectedIndex === index }"
-              @click="selectItem(item)"
-            >
+              @click="selectItem(item)">
               {{ item }}
             </li>
           </ul>
@@ -217,13 +216,19 @@ export default {
   }
   #search-box {
     width: 80%;
-    font-size: 4vw;
+    font-size: 3vw;
+ 
   }
   .search-text {
     font-size: 3vw;
   }
   .dropdown-button {
     font-size: 3vw;
+    width: 75%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
   }
+ 
 }
 </style>

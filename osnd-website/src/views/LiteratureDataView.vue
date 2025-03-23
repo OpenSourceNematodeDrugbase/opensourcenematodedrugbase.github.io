@@ -1,6 +1,6 @@
 <template>
   <div class="data-entry-container">
-
+    
     <div v-if="entry" class="content-wrapper">
       <img v-if="entry?.imageUrl" class="document-image" :src="entry.imageUrl" alt="Document Image">
 
@@ -85,11 +85,7 @@ export default {
   text-align: center;
 }
 
-.content-wrapper {
-  display: flex;
-  align-items: flex-start;
-  text-align: left;
-}
+
 
 .document-image {
   max-width: 200px;
@@ -124,5 +120,14 @@ ul {
 
 .document-button:hover, .source-button:hover {
   background-color: #0056b3;
+}
+
+/*Disabled on mobile*/
+@media screen and (min-width:1000px) {
+  .content-wrapper {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+}
 }
 </style>

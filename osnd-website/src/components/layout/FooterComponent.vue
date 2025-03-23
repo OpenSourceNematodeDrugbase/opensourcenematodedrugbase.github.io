@@ -97,13 +97,11 @@ export default {
 }
 
 .links {
-  position: absolute;
-  top: 150px;
-  right: 20px;
-  margin: 10px; /* Adjusts spacing from the edges */
+
+  margin: 25px; /* Adjusts spacing from the edges */
   list-style-type: none;
   padding: 10px, 10px;
-  text-align: right; /* Right justify the text */
+  text-align: center; /* Right justify the text */
 }
 
 .social-logo {
@@ -136,6 +134,14 @@ export default {
     justify-content: space-between; /* Align logos on the left and socials on the right */
     align-items: center;
     flex-wrap: nowrap; /* Prevent wrapping */
+  }
+  .links
+  {
+    position: absolute;
+    top: 150px;
+    right: 20px;
+    margin: 10px; /* Adjusts spacing from the edges */
+    text-align: right; /* Right justify the text */
   }
 }
 </style>

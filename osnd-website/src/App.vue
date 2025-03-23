@@ -59,7 +59,7 @@
     }
     .intro-text{
       text-align: center;
-      font-size: 5vw !important;
+      font-size: 3.8vw !important;
     }
   }
 </style>
