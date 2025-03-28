@@ -17,8 +17,11 @@ import ProteinDataView from "@/views/ProteinDataView.vue";
 import DrugTargetDataView from "@/views/DrugTargetDataView.vue";
 
 import DrugTargetEntryForm from "@/views/DrugTargetEntryForm.vue";
+import LiteratureEntryForm from "@/views/LiteratureEntryForm.vue";
 
 import WelcomeBlog from '@/views/Blogs/WelcomeBlog.vue'
+import ProteinEnzymeEntryForm from "@/views/ProteinEnzymeEntryForm.vue";
+
 
 const routes = [
   { path: '/', name: 'HomeView', component: HomePage },
@@ -38,6 +41,8 @@ const routes = [
   { path: '/drug-target-entry/:id', name: 'DrugTargetDataView', component: DrugTargetDataView, props: true },
 
   {path: '/drug-target-form', name: 'DrugTargetEntryForm', component: DrugTargetEntryForm },
+  {path: '/literature-form', name: 'LiteratureEntryForm', component: LiteratureEntryForm},
+  {path: '/protein-enzyme-form', name: 'ProteinEnzymeForm', component: ProteinEnzymeEntryForm},
 
   {path: '/blog/welcome-blog', name: 'WelcomeBlog', component: WelcomeBlog},
 

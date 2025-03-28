@@ -13,8 +13,8 @@
       <div class="button-container">
         <h2>Database Options</h2>
         <button class="admin-button" @click="navigateToDrugTargetForm">Add Drug Target Entry</button>
-        <button class="admin-button">Add Literature Entry</button>
-        <button class="admin-button">Add Protein/Enzyme Entry</button>
+        <button class="admin-button" @click="navigateToLiteratureForm">Add Literature Entry</button>
+        <button class="admin-button" @click="navigateToProteinEnzymeForm">Add Protein/Enzyme Entry</button>
       </div>
     </section>
   </div>
@@ -32,6 +32,12 @@ export default {
     },
     navigateToDrugTargetForm() {
       this.$router.push('/drug-target-form');
+    },
+    navigateToLiteratureForm() {
+      this.$router.push('/literature-form');
+    },
+    navigateToProteinEnzymeForm() {
+      this.$router.push('/protein-enzyme-form');
     },
   },
   name: 'UserDashboard',
