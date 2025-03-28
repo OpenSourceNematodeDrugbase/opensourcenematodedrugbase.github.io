@@ -163,15 +163,5 @@ export default {
 .source-button:hover {
   color: #0056b3;
 }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-.entry-display-container{
-  width: 100%;
-  justify-content: center;
-  padding: 0%;
-}
-  
-}
 </style>
 

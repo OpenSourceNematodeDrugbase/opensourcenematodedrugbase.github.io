@@ -42,36 +42,36 @@
   </div>
 </template>
 
-
 <script>
 import { ref, onMounted, watch, nextTick, onUnmounted, unref } from "vue";
 import { useRoute } from "vue-router";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getDatabase, ref as dbRef, onValue } from "firebase/database";
 import * as NGL from "ngl";
 
 export default {
   setup() {
     const route = useRoute();
-    const db = getFirestore();
+    const db = getDatabase();
     const entry = ref(null);
     const nglStage = ref(null);
 
-    // Fetch entry from Firestore
-    const fetchEntry = async () => {
+    // Fetch entry from Realtime Database
+    const fetchEntry = () => {
       const entryId = route.params.id;
       if (!entryId) return;
 
       try {
         console.log(`Fetching data for entry ID: ${entryId}`);
-        const docRef = doc(db, "drug-targets", entryId);
-        const docSnap = await getDoc(docRef);
+        const dataRef = dbRef(db, `drugTargets/${entryId}`);
 
-        if (docSnap.exists()) {
-          entry.value = { id: docSnap.id, ...docSnap.data() };
-        } else {
-          console.error("No such document found!");
-          entry.value = null;
-        }
+        onValue(dataRef, (snapshot) => {
+          if (snapshot.exists()) {
+            entry.value = { id: entryId, ...snapshot.val() };
+          } else {
+            console.error("No such document found!");
+            entry.value = null;
+          }
+        });
       } catch (error) {
         console.error("Error fetching document:", error);
       }

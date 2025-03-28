@@ -60,132 +60,109 @@ export default {
 </script>
 
 <style scoped>
+/* Container Styling */
 .entry-display-container {
   display: flex;
-  flex-wrap: wrap; /* Ensure the entries wrap to the next line when there's not enough space */
-  gap: 20px;
-  padding: 20px;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto; /* Center horizontally */
-  justify-content: center; /* Center the items horizontally within the container */
-  align-items: center; /* Center the items vertically within the container */
-  min-height: 100vh; /* Ensure the container takes at least the full height of the viewport */
-  box-sizing: border-box; /* Ensure padding is included in the width/height calculation */
+  flex-wrap: wrap;
+  gap: 24px; /* Increased gap for better spacing */
+  padding: 30px;
+  max-width: 1100px; /* Slightly wider for better content display */
+  /*width: 100%; Seems to break things*/
+  margin: 0 auto;
+  justify-content: center;
+  align-items: flex-start; /* Align items at the top */
 }
 
+/* Individual Entry Box */
 .entry-text {
-  border: 1px solid #ccc;
-  padding: 20px;
-  background-color: #f9f9f9;
-  flex-direction: column; /* Stack the content vertically */
-  text-align: left; /* Left-align all text inside the box */
+  border: 1px solid #ddd; /* Softer border */
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px; /* Rounded corners for a softer look */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%;
+  max-width: 500px; /* Prevent entries from being too wide */
+  text-align: left;
+  transition: transform 0.2s ease-in-out;
 }
 
+.entry-text:hover {
+  transform: translateY(-4px); /* Slight lift effect */
+}
+
+/* Headings */
 .entry-text h3 {
-  font-size: 18px; /* Make titles slightly larger */
-  font-weight: 600; /* Make titles bolder */
-  margin: 10px 0;
-  word-wrap: break-word; /* Ensure long titles break correctly */
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px; /* Add more spacing below the title */
+  color: #333;
 }
 
+/* Paragraphs */
 .entry-text p {
-  margin: 10px 0;
-  font-size: 14px; /* Slightly smaller font for descriptions */
-  line-height: 1.6; /* Increase line-height for readability */
-  word-wrap: break-word; /* Ensure long text breaks and stays within bounds */
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
 }
 
-.entry-text a {
-  color: #007bff;
-  margin-bottom: 10px; /* Space between the link and next element */
-  text-wrap: wrap;
+/* Alternative Names & Interaction Descriptions */
+.entry-text p strong {
+  font-weight: 600;
+  color: #222;
 }
 
-.entry-text a:hover {
-  text-decoration: underline;
+/* Unordered List */
+.entry-text ul {
+  margin-top: 5px;
+  padding-left: 20px;
+  list-style-type: disc;
 }
 
+.entry-text li {
+  margin-bottom: 5px;
+  font-size: 15px;
+  color: #444;
+}
+
+/* Buttons */
 .document-button {
   background-color: #007bff;
   color: white;
   border: none;
-  margin-top: 20px; /* Adjust spacing to be more consistent */
-  padding: 12px 25px; /* Increase button size for easier clickability */
-  border-radius: 8px; /* Slightly rounder for better aesthetics */
+  padding: 12px 18px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px; /* Button text is clearer */
-  display: block; /* Make the button block-level to ensure centering */
-  width: 100%; /* Full width of the container */
-  text-align: center; /* Ensure text is centered in the button */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  margin-top: 15px; /* Space between buttons */
 }
 
 .document-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #0056b3;
 }
 
 .document-button:disabled {
-  background-color: #858585;
-  color: white;
-  border: none;
-  margin-top: 20px; /* Adjust spacing to be more consistent */
-  padding: 12px 25px; /* Increase button size for easier clickability */
-  border-radius: 8px; /* Slightly rounder for better aesthetics */
-  cursor: pointer;
-  font-size: 16px; /* Button text is clearer */
-  display: block; /* Make the button block-level to ensure centering */
-  width: 100%; /* Full width of the container */
-  text-align: center; /* Ensure text is centered in the button */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  background-color: #aaa;
+  cursor: not-allowed;
 }
 
+/* Source Button */
 .source-button {
   background: none;
   border: none;
-  padding: 12px 25px; /* Increase button size for easier clickability */
-  border-radius: 8px; /* Slightly rounder for better aesthetics */
+  padding: 10px;
   cursor: pointer;
-  font-size: 16px; /* Button text is clearer */
-  display: block; /* Make the button block-level to ensure centering */
-  color: blue;
-  width: 100%; /* Full width of the container */
-  text-align: center; /* Center the text */
-  transition: color 0.3s ease; /* Smooth transition for hover effect */
+  font-size: 16px;
+  color: #007bff;
+  text-align: center;
+  width: 100%;
 }
 
 .source-button:hover {
-  color: #0056b3; /* Darker shade on hover */
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-align: left; /* Make sure the list itself is left-aligned */
-}
-
-li {
-  padding: 4px 0;
-  font-size: 14px;
-  text-align: left; /* Ensure each list item is aligned left */
-}
-
-.authors {
-  justify-self: center;
-}
-@media screen and (max-width: 500px) {
-  #documentTitle
-  {
-    font-size: 5vw !important;
-  }
-  #documentParagraph
-  {
-    font-size: 3vw !important;
-  }
-  .source-button
-  {
-    font-size: 3.8vw;
-  }
+  color: #0056b3;
 }
 </style>

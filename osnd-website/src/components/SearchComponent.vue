@@ -11,7 +11,6 @@ export default {
     const filterSearch = ref('');
     const isOpen = ref(false);
     const items = ref([
-      "Any",
       "Relevant Literature",
       "Proteins & Enzymes",
       "Drug Targets"

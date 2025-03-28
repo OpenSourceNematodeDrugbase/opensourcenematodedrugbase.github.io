@@ -8,15 +8,14 @@
 
   <SearchComponent @text-changed="updatedValue" @filter-changed="updatedFilter" />
 
-  <!-- Use EntryDisplay component -->
-  <LiteratureEntry v-if="filterSearch === 'document-collection'" :entries="entries" />
-  <ProteinEntry v-if="filterSearch === 'proteins-enzymes'" :entries="entries" />
-  <DrugTargetEntry v-if="filterSearch === 'drug-targets'" :entries="entries" />
+  <LiteratureEntry v-if="filterSearch === 'documentCollection'" :entries="entries" />
+  <ProteinEntry v-if="filterSearch === 'proteinEnzymes'" :entries="entries" />
+  <DrugTargetEntry v-if="filterSearch === 'drugTargets'" :entries="entries" />
 </template>
 
 <script>
 import { ref, onMounted, computed, watch } from 'vue';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getDatabase, ref as dbRef, onValue, set, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database'; // Import Realtime Database functions
 import SearchComponent from '@/components/SearchComponent.vue';
 import LiteratureEntry from '@/components/DataEntryComponents/LiteratureEntry.vue';
 import ProteinEntry from "@/components/DataEntryComponents/ProteinEntry.vue";
@@ -32,7 +31,7 @@ export default {
   data() {
     return {
       searchQuery: '',
-      filterSearch: 'document-collection',
+      filterSearch: 'documentCollection',
     };
   },
   methods: {
@@ -41,27 +40,47 @@ export default {
     },
     updatedFilter(event) {
       const filterMap = {
-        'Any': "Any-Data",
-        'Relevant Literature': 'document-collection',
-        'Proteins & Enzymes': 'proteins-enzymes',
-        'Drug Targets': 'drug-targets',
+        'Relevant Literature': 'documentCollection',
+        'Proteins & Enzymes': 'proteinEnzymes',
+        'Drug Targets': 'drugTargets',
       };
-      this.filterSearch = filterMap[event] || 'document-collection';
+      this.filterSearch = filterMap[event] || 'documentCollection';
     },
   },
   setup() {
-    const db = getFirestore();
+    const database = getDatabase(); // Initialize Realtime Database
     const allEntries = ref([]);
     const searchQuery = ref('');
-    const filterSearch = ref('document-collection');
+    const filterSearch = ref('documentCollection');
+    const realtimeData = ref(null);
 
-    const fetchEntries = async () => {
+    const fetchEntries = () => {
       if (!filterSearch.value) return;
       try {
-        const querySnapshot = await getDocs(collection(db, filterSearch.value));
-        allEntries.value = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        allEntries.value = []; // Clear the array before fetching new data
+
+        const entriesRef = dbRef(database, filterSearch.value);
+
+        // Listen for new entries
+        onChildAdded(entriesRef, (snapshot) => {
+          allEntries.value.push({ id: snapshot.key, ...snapshot.val() });
+        });
+
+        // Listen for changed entries
+        onChildChanged(entriesRef, (snapshot) => {
+          const index = allEntries.value.findIndex(entry => entry.id === snapshot.key);
+          if (index !== -1) {
+            allEntries.value[index] = { id: snapshot.key, ...snapshot.val() };
+          }
+        });
+
+        // Listen for removed entries
+        onChildRemoved(entriesRef, (snapshot) => {
+          allEntries.value = allEntries.value.filter(entry => entry.id !== snapshot.key);
+        });
+
       } catch (error) {
-        console.error('Error fetching Firestore data:', error);
+        console.error('Error fetching Realtime Database data:', error);
       }
     };
 
@@ -85,6 +104,8 @@ export default {
       entries: filteredEntries,
       searchQuery,
       filterSearch,
+      realtimeData,
+      db: database, // Pass the database instance to methods
     };
   },
 };
@@ -104,6 +125,11 @@ export default {
   margin-bottom: 20px;
 }
 
-
-
+.debug-section {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  text-align: left;
+}
 </style>

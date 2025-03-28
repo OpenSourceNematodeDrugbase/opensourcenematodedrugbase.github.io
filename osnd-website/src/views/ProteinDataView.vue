@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    <!-- NGL Viewer -->
     <div v-if="entry && entry.pdb_id" id="ngl-container" class="ngl-viewer"></div>
 
     <p v-else class="loading-message">Loading data...</p>
@@ -58,32 +57,33 @@
 <script>
 import { ref, onMounted, watch, nextTick, onUnmounted, unref } from "vue";
 import { useRoute } from "vue-router";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getDatabase, ref as dbRef, onValue } from "firebase/database"; // Import Realtime Database functions
 import * as NGL from "ngl";
 
 export default {
   setup() {
     const route = useRoute();
-    const db = getFirestore();
+    const db = getDatabase(); // Initialize Realtime Database
     const entry = ref(null);
     const nglStage = ref(null);
 
-    // Fetch entry from Firestore
-    const fetchEntry = async () => {
+    // Fetch entry from Realtime Database
+    const fetchEntry = () => {
       const entryId = route.params.id;
       if (!entryId) return;
 
       try {
         console.log(`Fetching data for entry ID: ${entryId}`);
-        const docRef = doc(db, "proteins-enzymes", entryId);
-        const docSnap = await getDoc(docRef);
+        const dataRef = dbRef(db, `proteinEnzymes/${entryId}`);
 
-        if (docSnap.exists()) {
-          entry.value = { id: docSnap.id, ...docSnap.data() };
-        } else {
-          console.error("No such document found!");
-          entry.value = null;
-        }
+        onValue(dataRef, (snapshot) => {
+          if (snapshot.exists()) {
+            entry.value = { id: entryId, ...snapshot.val() };
+          } else {
+            console.error("No such document found!");
+            entry.value = null;
+          }
+        });
       } catch (error) {
         console.error("Error fetching document:", error);
       }
@@ -227,19 +227,5 @@ ul li {
   overflow-wrap: break-word;
   white-space: pre-wrap;
   max-width: 100%;
-  display: block;
-}
-@media screen and (max-width:1000px) {  
-  .card {
-    text-align: center;
-    padding: 0%;
-  }
-  .sequence {
-  word-wrap: normal;
-  overflow-wrap: normal;
-  white-space: normal;
-  max-width: 60%;
-  font-size: 1.8vw;
-}
 }
 </style>
