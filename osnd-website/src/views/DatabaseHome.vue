@@ -11,6 +11,7 @@
   <!-- Use EntryDisplay component -->
   <LiteratureEntry v-if="filterSearch === 'document-collection'" :entries="entries" />
   <ProteinEntry v-if="filterSearch === 'proteins-enzymes'" :entries="entries" />
+  <DrugTargetEntry v-if="filterSearch === 'drug-targets'" :entries="entries" />
 </template>
 
 <script>
@@ -18,10 +19,12 @@ import { ref, onMounted, computed, watch } from 'vue';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import SearchComponent from '@/components/SearchComponent.vue';
 import LiteratureEntry from '@/components/DataEntryComponents/LiteratureEntry.vue';
-import ProteinEntry from "@/components/DataEntryComponents/ProteinEntry.vue"; // New component
+import ProteinEntry from "@/components/DataEntryComponents/ProteinEntry.vue";
+import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue"; // New component
 
 export default {
   components: {
+    DrugTargetEntry,
     ProteinEntry,
     SearchComponent,
     LiteratureEntry, // Register component
@@ -40,7 +43,7 @@ export default {
       const filterMap = {
         'Relevant Literature': 'document-collection',
         'Proteins & Enzymes': 'proteins-enzymes',
-        'Drug & Chemical Data': 'drug-targets',
+        'Drug Targets': 'drug-targets',
       };
       this.filterSearch = filterMap[event] || 'document-collection';
     },

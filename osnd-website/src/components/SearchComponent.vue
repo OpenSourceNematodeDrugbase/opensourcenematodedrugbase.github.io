@@ -13,7 +13,7 @@ export default {
     const items = ref([
       "Relevant Literature",
       "Proteins & Enzymes",
-      "Drug & Chemical Data"
+      "Drug Targets"
     ]);
 
     const selectedIndex = ref(-1);
