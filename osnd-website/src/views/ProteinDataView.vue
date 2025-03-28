@@ -57,17 +57,16 @@
 <script>
 import { ref, onMounted, watch, nextTick, onUnmounted, unref } from "vue";
 import { useRoute } from "vue-router";
-import { getDatabase, ref as dbRef, onValue } from "firebase/database"; // Import Realtime Database functions
+import { getDatabase, ref as dbRef, onValue } from "firebase/database";
 import * as NGL from "ngl";
 
 export default {
   setup() {
     const route = useRoute();
-    const db = getDatabase(); // Initialize Realtime Database
+    const db = getDatabase();
     const entry = ref(null);
     const nglStage = ref(null);
 
-    // Fetch entry from Realtime Database
     const fetchEntry = () => {
       const entryId = route.params.id;
       if (!entryId) return;
@@ -89,53 +88,57 @@ export default {
       }
     };
 
-    // Render NGL Viewer
     const renderNGLViewer = async (pdbId) => {
-      await nextTick(); // Ensure DOM updates before rendering
+      await nextTick();
 
       const container = document.getElementById("ngl-container");
       if (!container) return;
 
-      // Dispose of previous NGL stage (avoid memory leaks)
       if (nglStage.value) {
         nglStage.value.dispose();
         nglStage.value = null;
       }
 
-      // Initialize NGL Stage
       nglStage.value = new NGL.Stage("ngl-container", { backgroundColor: "black" });
 
-      // Load PDB file with delay to fix modelViewMatrix issue
+      container.addEventListener("wheel", preventScroll, { passive: false });
+
       setTimeout(() => {
         nglStage.value
           .loadFile(`https://files.rcsb.org/download/${pdbId}.pdb`, { defaultRepresentation: true })
           .then((component) => {
-            component.autoView(); // Center the view
+            component.autoView();
           })
           .catch((err) => {
             console.error("Error loading PDB file:", err);
           });
-      }, 500); // Slight delay to ensure proper loading
+      }, 500);
     };
 
-    // Watch for PDB ID changes
+    const preventScroll = (event) => {
+      event.preventDefault();
+    };
+
     watch(
-    () => unref(entry)?.pdb_id,
-    async (newPdbId) => {
-      if (newPdbId) {
-        await nextTick(); // Ensure Vue updates first
-        renderNGLViewer(newPdbId);
+      () => unref(entry)?.pdb_id,
+      async (newPdbId) => {
+        if (newPdbId) {
+          await nextTick();
+          renderNGLViewer(newPdbId);
+        }
       }
-    }
-  );
+    );
 
     onMounted(fetchEntry);
 
-    // Cleanup on unmount
     onUnmounted(() => {
       if (nglStage.value) {
         nglStage.value.dispose();
         nglStage.value = null;
+        const container = document.getElementById("ngl-container");
+        if (container) {
+          container.removeEventListener("wheel", preventScroll);
+        }
       }
     });
 
@@ -145,7 +148,6 @@ export default {
 </script>
 
 <style scoped>
-/* General Container */
 .data-entry-container {
   max-width: 900px;
   margin: auto;
@@ -153,7 +155,6 @@ export default {
   text-align: center;
 }
 
-/* Title */
 .entry-title {
   font-size: 28px;
   font-weight: bold;
@@ -161,14 +162,12 @@ export default {
   color: #333;
 }
 
-/* Content Wrapper */
 .content-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Cards for Grouping Data */
 .card {
   background: #fff;
   border-radius: 12px;
@@ -192,7 +191,6 @@ export default {
   margin-bottom: 10px;
 }
 
-/* Unordered Lists */
 ul {
   list-style: none;
   padding: 0;
@@ -205,7 +203,6 @@ ul li {
   margin-bottom: 10px;
 }
 
-/* NGL Viewer */
 .ngl-viewer {
   width: 100%;
   height: 500px;
@@ -215,7 +212,6 @@ ul li {
   background: #000;
 }
 
-/* Loading Message */
 .loading-message {
   font-size: 18px;
   font-weight: bold;

@@ -1,14 +1,23 @@
 <template>
-  <div class="intro-banner">
-    <h1>User Dashboard</h1>
-    <p class="intro-text" v-if="username">Welcome, {{ username }}</p>
-  </div>
+  <div class="user-dashboard-page">
+    <div class="intro-banner">
+      <h1>User Dashboard</h1>
+      <p class="intro-text" v-if="username">Welcome, {{ username }}</p>
+    </div>
 
-  <section class="user-dashboard">
-    <section class="user-details-container">
-      <div class="admin-text">Account Created: {{ formattedCreatedAt }}</div>
+    <section class="user-dashboard">
+      <section class="user-details-container">
+        <div class="admin-text">Account Created: {{ formattedCreatedAt }}</div>
+      </section>
+
+      <div class="button-container">
+        <h2>Database Options</h2>
+        <button class="admin-button">Add Drug Target Entry</button>
+        <button class="admin-button">Add Literature Entry</button>
+        <button class="admin-button">Add Protein/Enzyme Entry</button>
+      </div>
     </section>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -17,13 +26,11 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, getDoc, Timestamp } from 'firebase/firestore';
 
 export default {
-
   methods: {
     navigateToBlogEditor() {
       this.$router.push('/blog-select');
     },
   },
-
   name: 'UserDashboard',
   setup() {
     const username = ref(null);
@@ -42,7 +49,6 @@ export default {
             canEditBlog.value = userDoc.data().canEditBlog;
             createdAt.value = userDoc.data().createdAt;
 
-            // Convert Firestore Timestamp to JavaScript Date and format it
             if (createdAt.value instanceof Timestamp) {
               const date = createdAt.value.toDate();
               formattedCreatedAt.value = date.toLocaleDateString();
@@ -60,7 +66,6 @@ export default {
           formattedCreatedAt.value = null;
         }
       });
-
     });
 
     return {
@@ -72,31 +77,84 @@ export default {
 };
 </script>
 
-<style>
-.user-details-container {
-  font-size: 24px;
-  margin-top: 20px;
+<style scoped>
+.user-dashboard-page {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
 }
 
-.admin-text {
-  margin-top: 2px;
+.intro-banner {
+  background-color: #f0f8ff;
+  padding: 30px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.intro-banner h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.intro-banner p.intro-text {
+  font-size: 1.2em;
+  color: #666;
 }
 
 .user-dashboard {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Space between user details and buttons */
+}
+
+.user-details-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.admin-text {
+  font-size: 1.1em;
+  color: #444;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-container h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .admin-button {
   background-color: #007bff;
   color: white;
   border: none;
-  margin-top: 50px;
-  padding: 10px 20px;
+  padding: 12px 25px;
   border-radius: 5px;
   cursor: pointer;
-  max-width: 250px;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 1em;
+}
+
+.admin-button:hover {
+  background-color: #0056b3;
 }
 </style>
