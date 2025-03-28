@@ -26,12 +26,12 @@
           <h4>Molecular Accessibility Rating: {{ entry.molecularAccessibilityRating || "No Rating" }} </h4>
           <p><strong>Sub Cellular Location: </strong> {{ entry.subCellularLocation || "No Data" }}</p>
           <p><strong>Transport System: </strong> {{ entry.transportSystem || "No Data" }}</p>
-          <p><strong>Drugability Method: </strong> {{ entry.drugabilityMethod || "No Data" }}</p>
+          <p><strong>Drugability Method: </strong> {{ entry.druggabilityMethod || "No Data" }}</p>
           <p><strong>Tissue Expression: </strong> {{ entry.tissueExpression || "No Data" }}</p>
         </div>
         <div class="card">
           <h3>Drugability</h3>
-          <h4>Drugability Rating: {{ entry.drugabilityRating || "No Rating" }} </h4>
+          <h4>Drugability Rating: {{ entry.druggabilityRating || "No Rating" }} </h4>
           <p><strong>Resistant Potential: </strong> {{ entry.resistantPotential || "No Data" }}</p>
           <p><strong>Binding Score: </strong> {{ entry.bindingScore || "No Data" }}</p>
           <p><strong>Protein Structure Availability: </strong> {{ entry.proteinStructureAvailability || "No Data" }}</p>
