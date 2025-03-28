@@ -144,4 +144,9 @@ h1, h2 {
   background-color: #adc0d0;
 }
 
+@media screen and (max-width:1000px) {  
+  .submit-button {
+    padding: 20px 20px;
+  }
+}
 </style>

@@ -67,7 +67,7 @@
     padding-top: 15px;
   }
  
-  @media screen and (min-width:1100px) { /*Seen on Laptop*/
+  @media screen and (min-width:1441px) { /*Seen on Laptop*/
     .nav ul {
     
     align-items: center;
@@ -89,7 +89,7 @@
     left: 150px;
   }
   }
-  @media screen and (max-width:400px) { /*Seen on smaller screens*/
+  @media screen and (max-width:613px) { /*Seen on smaller screens*/
     .nav ul{
       display: initial  ;
     }

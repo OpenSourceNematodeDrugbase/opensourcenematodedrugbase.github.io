@@ -1,9 +1,9 @@
 <template>
   <div class="entry-display-container">
     <div v-for="entry in entries" :key="entry.id" class="entry-text">
-      <h3>{{ entry.documentTitle || "No Title" }}</h3>
-      <p>{{ entry.publishDate || "No Date" }}</p>
-      <p>{{ getShortenedText(entry.abstract, 40) || "No description available" }}</p>
+      <h3 id="documentTitle">{{ entry.documentTitle || "No Title" }} </h3>
+      <p >{{ entry.publishDate || "No Date" }}</p>
+      <p id="documentParagraph">{{ getShortenedText(entry.abstract, 40) || "No description available" }}</p>
 
       <button class="source-button" @click="accessSource(entry.url)">
         {{ entry.url || "Source unavailable" }}
@@ -173,5 +173,19 @@ li {
 
 .authors {
   justify-self: center;
+}
+@media screen and (max-width: 500px) {
+  #documentTitle
+  {
+    font-size: 5vw !important;
+  }
+  #documentParagraph
+  {
+    font-size: 3vw !important;
+  }
+  .source-button
+  {
+    font-size: 3.8vw;
+  }
 }
 </style>

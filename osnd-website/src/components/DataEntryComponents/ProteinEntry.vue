@@ -65,7 +65,7 @@ export default {
   gap: 24px; /* Increased gap for better spacing */
   padding: 30px;
   max-width: 1100px; /* Slightly wider for better content display */
-  width: 100%;
+  /*width: 100%; Seems to break things*/
   margin: 0 auto;
   justify-content: center;
   align-items: flex-start; /* Align items at the top */
@@ -166,9 +166,12 @@ export default {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .entry-text {
-    max-width: 100%; /* Make entries full width on smaller screens */
-  }
+.entry-display-container{
+  width: 100%;
+  justify-content: center;
+  padding: 0%;
+}
+  
 }
 </style>
 

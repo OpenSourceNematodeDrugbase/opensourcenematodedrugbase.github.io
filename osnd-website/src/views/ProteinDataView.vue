@@ -229,4 +229,17 @@ ul li {
   max-width: 100%;
   display: block;
 }
+@media screen and (max-width:1000px) {  
+  .card {
+    text-align: center;
+    padding: 0%;
+  }
+  .sequence {
+  word-wrap: normal;
+  overflow-wrap: normal;
+  white-space: normal;
+  max-width: 60%;
+  font-size: 1.8vw;
+}
+}
 </style>
