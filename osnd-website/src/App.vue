@@ -62,7 +62,7 @@
   @media screen and (max-width:1000px) {
     .section-text
     {
-      font-size: 22px !important;
+      font-size: 3.9vw !important;
     }
     .image 
     {
