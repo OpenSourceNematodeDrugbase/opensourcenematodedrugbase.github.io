@@ -2,7 +2,7 @@
     <header class="header">
       <div class="container">
         <router-link to="/">
-          <img class="header-logo" src="@/assets/OSNDB avatar_7.png" alt="Logo">
+        <img class="header-logo" src="@/assets/ONDB logo.png" alt="Logo">
         </router-link>
         <h1 class="logo">Open-Source Nematode Drug Base Project</h1>
         <nav class="nav">

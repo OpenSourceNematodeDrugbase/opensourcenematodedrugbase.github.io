@@ -23,9 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   </head>
   <div id="app">
-    <head> 
-      
-    </head>
+
       <!-- Header that appears across all pages -->
       <header>
         <HeaderComponent />
