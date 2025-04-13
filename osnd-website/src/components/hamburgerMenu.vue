@@ -19,15 +19,7 @@
     </header>
   </template>
 
-  <script>
-import HamburgerMenu from '../hamburgerMenu.vue';
-
-  export default {
-    name: 'HeaderComponent',
-  };
-  </script>
-  
-  <style scoped>
+<style scoped>
   .header {
     background-color: hsla(207, 95%, 85%, 0.671);
     padding: 20px;
@@ -97,4 +89,4 @@ import HamburgerMenu from '../hamburgerMenu.vue';
     }
   }
 
-</style>  
+</style> 
