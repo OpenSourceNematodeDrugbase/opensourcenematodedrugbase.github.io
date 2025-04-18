@@ -4,8 +4,8 @@
         <router-link to="/">
         <img class="header-logo" src="@/assets/ONDB logo.png" alt="Logo">
         </router-link>
-        <h1 class="logo">Open-Source Nematode Drug Base Project</h1>
-        <nav class="nav">
+        <h1 class="logo">Open Nematode Drug Base</h1>
+        <nav class="nav" v-if="BigScreen">
           <ul>
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/nematode-drugbase">Nematode Drugbase</router-link></li>
@@ -15,16 +15,29 @@
             <li><router-link to="/contact">Contact</router-link></li>
           </ul>
         </nav>
+        <!--Make this an ancor that shows the hamburger icon-->
       </div>
     </header>
   </template>
 
-  <script>
-import HamburgerMenu from '../hamburgerMenu.vue';
+  <script setup>
+  import { ref, onMounted, onUnmounted } from 'vue';
 
-  export default {
-    name: 'HeaderComponent',
-  };
+  const BigScreen = ref(false);
+
+  function checkScreenSize() {
+    BigScreen.value = window.innerWidth >= 768; //Removes the nav bar if the screen is too small
+}
+
+  onMounted(() => {
+  checkScreenSize();
+  window.addEventListener('resize', checkScreenSize); //Add a JS event lisenter that triggers the size changed function
+});
+  onUnmounted(() => { //When page exit
+  window.removeEventListener('resize', checkScreenSize);
+});
+  
+
   </script>
   
   <style scoped>
@@ -94,6 +107,10 @@ import HamburgerMenu from '../hamburgerMenu.vue';
   @media screen and (max-width:613px) { /*Seen on smaller screens*/
     .nav ul{
       display: initial  ;
+    }
+    .logo
+    {
+      font-size: 4.2vw;
     }
   }
 
