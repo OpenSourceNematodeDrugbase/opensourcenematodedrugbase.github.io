@@ -15,30 +15,20 @@
             <li><router-link to="/contact">Contact</router-link></li>
           </ul>
         </nav>
-        <!--Make this an ancor that shows the hamburger icon-->
+        <button v-if="!BigScreen" @click="phoneMenuOpened">
+          <img style="width: 50px;" src="../../assets/Hamburger.svg">
+        </button>
       </div>
     </header>
   </template>
 
-  <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+<script setup>
+import { findScreenSize } from '../Modules/changeScreenSize'; //Phone size JS
+import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js 
 
-  const BigScreen = ref(false);
+  const {BigScreen} = findScreenSize(); //Returns a bool from changeScreenSize.js that says if the screen is big or small
 
-  function checkScreenSize() {
-    BigScreen.value = window.innerWidth >= 768; //Removes the nav bar if the screen is too small
-}
-
-  onMounted(() => {
-  checkScreenSize();
-  window.addEventListener('resize', checkScreenSize); //Add a JS event lisenter that triggers the size changed function
-});
-  onUnmounted(() => { //When page exit
-  window.removeEventListener('resize', checkScreenSize);
-});
-  
-
-  </script>
+</script>
   
   <style scoped>
   .header {
