@@ -1,7 +1,7 @@
 <template>
     <header class="header">
       <div class="container">
-        <router-link to="/">
+        <router-link to="/" class="LogoAnchor">
         <img class="header-logo" src="@/assets/ONDB logo.png" alt="Logo">
         </router-link>
         <h1 class="logo">Open Nematode Drug Base</h1>
@@ -9,13 +9,13 @@
           <ul>
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/nematode-drugbase">Nematode Drugbase</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-            <li><router-link to="/funding">Funding</router-link></li>
             <li><router-link to="/blog-dashboard">Blog</router-link></li>
+            <li><router-link to="/funding">Funding</router-link></li>
+            <li><router-link to="/about">About</router-link></li>
             <li><router-link to="/contact">Contact</router-link></li>
           </ul>
         </nav>
-        <button v-if="!BigScreen" @click="phoneMenuOpened">
+        <button v-if="!BigScreen" @click="phoneMenuOpened" id="HamburgerMenuBtn">
           <img style="width: 50px;" src="../../assets/Hamburger.svg">
         </button>
       </div>
@@ -36,6 +36,8 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     padding: 20px;
     color: white;
     border-radius: 20px;
+    position: relative;
+    z-index: 2;
   }
   .logo {
     font-size: 1.5em;
@@ -86,22 +88,41 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
   .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
   }
+
   .logo
   {
     position: absolute;
     left: 150px;
   }
   }
-  @media screen and (max-width:613px) { /*Seen on smaller screens*/
+  @media screen and (max-width:768px) { /*Seen on smaller screens*/
     .nav ul{
-      display: initial  ;
+      display: initial;
     }
-    .logo
-    {
-      font-size: 4.2vw;
+    .logo{
+      font-size: 3.7vw;
+      display: flex;
     }
+    .container{
+      display: flex;
+      text-align: left;
+    }
+    .header-logo {
+      text-align: left;
+      width: 100%;
+    }
+    .LogoAnchor {
+      text-align: left;
+      width:  12%;
+    }
+    #HamburgerMenuBtn {
+      margin-left: auto;
+      background-color: transparent;
+      border :none;
+    }
+
   }
 
 </style>  

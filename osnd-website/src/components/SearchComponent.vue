@@ -137,7 +137,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 0; /*changed to 0 due to it overlaping with the hamburger menu*/
 }
 
 .search-text {

@@ -1,10 +1,18 @@
 import { ref, onMounted, onUnmounted } from 'vue'; //Imports vue components 
 const BigScreen = ref(false);
+const menuOpened = ref(false);
 
 
 function checkScreenSize() { //Checks screen size and does actions
     BigScreen.value = window.innerWidth >= 768; //Removes the nav bar if the screen is too small
     console.log("Hi");
+    if (menuOpened.value == true) 
+    {
+        if ( window.innerWidth <= 768)
+            {
+                phoneMenuOpened();
+            } //Turns off if the height is too big.
+    }
   }
 
 export function findScreenSize() { //Makes a global function that can be used anywhere
@@ -20,12 +28,19 @@ export function findScreenSize() { //Makes a global function that can be used an
     return {BigScreen};
 };
 
-const menuOpened = ref(false);
-
+//When Hamburger menu opened
 export function phoneMenuOpened()
 {
     menuOpened.value = !menuOpened.value;
     console.log(menuOpened.value);
+    if (menuOpened.value == true)
+    {
+        document.body.style.overflow = 'hidden';
+    }
+    else 
+    {
+        document.body.style.overflow = 'auto';
+    }
 }
 export function isMenuOpened()
 {
