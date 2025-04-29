@@ -5,6 +5,7 @@
         <img class="header-logo" src="@/assets/ONDB logo.png" alt="Logo">
         </router-link>
         <h1 class="logo">Open Nematode Drug Base</h1>
+        <!--Desktop nav bar-->
         <nav class="nav" v-if="BigScreen">
           <ul>
             <li><router-link to="/">Home</router-link></li>
@@ -15,19 +16,44 @@
             <li><router-link to="/contact">Contact</router-link></li>
           </ul>
         </nav>
+
+     
+      
         <button v-if="!BigScreen" @click="phoneMenuOpened" id="HamburgerMenuBtn">
           <img style="width: 50px;" src="../../assets/Hamburger.svg">
         </button>
       </div>
     </header>
+      <!--For mobile users-->
+    <div class="mobileBackground" v-if="openMenu">
+        <nav class="navMobile">
+          <ul>
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/nematode-drugbase">Nematode Drugbase</router-link></li>
+            <li><router-link to="/blog-dashboard">Blog</router-link></li>
+            <li><router-link to="/funding">Funding</router-link></li>
+            <li><router-link to="/about">About</router-link></li>
+            <li><router-link to="/contact">Contact</router-link></li>
+          </ul>
+        </nav>
+        <div class="BottomLinks">
+          <a id="UOWLogo"><img src="../../assets/UoW_Logo.png"></a>
+          <div class="PrivacyAndLogin">
+            <a id ="SignIn">Sign in</a>
+            <a id="Privacy">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
   </template>
 
 <script setup>
 import { findScreenSize } from '../Modules/changeScreenSize'; //Phone size JS
 import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js 
+ import { isMenuOpened } from '../Modules/changeScreenSize' //Button Pressed?
 
   const {BigScreen} = findScreenSize(); //Returns a bool from changeScreenSize.js that says if the screen is big or small
 
+  const openMenu = isMenuOpened();
 </script>
   
   <style scoped>
@@ -52,16 +78,17 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     list-style: none;
     justify-content: center;
     align-items: center;
+    padding-top: 7px;
   }
   
-  .nav a {
+  .nav a , .navMobile a {
     color: rgb(0, 0, 0);
     text-decoration: none;
     font-weight:bold;
     font-size: 17px
   }
   
-  .nav a:hover {
+  .nav a:hover ,  .navMobile a:hover {
     text-decoration: underline;
   }
 
@@ -73,7 +100,43 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
   li {
     padding-top: 15px;
   }
- 
+
+  .navMobile ul{
+    gap: 30px;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    display: initial ;
+  }
+  .mobileBackground {
+    
+    justify-content: center;
+    background-color: rgb(201, 228, 251);
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+  }
+  .BottomLinks {
+    margin-top: auto; /*Not sure why this is broken */
+  }
+  #UOWLogo {
+    width: 100%;
+    height: auto;
+  }
+  .PrivacyAndLogin{
+    font-weight: bold;
+  }
+  #SignIn {
+    float: left;
+    padding-left: 20px;
+  }
+  #Privacy {
+    float: Right;
+    padding-right: 20px;
+  }
   @media screen and (min-width:1441px) { /*Seen on Laptop*/
     .nav ul {
     
@@ -97,10 +160,7 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     left: 150px;
   }
   }
-  @media screen and (max-width:768px) { /*Seen on smaller screens*/
-    .nav ul{
-      display: initial;
-    }
+  @media screen and (max-width:767px) { /*Seen on smaller screens*/
     .logo{
       font-size: 3.7vw;
       display: flex;
@@ -121,6 +181,10 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
       margin-left: auto;
       background-color: transparent;
       border :none;
+    }
+    .header
+    {
+      border-radius: 0px;
     }
 
   }
