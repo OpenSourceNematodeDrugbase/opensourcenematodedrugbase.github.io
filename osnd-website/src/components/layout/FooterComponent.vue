@@ -111,7 +111,8 @@ export default {
 }
 
 .UoWLogo {
-  max-width: 350px; /* Adjust size if needed */
+  max-width: 350px;
+  width: 100%; /* Adjust size if needed */
 }
 
 .QHTLogo {

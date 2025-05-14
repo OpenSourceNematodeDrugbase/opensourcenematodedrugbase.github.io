@@ -26,24 +26,27 @@
     </header>
       <!--For mobile users-->
     <div class="mobileBackground" v-if="openMenu">
-        <nav class="navMobile">
-          <ul>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/nematode-drugbase">Nematode Drugbase</router-link></li>
-            <li><router-link to="/blog-dashboard">Blog</router-link></li>
-            <li><router-link to="/funding">Funding</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-            <li><router-link to="/contact">Contact</router-link></li>
-          </ul>
-        </nav>
-        <div class="BottomLinks">
-          <a id="UOWLogo"><img src="../../assets/UoW_Logo.png"></a>
-          <div class="PrivacyAndLogin">
-            <a id ="SignIn">Sign in</a>
-            <a id="Privacy">Privacy Policy</a>
-          </div>
-        </div>
+    </div>
+    <div v-if="openMenu">
+      <nav class="navMobile">
+      <ul>
+        <li><router-link to="/" @click.native="closePage">Home</router-link></li>
+        <li><router-link to="/nematode-drugbase" @click.native="closePage">Nematode Drugbase</router-link></li>
+        <li><router-link to="/blog-dashboard" @click.native="closePage">Blog</router-link></li>
+        <li><router-link to="/funding" @click.native="closePage">Funding</router-link></li>
+        <li><router-link to="/about"@click.native="closePage">About</router-link></li>
+        <li><router-link to="/contact"@click.native="closePage">Contact</router-link></li>
+      </ul>
+    </nav>
+    <div class="BottomLinks">
+      <a id="UOWLogo" href="https://www.westminster.ac.uk/"> <img src="../../assets/UoW_Logo.png"> </a>
+      <div class="PrivacyAndLogin">
+        <a id ="SignIn">Sign in</a>
+        <a id="Privacy">Privacy Policy</a>
       </div>
+    </div>
+    
+    </div>
   </template>
 
 <script setup>
@@ -54,6 +57,11 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
   const {BigScreen} = findScreenSize(); //Returns a bool from changeScreenSize.js that says if the screen is big or small
 
   const openMenu = isMenuOpened();
+
+  function closePage()
+  {
+    phoneMenuOpened();
+  }
 </script>
   
   <style scoped>
@@ -92,6 +100,9 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     text-decoration: underline;
   }
 
+  .navMobile li {
+    font-size: 3.7vw;
+  }
   .header-logo {
     width: 100px; /* Sets the width to 100px */
     height: auto; /* Maintains the aspect ratio */
@@ -107,20 +118,30 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     justify-content: center;
     align-items: center;
     display: initial ;
+    font-size: 3.0vw;
   }
-  .mobileBackground {
-    
-    justify-content: center;
-    background-color: rgb(201, 228, 251);
-    position: relative;
-    z-index: 2;
+  .navMobile {
+    position:relative;
     display: flex;
     flex-direction: column;
+    z-index: 3;
+    justify-content: center;
+  }
+  .mobileBackground {
+    background-color: rgb(201, 228, 251);
+    position: absolute;
+    z-index: 2;
     width: 100%;
     height: 100vh;
   }
   .BottomLinks {
-    margin-top: auto; /*Not sure why this is broken */
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    
+    /*Not sure why this is broken */
   }
   #UOWLogo {
     width: 100%;

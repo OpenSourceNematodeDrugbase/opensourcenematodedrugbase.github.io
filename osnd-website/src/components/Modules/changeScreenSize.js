@@ -1,11 +1,10 @@
-import { ref, onMounted, onUnmounted } from 'vue'; //Imports vue components 
+import { ref, onMounted, onUnmounted } from 'vue';
 const BigScreen = ref(false);
 const menuOpened = ref(false);
 
 
 function checkScreenSize() { //Checks screen size and does actions
     BigScreen.value = window.innerWidth >= 768; //Removes the nav bar if the screen is too small
-    console.log("Hi");
     if (menuOpened.value == true) 
     {
         if ( window.innerWidth <= 768)
@@ -15,6 +14,7 @@ function checkScreenSize() { //Checks screen size and does actions
     }
   }
 
+  
 export function findScreenSize() { //Makes a global function that can be used anywhere
     
     onMounted(() => {
@@ -46,3 +46,4 @@ export function isMenuOpened()
 {
     return menuOpened;
 }
+
