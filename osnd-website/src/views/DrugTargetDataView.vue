@@ -21,12 +21,30 @@
 
       <section class="criteria-section">
         <h3>Criteria</h3>
-        <p>
-          <strong>Similar Protein in Humans:</strong>
-          <span :class="{'yes': entry.similar_protein_in_humans, 'no': !entry.similar_protein_in_humans}">
-            {{ entry.similar_protein_in_humans ? ' Yes' : ' No' }}
-          </span>
-        </p>
+        <div>
+            <strong title="A drug that acts on the parasite will be less likely to have side effects if there is no closely related protein in humans.">Similar Protein in Humans:</strong>
+            <span :class="{'yes': entry.similar_protein_in_humans, 'no': !entry.similar_protein_in_humans}">
+              {{ entry.similar_protein_in_humans ? ' True' : ' False' }}
+            </span>
+          <div/>
+
+          <div>
+            <strong title="Genes with known domains (such as enzymes or transporters) are more likely to be druggable because these structures often provide clear binding sites for small-molecule drugs.">Has Known Protein Domain:</strong>
+            <span :class="{'yes': entry.has_known_protein_domain, 'no': !entry.has_known_protein_domain}">
+              {{ entry.has_known_protein_domain ? ' True' : ' False' }}
+            </span>
+          </div>
+
+          <div>
+            <strong title="Functionally annotated genes are more likely to be biologically relevant and suitable for target validation -> because their roles in cellular processes are already known or predicted.">Has Gene Ontology Functional Annotation:</strong>
+            <span :class="{'yes': entry.has_gene_ontology_functional_annotation, 'no': !entry.has_gene_ontology_functional_annotation}">
+              {{ entry.has_gene_ontology_functional_annotation ? ' True' : ' False' }}
+            </span>
+          </div>
+
+
+
+        </div>
       </section>
 
     </div>
@@ -151,5 +169,10 @@ strong {
   font-size: 18px;
   color: #e74c3c;
   font-weight: 600;
+}
+
+.criteria-section div {
+  margin-bottom: 10px;
+  font-size: 16px;
 }
 </style>

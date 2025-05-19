@@ -35,7 +35,9 @@ export default {
     const options = [5, 10, 25, 50];
 
     const filters = ref({
-      similarProtein: "", // "true", "false", or ""
+      similarProtein: "",
+      hasKnownDomain: "",
+      hasGOAnnotation: "",
     });
 
     const fetchEntries = () => {
@@ -62,11 +64,21 @@ export default {
 
     const filteredEntries = computed(() => {
       return allEntries.value.filter(entry => {
-        if (filters.value.similarProtein !== "") {
-          if (String(entry.similar_protein_in_humans) !== filters.value.similarProtein) {
-            return false;
-          }
+        if (filters.value.similarProtein !== "" &&
+            String(entry.similar_protein_in_humans) !== filters.value.similarProtein) {
+          return false;
         }
+
+        if (filters.value.hasKnownDomain !== "" &&
+            String(entry.has_known_protein_domain) !== filters.value.hasKnownDomain) {
+          return false;
+        }
+
+        if (filters.value.hasGOAnnotation !== "" &&
+            String(entry.has_gene_ontology_functional_annotation) !== filters.value.hasGOAnnotation) {
+          return false;
+        }
+
         return true;
       });
     });

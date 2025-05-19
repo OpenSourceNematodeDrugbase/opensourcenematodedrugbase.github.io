@@ -1,20 +1,18 @@
 <template>
   <div class="drug-target-form-container">
-    <h2>New Drug Target Entry Form</h2>
+    <h2>Add New Drug Targets</h2>
     <div class="intro-section">
       <p>
-        You can add drug targets manually to the database here. Please be aware
-        that data cannot be deleted at this time. Please refrain from using
+        You can add drug targets automatically to the database here. Please be aware
+        that using the 'delete all entries' button will remove ALL data and is not recommended. Please refrain from using
         special characters such as &amp;*,!?.
       </p>
 
       <p>
-        Additionally, you can upload JSON files to add new entries. Please ensure
-        the JSON follows the template before uploading.
+        You can upload JSON files to add new entries.
       </p>
 
-      <button @click="downloadJsonTemplate" class="admin-button">Download JSON Template</button>
-      <button @click="triggerFileInput" class="admin-button">Upload JSON Template</button>
+      <button @click="triggerFileInput" class="admin-button">Upload JSON</button>
       <button @click="deleteAllEntries" class="admin-button danger-button">Delete All Entries (Dev)</button>
       <input
         type="file"
@@ -24,232 +22,6 @@
         accept="application/json"
       />
     </div>
-
-    <form @submit.prevent="submitForm" class="drug-target-form">
-      <section class="form-section">
-        <h3>Drug Target Name & Ratings</h3>
-        <div class="form-group">
-          <label for="targetName">Target Name:</label>
-          <input
-            type="text"
-            id="targetName"
-            v-model="formData.targetName"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="functionalImportanceRating">Functional Importance Rating:</label>
-          <select
-            id="functionalImportanceRating"
-            v-model="formData.functionalImportanceRating"
-          >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="pathogenSpecificityRating">Pathogen Specificity Rating:</label>
-          <select
-            id="pathogenSpecificityRating"
-            v-model="formData.pathogenSpecificityRating"
-          >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="molecularAccessibilityRating">Molecular Accessibility Rating:</label>
-          <select
-            id="molecularAccessibilityRating"
-            v-model="formData.molecularAccessibilityRating"
-          >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="druggabilityRating">Druggability Rating:</label>
-          <select
-            id="druggabilityRating"
-            v-model="formData.druggabilityRating"
-          >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-      </section>
-
-      <section class="form-section">
-        <h3>Drug Target Properties</h3>
-        <div class="form-group">
-          <label for="essentiallyScore">Essentially Score:</label>
-          <select
-            id="essentiallyScore"
-            v-model="formData.essentiallyScore"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="phenotypeEffectLethal">Phenotype Effect Lethal:</label>
-          <select
-            id="phenotypeEffectLethal"
-            v-model="formData.phenotypeEffectLethal"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="expressionStage">Expression Stage:</label>
-          <input
-            type="text"
-            id="expressionStage"
-            v-model="formData.expressionStage"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="pathwayEssentially">Pathway Essentially:</label>
-          <select
-            id="pathwayEssentially"
-            v-model="formData.pathwayEssentially"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="uniqueParasiteMetabolicPathway">Unique Parasite Metabolic Pathway:</label>
-          <select
-            id="uniqueParasiteMetabolicPathway"
-            v-model="formData.uniqueParasiteMetabolicPathway"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="orthologComparison">Ortholog Comparison:</label>
-          <select
-            id="orthologComparison"
-            v-model="formData.orthologComparison"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="hostHomology">Host Homology:</label>
-          <input
-            type="number"
-            id="hostHomology"
-            v-model="formData.hostHomology"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="crossSpeciesConservation">Cross Species Conservation:</label>
-          <select
-            id="crossSpeciesConservation"
-            v-model="formData.crossSpeciesConservation"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="orthologPercentageIdentity">Ortholog Percentage Identity:</label>
-          <input
-            type="number"
-            id="orthologPercentageIdentity"
-            v-model="formData.orthologPercentageIdentity"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="subCellularLocation">Sub Cellular Location:</label>
-          <input
-            type="text"
-            id="subCellularLocation"
-            v-model="formData.subCellularLocation"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="transportSystem">Transport System:</label>
-          <input
-            type="text"
-            id="transportSystem"
-            v-model="formData.transportSystem"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="druggabilityMethod">Druggability Method:</label>
-          <input
-            type="text"
-            id="druggabilityMethod"
-            v-model="formData.druggabilityMethod"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="tissueExpression">Tissue Expression:</label>
-          <input
-            type="text"
-            id="tissueExpression"
-            v-model="formData.tissueExpression"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="resistantPotential">Resistant Potential:</label>
-          <input
-            type="number"
-            id="resistantPotential"
-            v-model="formData.resistantPotential"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="bindingScore">Binding Score:</label>
-          <input
-            type="number"
-            id="bindingScore"
-            v-model="formData.bindingScore"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="proteinStructureAvailability">Protein Structure Availability:</label>
-          <select
-            id="proteinStructureAvailability"
-            v-model="formData.proteinStructureAvailability"
-          >
-            <option value="true">True</option>
-            <option value="false">False</option>
-          </select>
-        </div>
-      </section>
-
-      <button type="submit" class="submit-button">Submit</button>
-    </form>
   </div>
 </template>
 
@@ -259,96 +31,9 @@ import { getDatabase, ref as dbRef, push, set, remove } from 'firebase/database'
 
 export default {
   setup() {
-    const formData = ref({
-      targetName: '',
-      functionalImportanceRating: 'High',
-      essentiallyScore: 'true',
-      phenotypeEffectLethal: 'true',
-      expressionStage: '',
-      pathwayEssentially: 'true',
-      uniqueParasiteMetabolicPathway: 'true',
-      pathogenSpecificityRating: 'High',
-      orthologComparison: 'true',
-      hostHomology: 0,
-      crossSpeciesConservation: 'true',
-      orthologPercentageIdentity: 0,
-      molecularAccessibilityRating: 'Low',
-      subCellularLocation: '',
-      transportSystem: '',
-      druggabilityMethod: '',
-      tissueExpression: '',
-      druggabilityRating: 'High',
-      resistantPotential: 1,
-      bindingScore: 1,
-      proteinStructureAvailability: 'true',
-    });
 
     const db = getDatabase();
     const fileInput = ref(null); // Add this line
-
-    const submitForm = () => {
-      const dataRef = dbRef(db, 'drugTargets');
-      const newDrugTargetRef = push(dataRef);
-      set(newDrugTargetRef, formData.value)
-        .then(() => {
-          alert('Drug target added successfully!');
-          formData.value = {
-            targetName: '',
-            functionalImportanceRating: 'High',
-            essentiallyScore: 'true',
-            phenotypeEffectLethal: 'true',
-            expressionStage: '',
-            pathwayEssentially: 'true',
-            uniqueParasiteMetabolicPathway: 'true',
-            pathogenSpecificityRating: 'High',
-            orthologComparison: 'true',
-            hostHomology: 0,
-            crossSpeciesConservation: 'true',
-            orthologPercentageIdentity: 0,
-            molecularAccessibilityRating: 'Low',
-            subCellularLocation: '',
-            transportSystem: '',
-            druggabilityMethod: '',
-            tissueExpression: '',
-            druggabilityRating: 'High',
-            resistantPotential: 1,
-            bindingScore: 1,
-            proteinStructureAvailability: 'true',
-          };
-        })
-        .catch((error) => {
-          console.error('Error adding drug target:', error);
-          alert('Failed to add drug target. Please check the console for errors.');
-        });
-    };
-
-    const downloadJsonTemplate = () => {
-      const template = {
-        "Genome project": "",
-        "Human gene stable ID": "",
-        "Human gene name": "",
-        "Human protein stable ID": "",
-        "Homology type": "ortholog_one2many",
-        "% identity": 0.0,
-        "Human % identity": 0.0,
-        "Gene biotype": "",
-        "Gene stable ID": "",
-        "Caenorhabditis elegans (PRJNA13758) [WS290] gene stable ID": "",
-        "Caenorhabditis elegans (PRJNA13758) [WS290] gene name": "",
-        "% identity.1": 0.0,
-        "id": "",
-        "similar_protein_in_humans": false
-      };
-      const blob = new Blob([JSON.stringify(template, null, 2)], {
-        type: 'application/json',
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'drug_target_template.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    };
 
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
@@ -417,9 +102,6 @@ export default {
     };
 
     return {
-      formData,
-      submitForm,
-      downloadJsonTemplate,
       handleFileUpload,
       triggerFileInput,
       fileInput,

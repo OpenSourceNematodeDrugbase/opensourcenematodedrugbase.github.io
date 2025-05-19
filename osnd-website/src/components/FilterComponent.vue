@@ -11,25 +11,25 @@
           <label for="proteinFilter">Similar Protein in Humans:</label>
           <select id="proteinFilter" v-model="localFilters.similarProtein">
             <option value="">All</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
           </select>
         </div>
 
-        <!-- Placeholder Filter 1 -->
+        <!-- Has Known Protein Domain -->
         <div class="filter-group">
-          <label for="placeholder1">Placeholder 1:</label>
-          <select id="placeholder1">
+          <label for="domainFilter">Has Known Protein Domain:</label>
+          <select id="domainFilter" v-model="localFilters.hasKnownDomain">
             <option value="">All</option>
             <option value="true">True</option>
             <option value="false">False</option>
           </select>
         </div>
 
-        <!-- Placeholder Filter 2 -->
+        <!-- Has Gene Ontology Functional Annotation -->
         <div class="filter-group">
-          <label for="placeholder2">Placeholder 2:</label>
-          <select id="placeholder2">
+          <label for="goFilter">Has Gene Ontology Functional Annotation:</label>
+          <select id="goFilter" v-model="localFilters.hasGOAnnotation">
             <option value="">All</option>
             <option value="true">True</option>
             <option value="false">False</option>
