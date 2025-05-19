@@ -15,6 +15,7 @@
 
       <button @click="downloadJsonTemplate" class="admin-button">Download JSON Template</button>
       <button @click="triggerFileInput" class="admin-button">Upload JSON Template</button>
+      <button @click="deleteAllEntries" class="admin-button danger-button">Delete All Entries (Dev)</button>
       <input
         type="file"
         ref="fileInput"
@@ -254,7 +255,7 @@
 
 <script>
 import { ref } from 'vue';
-import { getDatabase, ref as dbRef, push, set } from 'firebase/database';
+import { getDatabase, ref as dbRef, push, set, remove } from 'firebase/database';
 
 export default {
   setup() {
@@ -323,28 +324,20 @@ export default {
 
     const downloadJsonTemplate = () => {
       const template = {
-        targetName: '',
-        functionalImportanceRating: 'High',
-        essentiallyScore: 'true',
-        phenotypeEffectLethal: 'true',
-        expressionStage: '',
-        pathwayEssentially: 'true',
-        uniqueParasiteMetabolicPathway: 'true',
-        immuneEvasionRole: 'true',
-        pathogenSpecificityRating: 'High',
-        orthologComparison: 'true',
-        hostHomology: 0,
-        crossSpeciesConservation: 'true',
-        orthologPercentageIdentity: 0,
-        molecularAccessibilityRating: 'Low',
-        subCellularLocation: '',
-        transportSystem: '',
-        druggabilityMethod: '',
-        tissueExpression: '',
-        druggabilityRating: 'High',
-        resistantPotential: 1,
-        bindingScore: 1,
-        proteinStructureAvailability: 'true',
+        "Genome project": "",
+        "Human gene stable ID": "",
+        "Human gene name": "",
+        "Human protein stable ID": "",
+        "Homology type": "ortholog_one2many",
+        "% identity": 0.0,
+        "Human % identity": 0.0,
+        "Gene biotype": "",
+        "Gene stable ID": "",
+        "Caenorhabditis elegans (PRJNA13758) [WS290] gene stable ID": "",
+        "Caenorhabditis elegans (PRJNA13758) [WS290] gene name": "",
+        "% identity.1": 0.0,
+        "id": "",
+        "similar_protein_in_humans": false
       };
       const blob = new Blob([JSON.stringify(template, null, 2)], {
         type: 'application/json',
@@ -365,27 +358,59 @@ export default {
       reader.onload = (e) => {
         try {
           const jsonData = JSON.parse(e.target.result);
-          if (typeof jsonData === 'object' && jsonData !== null) {
-            const dataRef = dbRef(db, 'drugTargets');
-            const newDrugTargetRef = push(dataRef);
-            set(newDrugTargetRef, jsonData)
+
+          const dataRef = dbRef(db, 'drugTargets');
+
+          if (Array.isArray(jsonData)) {
+            // If array, push each object individually
+            const promises = jsonData.map(item => {
+              const newRef = push(dataRef);
+              return set(newRef, item);
+            });
+            Promise.all(promises)
               .then(() => {
-                alert('JSON data uploaded and added successfully!');
+                alert('All entries added successfully!');
               })
               .catch((error) => {
-                console.error('Error uploading JSON data:', error);
-                alert('Failed to upload JSON data. Please check the console for errors.');
+                console.error('Error adding some entries:', error);
+                alert('Some entries failed to upload.');
+              });
+          } else if (typeof jsonData === 'object' && jsonData !== null) {
+            // If a single object, push just that one
+            const newRef = push(dataRef);
+            set(newRef, jsonData)
+              .then(() => alert('Entry added successfully!'))
+              .catch((error) => {
+                console.error('Upload error:', error);
+                alert('Upload failed.');
               });
           } else {
-            alert('Invalid JSON file. Please upload a valid JSON file.');
+            alert('Uploaded JSON must be an object or an array of objects.');
           }
+
         } catch (error) {
-          console.error('Error parsing JSON:', error);
-          alert('Invalid JSON file. Please ensure the file is valid JSON.');
+          console.error('JSON parsing failed:', error);
+          alert('Invalid JSON file.');
         }
       };
       reader.readAsText(file);
     };
+
+    const deleteAllEntries = () => {
+      if (confirm("Are you sure you want to delete ALL entries? This cannot be undone.")) {
+        const targetRef = dbRef(db, 'drugTargets');
+        remove(targetRef)
+          .then(() => {
+            alert("All entries deleted.");
+          })
+          .catch((error) => {
+            console.error("Error deleting entries:", error);
+            alert("Failed to delete entries.");
+          });
+      }
+    };
+
+
 
     const triggerFileInput = () => { // Add this function
       fileInput.value.click();
@@ -396,8 +421,9 @@ export default {
       submitForm,
       downloadJsonTemplate,
       handleFileUpload,
-      triggerFileInput, // Add this to the return
-      fileInput, // Add this to the return
+      triggerFileInput,
+      fileInput,
+      deleteAllEntries
     };
   },
 };
@@ -547,5 +573,12 @@ export default {
 .file-upload-wrapper span:last-child {
   font-weight: bold;
   color: #007bff;
+}
+
+.danger-button {
+  background-color: #dc3545;
+}
+.danger-button:hover {
+  background-color: #a71d2a;
 }
 </style>

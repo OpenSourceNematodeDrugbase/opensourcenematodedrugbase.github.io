@@ -1,111 +1,66 @@
 <template>
-  <div class="intro-banner">
-    <h1>The Nematode Drugbase</h1>
-    <p class="intro-text">
-      A comprehensive resource for researchers, healthcare professionals, and policymakers focused on understanding the critical role that nematodes play in neglected diseases.
-    </p>
+
+  <SearchComponent/>
+
+  <div class="database-home-container">
+    <DrugTargetEntry :entries="paginatedEntries" />
+
+    <div class="pagination-controls">
+      <label for="entriesPerPage">Show entries:</label>
+      <select id="entriesPerPage" v-model.number="entriesPerPage">
+        <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
+      </select>
+    </div>
   </div>
-
-  <SearchComponent @text-changed="updatedValue" @filter-changed="updatedFilter" />
-
-  <LiteratureEntry v-if="filterSearch === 'documentCollection'" :entries="entries" />
-  <ProteinEntry v-if="filterSearch === 'proteinEnzymes'" :entries="entries" />
-  <DrugTargetEntry v-if="filterSearch === 'drugTargets'" :entries="entries" />
 </template>
 
 <script>
-import { ref, onMounted, computed, watch } from 'vue';
-import { getDatabase, ref as dbRef, onValue, set, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database'; // Import Realtime Database functions
-import SearchComponent from '@/components/SearchComponent.vue';
-import LiteratureEntry from '@/components/DataEntryComponents/LiteratureEntry.vue';
-import ProteinEntry from "@/components/DataEntryComponents/ProteinEntry.vue";
-import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue"; // New component
+import { ref, onMounted, computed } from 'vue';
+import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database';
+import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue";
+import SearchComponent from "@/components/SearchComponent.vue";
 
 export default {
   components: {
-    DrugTargetEntry,
-    ProteinEntry,
     SearchComponent,
-    LiteratureEntry, // Register component
-  },
-  data() {
-    return {
-      searchQuery: '',
-      filterSearch: 'documentCollection',
-    };
-  },
-  methods: {
-    updatedValue(event) {
-      this.searchQuery = event.toLowerCase();
-    },
-    updatedFilter(event) {
-      const filterMap = {
-        'Relevant Literature': 'documentCollection',
-        'Proteins & Enzymes': 'proteinEnzymes',
-        'Drug Targets': 'drugTargets',
-      };
-      this.filterSearch = filterMap[event] || 'documentCollection';
-    },
+    DrugTargetEntry,
   },
   setup() {
-    const database = getDatabase(); // Initialize Realtime Database
+    const database = getDatabase();
     const allEntries = ref([]);
-    const searchQuery = ref('');
-    const filterSearch = ref('documentCollection');
-    const realtimeData = ref(null);
+    const entriesPerPage = ref(5);
+    const options = [5, 10, 25, 50];
 
     const fetchEntries = () => {
-      if (!filterSearch.value) return;
-      try {
-        allEntries.value = []; // Clear the array before fetching new data
+      allEntries.value = [];
+      const entriesRef = dbRef(database, 'drugTargets');
 
-        const entriesRef = dbRef(database, filterSearch.value);
+      onChildAdded(entriesRef, (snapshot) => {
+        allEntries.value.push({ id: snapshot.key, ...snapshot.val() });
+      });
 
-        // Listen for new entries
-        onChildAdded(entriesRef, (snapshot) => {
-          allEntries.value.push({ id: snapshot.key, ...snapshot.val() });
-        });
+      onChildChanged(entriesRef, (snapshot) => {
+        const index = allEntries.value.findIndex(entry => entry.id === snapshot.key);
+        if (index !== -1) {
+          allEntries.value[index] = { id: snapshot.key, ...snapshot.val() };
+        }
+      });
 
-        // Listen for changed entries
-        onChildChanged(entriesRef, (snapshot) => {
-          const index = allEntries.value.findIndex(entry => entry.id === snapshot.key);
-          if (index !== -1) {
-            allEntries.value[index] = { id: snapshot.key, ...snapshot.val() };
-          }
-        });
-
-        // Listen for removed entries
-        onChildRemoved(entriesRef, (snapshot) => {
-          allEntries.value = allEntries.value.filter(entry => entry.id !== snapshot.key);
-        });
-
-      } catch (error) {
-        console.error('Error fetching Realtime Database data:', error);
-      }
+      onChildRemoved(entriesRef, (snapshot) => {
+        allEntries.value = allEntries.value.filter(entry => entry.id !== snapshot.key);
+      });
     };
 
-    watch(filterSearch, fetchEntries);
     onMounted(fetchEntries);
 
-    const filteredEntries = computed(() =>
-      allEntries.value.filter((entry) => {
-        const queryLower = searchQuery.value.toLowerCase();
-        return (
-          !searchQuery.value ||
-          entry.documentTitle?.toLowerCase().includes(queryLower) ||
-          entry.abstract?.toLowerCase().includes(queryLower) ||
-          (entry.keywords && entry.keywords.some((keyword) => keyword.toLowerCase().includes(queryLower))) ||
-          (entry.authors && entry.authors.some((author) => author.toLowerCase().includes(queryLower)))
-        );
-      })
-    );
+    const paginatedEntries = computed(() => {
+      return allEntries.value.slice(0, entriesPerPage.value);
+    });
 
     return {
-      entries: filteredEntries,
-      searchQuery,
-      filterSearch,
-      realtimeData,
-      db: database, // Pass the database instance to methods
+      paginatedEntries,
+      entriesPerPage,
+      options,
     };
   },
 };
@@ -113,23 +68,26 @@ export default {
 
 <style scoped>
 .database-home-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center; /* Center the entries in the container */
-  max-width: 100%; /* Ensure it takes up full width */
-}
-
-.intro-banner {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.debug-section {
-  margin-top: 40px;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  text-align: left;
+}
+
+.pagination-controls {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.pagination-controls select {
+  padding: 5px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
 }
 </style>

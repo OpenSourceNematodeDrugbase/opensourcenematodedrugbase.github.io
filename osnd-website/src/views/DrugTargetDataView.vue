@@ -1,182 +1,91 @@
 <template>
-  <div class="data-entry-container">
-    <div v-if="entry" class="content-wrapper">
-      <h2 class="entry-title">{{ entry.targetName || "Name Unprovided" }}</h2>
-      <div class="card-grid">
-        <div class="card">
-          <h3>Functional Importance</h3>
-          <h4>Functional Importance Rating: {{ entry.functionalImportanceRating || "No Rating" }} </h4>
-          <p><strong>Essentially Score: </strong> {{ entry.essentiallyScore || "No Data" }}</p>
-          <p><strong>Phenotype Effect Lethal: </strong> {{ entry.phenotypeEffectLethal || "No Data" }}</p>
-          <p><strong>Expression Stage: </strong> {{ entry.expressionStage || "No Data" }}</p>
-          <p><strong>Pathway Essentially: </strong> {{ entry.pathwayEssentially || "No Data" }}</p>
-          <p><strong>Unique Parasite Metabolic Pathway: </strong> {{ entry.uniqueParasiteMetabolicPathway || "No Data" }}</p>
-          <p><strong>Immune Evasion Role: </strong> {{ entry.immuneEvasionRole || "No Data" }}</p>
-        </div>
-        <div class="card">
-          <h3>Pathogen Specificity</h3>
-          <h4>Pathogen Specificity Rating: {{ entry.pathogenSpecificityRating || "No Rating" }} </h4>
-          <p><strong>Ortholog Comparison: </strong> {{ entry.orthologComparison || "No Data" }}</p>
-          <p><strong>Host Homology: </strong> {{ entry.hostHomology || "No Data" }}</p>
-          <p><strong>Cross-Species Conservation: </strong> {{ entry.crossSpeciesConservation || "No Data" }}</p>
-          <p><strong>Ortholog Percentage Identity: </strong> {{ entry.orthologPercentageIdentity || "No Data" }}</p>
-        </div>
-        <div class="card">
-          <h3>Molecular Accessibility</h3>
-          <h4>Molecular Accessibility Rating: {{ entry.molecularAccessibilityRating || "No Rating" }} </h4>
-          <p><strong>Sub Cellular Location: </strong> {{ entry.subCellularLocation || "No Data" }}</p>
-          <p><strong>Transport System: </strong> {{ entry.transportSystem || "No Data" }}</p>
-          <p><strong>Drugability Method: </strong> {{ entry.druggabilityMethod || "No Data" }}</p>
-          <p><strong>Tissue Expression: </strong> {{ entry.tissueExpression || "No Data" }}</p>
-        </div>
-        <div class="card">
-          <h3>Drugability</h3>
-          <h4>Drugability Rating: {{ entry.druggabilityRating || "No Rating" }} </h4>
-          <p><strong>Resistant Potential: </strong> {{ entry.resistantPotential || "No Data" }}</p>
-          <p><strong>Binding Score: </strong> {{ entry.bindingScore || "No Data" }}</p>
-          <p><strong>Protein Structure Availability: </strong> {{ entry.proteinStructureAvailability || "No Data" }}</p>
-        </div>
+  <div class="drug-target-view-container">
+    <div v-if="loading">Loading entry details...</div>
+    <div v-else-if="entry">
+      <h2>{{ entry.gene_stable_id }} — {{ entry.human_gene_name }}</h2>
+
+      <p><strong>Genome Project:</strong> {{ entry.genome_project || 'N/A' }}</p>
+      <p><strong>Gene Biotype:</strong> {{ entry.gene_biotype || 'N/A' }}</p>
+      <p><strong>Homology Type:</strong> {{ entry.homology_type || 'N/A' }}</p>
+      <p><strong>Human Gene Stable ID:</strong> {{ entry.human_gene_stable_id || 'N/A' }}</p>
+      <p><strong>Human Protein Stable ID:</strong> {{ entry.human_protein_stable_id || 'N/A' }}</p>
+      <p><strong>Identity:</strong> {{ entry.identity ?? 'N/A' }}</p>
+      <p><strong>Human Identity:</strong> {{ entry.human_identity ?? 'N/A' }}</p>
+      <p><strong>Similar Protein in Humans:</strong> {{ entry.similar_protein_in_humans ? 'Yes' : 'No' }}</p>
+
+      <div v-if="entry.caenorhabditis_elegans_prjna13758_ws290_gene_name">
+        <p><strong>C. elegans Gene Name:</strong> {{ entry.caenorhabditis_elegans_prjna13758_ws290_gene_name }}</p>
+        <p><strong>C. elegans Gene Stable ID:</strong> {{ entry.caenorhabditis_elegans_prjna13758_ws290_gene_stable_id }}</p>
       </div>
     </div>
-    <p v-else class="loading-message">Loading data...</p>
+    <div v-else>
+      <p>Entry not found.</p>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, watch, nextTick, onUnmounted, unref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { getDatabase, ref as dbRef, onValue } from "firebase/database";
-import * as NGL from "ngl";
+import { getDatabase, ref as dbRef, get, child } from "firebase/database";
 
 export default {
   setup() {
     const route = useRoute();
-    const db = getDatabase();
     const entry = ref(null);
-    const nglStage = ref(null);
+    const loading = ref(true);
 
-    // Fetch entry from Realtime Database
-    const fetchEntry = () => {
-      const entryId = route.params.id;
-      if (!entryId) return;
+    onMounted(async () => {
+      const id = route.params.id;
 
       try {
-        console.log(`Fetching data for entry ID: ${entryId}`);
-        const dataRef = dbRef(db, `drugTargets/${entryId}`);
-
-        onValue(dataRef, (snapshot) => {
-          if (snapshot.exists()) {
-            entry.value = { id: entryId, ...snapshot.val() };
-          } else {
-            console.error("No such document found!");
-            entry.value = null;
-          }
-        });
+        const db = getDatabase();
+        const snapshot = await get(child(dbRef(db), `entries/${id}`)); // Assumes your data is at /entries/:id
+        if (snapshot.exists()) {
+          entry.value = snapshot.val();
+        } else {
+          console.warn("Entry not found for ID:", id);
+        }
       } catch (error) {
-        console.error("Error fetching document:", error);
-      }
-    };
-
-    // Render NGL Viewer
-    const renderNGLViewer = async (pdbId) => {
-      await nextTick(); // Ensure DOM updates before rendering
-
-      const container = document.getElementById("ngl-container");
-      if (!container) return;
-
-      // Dispose of previous NGL stage (avoid memory leaks)
-      if (nglStage.value) {
-        nglStage.value.dispose();
-        nglStage.value = null;
-      }
-
-      // Initialize NGL Stage
-      nglStage.value = new NGL.Stage("ngl-container", { backgroundColor: "black" });
-
-      // Load PDB file with delay to fix modelViewMatrix issue
-      setTimeout(() => {
-        nglStage.value
-          .loadFile(`https://files.rcsb.org/download/${pdbId}.pdb`, { defaultRepresentation: true })
-          .then((component) => {
-            component.autoView(); // Center the view
-          })
-          .catch((err) => {
-            console.error("Error loading PDB file:", err);
-          });
-      }, 500); // Slight delay to ensure proper loading
-    };
-
-    // Watch for PDB ID changes
-    watch(
-    () => unref(entry)?.pdb_id,
-    async (newPdbId) => {
-      if (newPdbId) {
-        await nextTick(); // Ensure Vue updates first
-        renderNGLViewer(newPdbId);
-      }
-    }
-  );
-
-    onMounted(fetchEntry);
-
-    // Cleanup on unmount
-    onUnmounted(() => {
-      if (nglStage.value) {
-        nglStage.value.dispose();
-        nglStage.value = null;
+        console.error("Error fetching entry:", error);
+      } finally {
+        loading.value = false;
       }
     });
 
-    return { entry };
+    return {
+      entry,
+      loading,
+    };
   },
 };
 </script>
 
 <style scoped>
-.data-entry-container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.entry-title {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
+.drug-target-view-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
   color: #333;
 }
 
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
-  justify-content: center;
-}
-
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: left;
-}
-
-.card p {
-  margin: 8px 0;
-  font-size: 16px;
-  color: #444;
-}
-
-.card h3 {
-  font-size: 20px;
-  color: #007bff;
-  margin-bottom: 10px;
-}
-
-.loading-message {
-  font-size: 18px;
+h2 {
+  font-size: 24px;
   font-weight: bold;
-  color: #666;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+strong {
+  color: #222;
 }
 </style>
