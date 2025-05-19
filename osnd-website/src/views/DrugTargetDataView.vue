@@ -2,21 +2,33 @@
   <div class="drug-target-view-container">
     <div v-if="loading">Loading entry details...</div>
     <div v-else-if="entry">
-      <h2>{{ entry.gene_stable_id }} — {{ entry.human_gene_name }}</h2>
-
-      <p><strong>Genome Project:</strong> {{ entry.genome_project || 'N/A' }}</p>
-      <p><strong>Gene Biotype:</strong> {{ entry.gene_biotype || 'N/A' }}</p>
-      <p><strong>Homology Type:</strong> {{ entry.homology_type || 'N/A' }}</p>
-      <p><strong>Human Gene Stable ID:</strong> {{ entry.human_gene_stable_id || 'N/A' }}</p>
-      <p><strong>Human Protein Stable ID:</strong> {{ entry.human_protein_stable_id || 'N/A' }}</p>
-      <p><strong>Identity:</strong> {{ entry.identity ?? 'N/A' }}</p>
-      <p><strong>Human Identity:</strong> {{ entry.human_identity ?? 'N/A' }}</p>
-      <p><strong>Similar Protein in Humans:</strong> {{ entry.similar_protein_in_humans ? 'Yes' : 'No' }}</p>
-
-      <div v-if="entry.caenorhabditis_elegans_prjna13758_ws290_gene_name">
-        <p><strong>C. elegans Gene Name:</strong> {{ entry.caenorhabditis_elegans_prjna13758_ws290_gene_name }}</p>
+      <h2>Drug Target Entry: {{ entry.gene_stable_id }}</h2>
+      <section class="details-section">
+        <h3>Entry Details</h3>
+        <p><strong>Genome Project:</strong> {{ entry.genome_project }}</p>
+        <p><strong>Gene Stable ID:</strong> {{ entry.gene_stable_id }}</p>
+        <p><strong>Gene Biotype:</strong> {{ entry.gene_biotype }}</p>
+        <p><strong>Human Gene Stable ID:</strong> {{ entry.human_gene_stable_id }}</p>
+        <p><strong>Human Gene Name:</strong> {{ entry.human_gene_name }}</p>
+        <p><strong>Human Protein Stable ID:</strong> {{ entry.human_protein_stable_id }}</p>
+        <p><strong>Homology Type:</strong> {{ entry.homology_type }}</p>
+        <p><strong>Identity:</strong> {{ entry.identity }}%</p>
+        <p><strong>Human Identity:</strong> {{ entry.human_identity }}%</p>
         <p><strong>C. elegans Gene Stable ID:</strong> {{ entry.caenorhabditis_elegans_prjna13758_ws290_gene_stable_id }}</p>
-      </div>
+        <p><strong>C. elegans Gene Name:</strong> {{ entry.caenorhabditis_elegans_prjna13758_ws290_gene_name }}</p>
+        <p><strong>Identity 1:</strong> {{ entry.identity_1 }}%</p>
+      </section>
+
+      <section class="criteria-section">
+        <h3>Criteria</h3>
+        <p>
+          <strong>Similar Protein in Humans:</strong>
+          <span :class="{'yes': entry.similar_protein_in_humans, 'no': !entry.similar_protein_in_humans}">
+            {{ entry.similar_protein_in_humans ? ' Yes' : ' No' }}
+          </span>
+        </p>
+      </section>
+
     </div>
     <div v-else>
       <p>Entry not found.</p>
@@ -36,15 +48,18 @@ export default {
     const loading = ref(true);
 
     onMounted(async () => {
+      // Extract the ID from the route, which is the last part of the URL
       const id = route.params.id;
 
       try {
         const db = getDatabase();
-        const snapshot = await get(child(dbRef(db), `entries/${id}`)); // Assumes your data is at /entries/:id
+        // Retrieve the entry from Firebase Realtime Database at /entries/:id
+        const snapshot = await get(child(dbRef(db), `drugTargets/${id}`));
         if (snapshot.exists()) {
           entry.value = snapshot.val();
         } else {
-          console.warn("Entry not found for ID:", id);
+          console.warn(`Entry not found for ID: ${id}`);
+          console.log("Route ID:", id);
         }
       } catch (error) {
         console.error("Error fetching entry:", error);
@@ -65,27 +80,76 @@ export default {
 .drug-target-view-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px 20px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
   font-size: 16px;
-  color: #333;
+}
+
+.loading {
+  font-style: italic;
+  text-align: center;
+  color: #555;
+  font-size: 18px;
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #007bff;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1a73e8;
+  border-bottom: 2px solid #1a73e8;
+  padding-bottom: 6px;
 }
 
-p {
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+  color: #34495e;
+}
+
+.details-section p,
+.criteria-section p {
   margin-bottom: 12px;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 strong {
   color: #222;
+}
+
+.criteria-section {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f0f7ff;
+  border-radius: 10px;
+  border: 1px solid #d0e2ff;
+}
+
+.criteria-section p {
+  font-size: 16px;
+}
+
+.criteria-section span.yes {
+  color: #27ae60;
+  font-weight: 700;
+}
+
+.criteria-section span.no {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+.not-found {
+  text-align: center;
+  font-size: 18px;
+  color: #e74c3c;
+  font-weight: 600;
 }
 </style>

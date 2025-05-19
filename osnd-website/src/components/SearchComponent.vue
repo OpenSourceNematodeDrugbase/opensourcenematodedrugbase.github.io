@@ -37,7 +37,7 @@ export default {
 .search-container {
   max-width: 600px;
   margin: 50px auto;
-  padding: 0 20px;
+  padding: 0 0px;
   display: flex;
   justify-content: center;
 }

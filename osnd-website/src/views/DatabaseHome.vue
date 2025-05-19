@@ -1,6 +1,7 @@
 <template>
+  <SearchComponent />
 
-  <SearchComponent/>
+  <FilterComponent :filters="filters" @update:filters="filters = $event" />
 
   <div class="database-home-container">
     <DrugTargetEntry :entries="paginatedEntries" />
@@ -19,9 +20,11 @@ import { ref, onMounted, computed } from 'vue';
 import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database';
 import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
+import FilterComponent from "@/components/FilterComponent.vue";
 
 export default {
   components: {
+    FilterComponent,
     SearchComponent,
     DrugTargetEntry,
   },
@@ -30,6 +33,10 @@ export default {
     const allEntries = ref([]);
     const entriesPerPage = ref(5);
     const options = [5, 10, 25, 50];
+
+    const filters = ref({
+      similarProtein: "", // "true", "false", or ""
+    });
 
     const fetchEntries = () => {
       allEntries.value = [];
@@ -53,11 +60,23 @@ export default {
 
     onMounted(fetchEntries);
 
+    const filteredEntries = computed(() => {
+      return allEntries.value.filter(entry => {
+        if (filters.value.similarProtein !== "") {
+          if (String(entry.similar_protein_in_humans) !== filters.value.similarProtein) {
+            return false;
+          }
+        }
+        return true;
+      });
+    });
+
     const paginatedEntries = computed(() => {
-      return allEntries.value.slice(0, entriesPerPage.value);
+      return filteredEntries.value.slice(0, entriesPerPage.value);
     });
 
     return {
+      filters,
       paginatedEntries,
       entriesPerPage,
       options,
