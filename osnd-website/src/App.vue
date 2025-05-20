@@ -62,10 +62,10 @@
     }
     .intro-text{
       text-align: center;
-      font-size: 4.3vw !important;
+      font-size: 2.87vw !important;
     }
     .intro-banner h1{
-    font-size: 5.2vw;
+    font-size: 3.7vw;
     
    }
   }
