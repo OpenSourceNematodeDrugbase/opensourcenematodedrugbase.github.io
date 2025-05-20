@@ -1,3 +1,4 @@
+import { doc } from 'firebase/firestore';
 import { ref, onMounted, onUnmounted } from 'vue';
 const BigScreen = ref(false);
 const menuOpened = ref(false);
@@ -36,10 +37,12 @@ export function phoneMenuOpened()
     if (menuOpened.value == true)
     {
         document.body.style.overflow = 'hidden';
+        document.getElementById("HamburgerImg").src = "/src/assets/Cross.svg"
     }
     else 
     {
         document.body.style.overflow = 'auto';
+        document.getElementById("HamburgerImg").src = "/src/assets/Hamburger.svg"
     }
 }
 export function isMenuOpened()

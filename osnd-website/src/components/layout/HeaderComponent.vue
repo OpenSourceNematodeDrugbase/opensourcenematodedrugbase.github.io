@@ -20,7 +20,7 @@
      
       
         <button v-if="!BigScreen" @click="phoneMenuOpened" id="HamburgerMenuBtn">
-          <img style="width: 50px;" src="../../assets/Hamburger.svg">
+          <img style="width: 50px;" src="../../assets/Hamburger.svg" id="HamburgerImg">
         </button>
       </div>
     </header>
