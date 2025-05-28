@@ -8,6 +8,16 @@
     <hr>
   </section>
   <section class="header-section">
+    <img class="image usnd-img" src="@/assets/Maintenance.png" alt="maintenance.png">
+    <h3>The ONDB website is currently still in development...</h3>
+    <p>Please follow
+  <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/about/" target="_blank" rel="noopener noreferrer">
+    our LinkedIn page
+  </a>
+  or other social media for updates.</p>
+  </section>
+  <hr>
+  <section class="header-section">
     <h2>The Platform</h2>
     <button @click="navigateToDatabase" type="submit" class="submit-button">OPEN DATABASE</button>
     <p class="section-text">The open-access project aims to enable discovery of medicines for neglected diseases caused by nematodes (parasitic worms).</p>

@@ -1,4 +1,16 @@
 <template>
+
+  <button @click="navigateToDatabaseFaq" type="submit" class="submit-button">Database FAQ</button>
+
+  <h2>
+  The database and criterion is currently being updated.
+  Please follow
+  <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/about/" target="_blank" rel="noopener noreferrer">
+    our LinkedIn page
+  </a>
+  or other social media for updates.
+</h2>
+
   <SearchComponent />
 
   <FilterComponent :filters="filters" @update:filters="filters = $event" />
@@ -12,6 +24,12 @@
         <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
       </select>
     </div>
+  </div>
+
+  <div>
+    <p>Special thanks and credit goes to the following organisations and individuals for providing data for the Nematode Drugbase tool:</p>
+    <p>WormBase 2024: status and transitioning to Alliance infrastructure Paul W. Sternberg, Kimberly Van Auken, Qinghua Wang, Adam Wright, Karen Yook, Magdalena Zarowiecki, Valerio Arnaboldi , Andrés Becerra, Stephanie Brown, Scott Cain, Juancarlos Chan, Wen J. Chen, Jaehyoung Cho, Paul Davis, Stavros Diamantakis, Sarah Dyer, Dionysis Grigoriadis, Christian A. Grove, Todd Harris, Kevin Howe, Ranjana Kishore, Raymond Lee, Ian Longden, Manuel Luypaert, Hans-Michael Müller, Paulo Nuin, Mark Quinton-Tulloch, Daniela Raciti, Tim Schedl, Gary Schindelman, Lincoln Stein Genetics, Volume 227, Issue 1, May 2024, iyae050.</p>
+    <p>Data provided via WormBase BioMart (http://www.wormbase.org/tools/martview)</p>
   </div>
 </template>
 
@@ -28,6 +46,11 @@ export default {
     SearchComponent,
     DrugTargetEntry,
   },
+  methods: {
+    navigateToDatabaseFaq() {
+      this.$router.push('/database-faq'); // Navigate to the "About" page
+    },
+  },
   setup() {
     const database = getDatabase();
     const allEntries = ref([]);
@@ -38,6 +61,8 @@ export default {
       similarProtein: "",
       hasKnownDomain: "",
       hasGOAnnotation: "",
+      hasParalogueGeneStableID: "",
+      hasLaravalDevelopmentLink: "",
     });
 
     const fetchEntries = () => {
@@ -45,18 +70,18 @@ export default {
       const entriesRef = dbRef(database, 'drugTargets');
 
       onChildAdded(entriesRef, (snapshot) => {
-        allEntries.value.push({ id: snapshot.key, ...snapshot.val() });
+        allEntries.value.push({ firebaseId: snapshot.key, ...snapshot.val() });
       });
 
       onChildChanged(entriesRef, (snapshot) => {
-        const index = allEntries.value.findIndex(entry => entry.id === snapshot.key);
+        const index = allEntries.value.findIndex(entry => entry.firebaseId === snapshot.key);
         if (index !== -1) {
-          allEntries.value[index] = { id: snapshot.key, ...snapshot.val() };
+          allEntries.value[index] = { firebaseId: snapshot.key, ...snapshot.val() };
         }
       });
 
       onChildRemoved(entriesRef, (snapshot) => {
-        allEntries.value = allEntries.value.filter(entry => entry.id !== snapshot.key);
+        allEntries.value = allEntries.value.filter(entry => entry.firebaseId !== snapshot.key);
       });
     };
 
@@ -76,6 +101,16 @@ export default {
 
         if (filters.value.hasGOAnnotation !== "" &&
             String(entry.has_gene_ontology_functional_annotation) !== filters.value.hasGOAnnotation) {
+          return false;
+        }
+
+        if (filters.value.hasParalogueGeneStableID !== "" &&
+            String(entry.has_paralogue_id) !== filters.value.hasParalogueGeneStableID) {
+          return false;
+        }
+
+        if (filters.value.hasLaravalDevelopmentLink !== "" &&
+            String(entry.linked_to_larval_development) !== filters.value.hasLaravalDevelopmentLink) {
           return false;
         }
 
@@ -121,4 +156,29 @@ export default {
   border: 1px solid #ccc;
   cursor: pointer;
 }
+
+.submit-button {
+  padding: 10px 24px;
+  background-color: #2563eb; /* Tailwind 'blue-600' */
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.submit-button:hover {
+  background-color: #1e40af; /* Tailwind 'blue-800' */
+  transform: translateY(-1px);
+}
+
+.submit-button:active {
+  background-color: #1e3a8a; /* Tailwind 'blue-900' */
+  transform: translateY(0);
+}
+
 </style>

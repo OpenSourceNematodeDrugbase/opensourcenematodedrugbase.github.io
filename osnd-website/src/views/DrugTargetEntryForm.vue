@@ -20,6 +20,7 @@
         @change="handleFileUpload"
         class="file-upload"
         accept="application/json"
+        multiple
       />
     </div>
   </div>
@@ -36,50 +37,51 @@ export default {
     const fileInput = ref(null); // Add this line
 
     const handleFileUpload = (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
+      const files = event.target.files;
+      if (!files.length) return;
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const jsonData = JSON.parse(e.target.result);
+      const dataRef = dbRef(db, 'drugTargets');
+      const allPromises = [];
 
-          const dataRef = dbRef(db, 'drugTargets');
+      Array.from(files).forEach((file) => {
+        const reader = new FileReader();
+        const promise = new Promise((resolve, reject) => {
+          reader.onload = (e) => {
+            try {
+              const jsonData = JSON.parse(e.target.result);
 
-          if (Array.isArray(jsonData)) {
-            // If array, push each object individually
-            const promises = jsonData.map(item => {
-              const newRef = push(dataRef);
-              return set(newRef, item);
-            });
-            Promise.all(promises)
-              .then(() => {
-                alert('All entries added successfully!');
-              })
-              .catch((error) => {
-                console.error('Error adding some entries:', error);
-                alert('Some entries failed to upload.');
-              });
-          } else if (typeof jsonData === 'object' && jsonData !== null) {
-            // If a single object, push just that one
-            const newRef = push(dataRef);
-            set(newRef, jsonData)
-              .then(() => alert('Entry added successfully!'))
-              .catch((error) => {
-                console.error('Upload error:', error);
-                alert('Upload failed.');
-              });
-          } else {
-            alert('Uploaded JSON must be an object or an array of objects.');
-          }
+              if (Array.isArray(jsonData)) {
+                // If array, push each object individually
+                const innerPromises = jsonData.map(item => {
+                  const newRef = push(dataRef);
+                  return set(newRef, item);
+                });
+                Promise.all(innerPromises).then(resolve).catch(reject);
+              } else if (typeof jsonData === 'object' && jsonData !== null) {
+                // Single object
+                const newRef = push(dataRef);
+                set(newRef, jsonData).then(resolve).catch(reject);
+              } else {
+                reject(new Error('Uploaded JSON must be an object or an array of objects.'));
+              }
+            } catch (error) {
+              reject(new Error('Invalid JSON file.'));
+            }
+          };
+          reader.onerror = () => reject(new Error('Failed to read file.'));
+        });
+        reader.readAsText(file);
+        allPromises.push(promise);
+      });
 
-        } catch (error) {
-          console.error('JSON parsing failed:', error);
-          alert('Invalid JSON file.');
-        }
-      };
-      reader.readAsText(file);
+      Promise.all(allPromises)
+        .then(() => alert('All files uploaded successfully!'))
+        .catch(error => {
+          console.error('Error uploading files:', error);
+          alert(`Upload failed: ${error.message}`);
+        });
     };
+
 
     const deleteAllEntries = () => {
       if (confirm("Are you sure you want to delete ALL entries? This cannot be undone.")) {

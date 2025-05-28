@@ -35,6 +35,26 @@
             <option value="false">False</option>
           </select>
         </div>
+
+        <!-- Has Paralogue Stable ID -->
+        <div class="filter-group">
+          <label for="goFilter">Has Paralogue Gene Stable ID:</label>
+          <select id="goFilter" v-model="localFilters.hasParalogueGeneStableID">
+            <option value="">All</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
+
+        <!-- Is Linked to Larval Development -->
+        <div class="filter-group">
+          <label for="goFilter">Has Link to Larval Development:</label>
+          <select id="goFilter" v-model="localFilters.hasLaravalDevelopmentLink">
+            <option value="">All</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
       </div>
     </transition>
   </div>
