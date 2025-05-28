@@ -19,12 +19,12 @@
         <li class="item-text">Paule Abrutyte - Marketing & Outreach</li>
         <br>
         <h2>Academic Partners</h2>
-        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/barr-alastair" target="_blank">Alastair Barr</a></li>
-        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/partridge-freddie" target="_blank">Freddie Patridge</a></li>
-        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/sengupta-dipankar" target="_blank">Dipankar Sengupta</a></li>
-        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/seyoum-teddy" target="_blank">Teddy Seyoum</a></li>
-        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/hayes-polly" target="_blank">Polly Hayes</a></li>
-        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/guiliano-david" target="_blank">David Guiliano</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/barr-alastair" target="_blank">Dr Alastair Barr</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/partridge-freddie" target="_blank">Dr Freddie Patridge</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/sengupta-dipankar" target="_blank">Dr Dipankar Sengupta</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/seyoum-teddy" target="_blank">Dr Teddy Seyoum</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/hayes-polly" target="_blank">Dr Polly Hayes</a></li>
+        <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/guiliano-david" target="_blank">Dr David Guiliano</a></li>
 
         <p class="section-text">Additionally, Dr Abdulhakeem Sulyman will be joining in 2025 supported by an Africa Research Excellence Fund Research Development Fellowship.</p>
 

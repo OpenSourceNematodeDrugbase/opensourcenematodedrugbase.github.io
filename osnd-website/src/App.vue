@@ -118,5 +118,9 @@ h1, h2 {
     {
       width: 80% !important;
     }
+    .intro-text{
+      text-align: center;
+      font-size: 3.8vw !important;
+    }
   }
 </style>

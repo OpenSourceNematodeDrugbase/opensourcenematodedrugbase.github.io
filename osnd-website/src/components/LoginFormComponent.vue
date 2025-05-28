@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <form @submit.prevent="submitForm" class="form-container">
     <div class="form-group">
       <label for="email"></label>
       <input
@@ -16,14 +16,15 @@
       <input
         v-model="password"
         placeholder="Password"
-        type="text"
+        type="password"
         id="password"
         required
       />
     </div>
 
     <div class="form-group">
-      <button type="submit">Login</button>
+      <button type="submit" @click="handleLogin" class="button">Sign In</button>
+      <button type="button" @click="handleSignUp" class="button">Sign Up</button>
     </div>
   </form>
 </template>
@@ -32,7 +33,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { auth } from "../main.js";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default {
   setup() {
@@ -57,60 +58,43 @@ export default {
       }
     };
 
-    const submitForm = () => {
-      handleLogin();
+    const handleSignUp = async () => {
+      router.push("/sign-up");
     };
 
     return {
       email,
       password,
       error,
-      submitForm,
+      handleLogin,
+      handleSignUp,
     };
   },
 };
 </script>
 
 <style scoped>
-.form-group {
-  margin-bottom: 10px;
-  padding: 10px;
-}
-
-.form-group label {
-  margin-right: 20px;
-  margin-left: 20px;
-  font-size: 18px;
-}
-
-.form-group button {
-  padding: 15px;
-  width: 10%;
-  margin-top: -87px;
-  margin-bottom: 2px;
-  margin-left: 100px;
-  margin-right: 0px;
-  position: absolute;
-}
-
-input[type="text"] {
-  width: 20%;
-  padding: 20px 20px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 20px;
-  margin-right: 400px;
-  box-sizing: border-box;
-  font-size: 15px;
-}
-
-textarea {
-  width: 53.5%;
-  height: 150px;
-  padding: 12px 20px;
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
   margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
   box-sizing: border-box;
-  resize: none;
-  color: rgb(125, 125, 125);
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
 }
 </style>

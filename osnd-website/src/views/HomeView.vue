@@ -8,9 +8,20 @@
     <hr>
   </section>
   <section class="header-section">
+    <img class="image usnd-img" src="@/assets/Maintenance.png" alt="maintenance.png">
+    <h3>The ONDB website is currently still in development...</h3>
+    <p>Please follow
+  <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/about/" target="_blank" rel="noopener noreferrer">
+    our LinkedIn page
+  </a>
+  or other social media for updates.</p>
+  </section>
+  <hr>
+  <section class="header-section">
     <h2>The Platform</h2>
+    <button @click="navigateToDatabase" type="submit" class="submit-button">OPEN DATABASE</button>
     <p class="section-text">The open-access project aims to enable discovery of medicines for neglected diseases caused by nematodes (parasitic worms).</p>
-    <p class="section-text">The project will launch here in 2025.</p>
+    <hr>
   </section>
   <section class="header-section">
     <h2>Mission Statement</h2>
@@ -28,7 +39,77 @@
   </section>
 </template>
 
+<script>
+export default {
+  methods: {
+    navigateToDatabase() {
+      this.$router.push('/nematode-drugbase'); // Navigate to the "About" page
+    },
+  },
+};
+</script>
 
+<style>
+
+/* General styling */
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6;
+  color: #333;
+  text-wrap: balance;
+}
+
+h1, h2 {
+  color: #2a2a2a;
+  font-weight: 600;
+  line-height: 1.4;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.intro-banner {
+  text-align: center;
+  padding: 3rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.intro-text {
+  font-size: 24px;
+  max-width: 950px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Header section styling */
+.header-section {
+  margin: 0 auto;
+  max-width: 1050px;
+}
+
+.header-section h2 {
+  font-size: 42px;
+  margin: 25px, 0px;
+}
+
+.section-text {
+  font-size: 32px;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Image styling */
+.image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+}
+
+</style>
 
 <style scoped>
 
@@ -51,4 +132,31 @@
 }
 
 
+</style>
+
+<style scoped>
+
+.submit-button {
+  padding: 20px 200px;
+  background-color: #CEE1F2;
+  color: #F2B872; /* Text color */
+  text-shadow: 0.75px 0.75px 0.75px #593C23, -0.75px -0.75px 0px #593C23, 0.75px -0.75px 0px #593C23, -0.75px 0.75px 0px #593C23;
+  font-size: 42px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: 4px solid rgb(255, 255, 255); /* Correct outline format */
+}
+
+
+.submit-button:hover {
+  background-color: #adc0d0;
+}
+
+@media screen and (max-width:1000px) {  
+  .submit-button {
+    padding: 20px 20px;
+  }
+}
 </style>
