@@ -1,29 +1,63 @@
 <template>
     <header class="header">
       <div class="container">
-        <router-link to="/">
-          <img class="header-logo" src="@/assets/OSNDB avatar_7.png" alt="Logo">
+        <router-link to="/" class="LogoAnchor">
+        <img class="header-logo" src="@/assets/ONDB logo.png" alt="Logo">
         </router-link>
-        <h1 class="logo">Open-Source Nematode Drug Base Project</h1>
-        <nav class="nav">
+        <h1 class="logo">Open Nematode Drug Base</h1>
+        <!--Desktop nav bar-->
+        <nav class="nav" v-if="BigScreen">
           <ul>
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/nematode-drugbase">Nematode Drugbase</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
-            <li><router-link to="/funding">Funding</router-link></li>
             <li><router-link to="/blog-dashboard">Blog</router-link></li>
+            <li><router-link to="/funding">Funding</router-link></li>
+            <li><router-link to="/about">About</router-link></li>
             <li><router-link to="/contact">Contact</router-link></li>
           </ul>
         </nav>
+
+        <button v-if="!BigScreen" @click="phoneMenuOpened" id="HamburgerMenuBtn">
+          <img style="width: 50px;" src="../../assets/Hamburger.svg" id="HamburgerImg">
+        </button>
       </div>
     </header>
+      <!--For mobile users-->
+    <div class="mobileBackground" v-if="openMenu">
+    </div>
+    <div v-if="openMenu">
+      <nav class="navMobile">
+      <ul>
+        <li><router-link to="/" @click.native="phoneMenuOpened">Home</router-link></li>
+        <li><router-link to="/nematode-drugbase" @click.native="phoneMenuOpened">Nematode Drugbase</router-link></li>
+        <li><router-link to="/blog-dashboard" @click.native="phoneMenuOpened">Blog</router-link></li>
+        <li><router-link to="/funding" @click.native="phoneMenuOpened">Funding</router-link></li>
+        <li><router-link to="/about"@click.native="phoneMenuOpened">About</router-link></li>
+        <li><router-link to="/contact"@click.native="phoneMenuOpened">Contact</router-link></li>
+      </ul>
+    </nav>
+    <div class="BottomLinks">
+      <a id="UOWLogo" href="https://www.westminster.ac.uk/"> <img src="../../assets/UoW_Logo.png"> </a>
+      <div class="PrivacyAndLogin">
+       <!-- <a id ="SignIn">Sign in</a> -->
+        <a id="Privacy"><router-link to="/privacy-policy" @click.native="phoneMenuOpened">Privacy Policy</router-link></a>
+      </div>
+    </div>
+    
+    </div>
   </template>
 
-  <script>
-  export default {
-    name: 'HeaderComponent',
-  };
-  </script>
+<script setup>
+import { findScreenSize } from '../Modules/changeScreenSize'; //Phone size JS
+import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js 
+ import { isMenuOpened } from '../Modules/changeScreenSize' //Button Pressed?
+
+  const {BigScreen} = findScreenSize(); //Returns a bool from changeScreenSize.js that says if the screen is big or small
+
+  const openMenu = isMenuOpened();
+
+
+</script>
   
   <style scoped>
   .header {
@@ -31,6 +65,8 @@
     padding: 20px;
     color: white;
     border-radius: 20px;
+    position: relative;
+    z-index: 2;
   }
   .logo {
     font-size: 1.5em;
@@ -45,19 +81,23 @@
     list-style: none;
     justify-content: center;
     align-items: center;
+    padding-top: 7px;
   }
   
-  .nav a {
+  .nav a , .navMobile a {
     color: rgb(0, 0, 0);
     text-decoration: none;
     font-weight:bold;
     font-size: 17px
   }
   
-  .nav a:hover {
+  .nav a:hover ,  .navMobile a:hover {
     text-decoration: underline;
   }
 
+  .navMobile li {
+    font-size: 3.7vw;
+  }
   .header-logo {
     width: 100px; /* Sets the width to 100px */
     height: auto; /* Maintains the aspect ratio */
@@ -66,7 +106,55 @@
   li {
     padding-top: 15px;
   }
- 
+
+  .navMobile ul{
+    gap: 30px;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    display: initial ;
+    font-size: 3.0vw;
+  }
+  .navMobile {
+    position:relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    justify-content: center;
+  }
+  .mobileBackground {
+    background-color: rgb(201, 228, 251);
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+  }
+  .BottomLinks {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    
+    /*Not sure why this is broken */
+  }
+  #UOWLogo {
+    width: 100%;
+    height: auto;
+  }
+  .PrivacyAndLogin a{
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+  }
+  #SignIn {
+    float: left;
+    padding-left: 20px;
+  }
+  #Privacy {
+    /*float: Right;*/
+    padding-right: 20px;
+  }
   @media screen and (min-width:1441px) { /*Seen on Laptop*/
     .nav ul {
     
@@ -81,18 +169,42 @@
   .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
   }
+
   .logo
   {
     position: absolute;
     left: 150px;
   }
   }
-  @media screen and (max-width:613px) { /*Seen on smaller screens*/
-    .nav ul{
-      display: initial  ;
+  @media screen and (max-width:767px) { /*Seen on smaller screens*/
+    .logo{
+      font-size: 3.7vw;
+      display: flex;
     }
+    .container{
+      display: flex;
+      text-align: left;
+    }
+    .header-logo {
+      text-align: left;
+      width: 100%;
+    }
+    .LogoAnchor {
+      text-align: left;
+      width:  12%;
+    }
+    #HamburgerMenuBtn {
+      margin-left: auto;
+      background-color: transparent;
+      border :none;
+    }
+    .header
+    {
+      border-radius: 0px;
+    }
+
   }
 
 </style>  

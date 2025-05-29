@@ -53,7 +53,6 @@ export default {
 
 /* General styling */
 body {
-  font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f7f6;
@@ -65,7 +64,6 @@ h1, h2 {
   color: #2a2a2a;
   font-weight: 600;
   line-height: 1.4;
-  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .intro-banner {

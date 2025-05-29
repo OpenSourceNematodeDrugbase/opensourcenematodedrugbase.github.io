@@ -1,49 +1,45 @@
-<script>
-  import { RouterLink, RouterView } from 'vue-router'
-
-  import HeaderComponent from './components/layout/HeaderComponent.vue'
-  import FooterComponent from './components/layout/FooterComponent.vue'
-  import BackToTop from './components/layout/BackToTop.vue';
-  
-  export default 
-  {
-    name: 'App',
-    components: 
-    {
-      HeaderComponent,
-      FooterComponent,
-      BackToTop
-    },
-  }
-
-</script>
-
 <template>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
   <div id="app">
+
       <!-- Header that appears across all pages -->
       <header>
         <HeaderComponent />
       </header>
-
+ 
       <!-- Main content area where the router-view will display the active route's component -->
       <main>
         <router-view />
       </main>
-  
       <!-- Footer that appears across all pages -->
       <footer>
-        <FooterComponent />
+        <FooterComponent/>
       </footer>
       <BackToTop/>
   </div>
 </template>
 
+<script setup>
+  import { RouterLink, RouterView } from 'vue-router'
+  import HeaderComponent from './components/layout/HeaderComponent.vue'
+  import FooterComponent from './components/layout/FooterComponent.vue'
+  import { isMenuOpened } from './components/Modules/changeScreenSize'
+  import BackToTop from './components/layout/BackToTop.vue';
+  const openMenu = isMenuOpened();
 
+
+</script>
 <style>
   /* Global styles can go here */
 
   #app {
-    font-family: Arial, sans-serif;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
     color: #333;
     text-align: center;
   }
@@ -51,9 +47,11 @@
   main {
     padding: 20px;
   }
+  .intro-banner h1 {
+    font-weight: 700;
+  }
 
   body {
-  font-family: 'Helvetica Neue', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f7f6;
@@ -65,7 +63,6 @@ h1, h2 {
   color: #2a2a2a;
   font-weight: 600;
   line-height: 1.4;
-  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .intro-banner {
@@ -112,7 +109,7 @@ h1, h2 {
   @media screen and (max-width:1000px) {
     .section-text
     {
-      font-size: 22px !important;
+      font-size: 3.9vw !important;
     }
     .image 
     {
@@ -120,7 +117,11 @@ h1, h2 {
     }
     .intro-text{
       text-align: center;
-      font-size: 3.8vw !important;
+      font-size: 2.87vw !important;
     }
+    .intro-banner h1{
+    font-size: 3.7vw;
+    
+   }
   }
 </style>
