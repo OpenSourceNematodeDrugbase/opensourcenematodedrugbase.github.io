@@ -30,7 +30,7 @@
         <a href="https://www.instagram.com/ondbuniwestminster/" target="_blank">
           <img class="social-logo" src="@/assets/Instagram_Logo.png" alt="Instagram_Logo">
         </a>
-        <a href="https://www.linkedin.com/" target="_blank">
+        <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/posts/" target="_blank">
           <img class="social-logo" src="@/assets/LinkedIn_Logo.png" alt="LinkedIn_Logo">
         </a>
         <a href="https://x.com/ONDBwestminster" target="_blank">
