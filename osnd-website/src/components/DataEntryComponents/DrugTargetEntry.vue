@@ -1,7 +1,11 @@
 <template>
   <div class="entry-display-container">
-    <div v-for="entry in entries" :key="entry.id" class="entry-text">
-      <h3>{{ entry.targetName || "No Name Provided" }}</h3>
+    <div v-for="entry in entries" :key="entry.firebaseId" class="entry-text">
+      <h3>{{ entry.gene_stable_id || "No Gene ID" }} — {{ entry.genome_project || "No Genome Project Found" }}</h3>
+
+      <p><strong>Genome Name:</strong> {{ entry.genome_name || 'N/A' }}</p>
+      <p><strong>Gene Biotype:</strong> {{ entry.gene_biotype || 'N/A' }}</p>
+
       <button class="document-button" @click="viewDataEntry(entry)">View Drug Target</button>
     </div>
   </div>
@@ -30,10 +34,10 @@ export default {
     },
     viewDataEntry(entry) {
       router.push({
-        path: `/drug-target-entry/${entry.id}`,
-        state: { entry },
+        path: `/drug-target-entry/${entry.firebaseId}`
       });
     },
+
     accessSource(url) {
       if (!url) return;
       window.open(url, "_blank");

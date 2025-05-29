@@ -16,7 +16,9 @@
     </section>
   </template>
   
+
   <style scoped>
+  
   
   .item-text {
     font-size: 24px;

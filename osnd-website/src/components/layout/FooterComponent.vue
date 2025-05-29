@@ -15,21 +15,28 @@
         </a>
       </div>
       </div>
+      
+      
 
-      <div class="socials">
-        <a href="https://www.facebook.com/people/Open-source-Nematode-DrugBase/61572548505626/" target="_blank">
+       <!-- Right-aligned Social Icons -->
+
+       <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61572548505626" target="_blank">
           <img class="social-logo" src="@/assets/Facebook_logo_(square).png" alt="Facebook_Logo">
         </a>
-        <a href="https://www.instagram.com/ondbuniwestminster/#" target="_blank">
+        <a href="https://www.youtube.com/channel/UC5s6DPuDbR0sbBaKA92wj8w" target="_blank">
+          <img class="social-logo" src="@\assets\Youtube_logo.png" alt="YouTube Logo">
+        </a>
+        <a href="https://www.instagram.com/ondbuniwestminster/" target="_blank">
           <img class="social-logo" src="@/assets/Instagram_Logo.png" alt="Instagram_Logo">
         </a>
-        <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/about/" target="_blank">
+        <a href="https://www.linkedin.com/" target="_blank">
           <img class="social-logo" src="@/assets/LinkedIn_Logo.png" alt="LinkedIn_Logo">
         </a>
         <a href="https://x.com/ONDBwestminster" target="_blank">
           <img class="social-logo" src="@/assets/X_logo.jpg" alt="X_Logo">
         </a>
-        <a href="https://www.tiktok.com/@ondb_uow" target="_blank">
+        <a href="https://www.tiktok.com/@ondb6?_t=ZG-8tiW8Gi20cy&_r=1" target="_blank">
           <img class="social-logo" src="@/assets/TikTok_Logo.png" alt="TikTok_Logo">
         </a>
         <a href="https://github.com/OpenSourceNematodeDrugbase" target="_blank">
@@ -40,50 +47,18 @@
     </div>
 
     <div class="links">
-      <li v-if="isAuthenticated"><router-link to="/user-dashboard">User Dashboard</router-link></li>
-      
-      <li v-if="!isAuthenticated"><router-link to="/sign-in">Sign In</router-link></li>
-      <li v-else><a href="#" @click="signOut">Sign Out</a></li>
-      <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
-    </div>
+    <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
+  </div>
   </footer>
+
+  
 
 </template>
 
 
 <script>
-import { ref, onMounted } from 'vue';
-import { getAuth, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
-import { useRouter } from "vue-router";
-
 export default {
   name: 'FooterComponent',
-  setup() {
-    const isAuthenticated = ref(false);
-    const auth = getAuth();
-    const router = useRouter();
-
-    onMounted(() => {
-      onAuthStateChanged(auth, (user) => {
-        isAuthenticated.value = !!user;
-      });
-    });
-
-    const signOut = async () => {
-      try {
-        await firebaseSignOut(auth);
-        isAuthenticated.value = false;
-        router.push({ path: '/' });
-      } catch (error) {
-        console.error('Error signing out:', error);
-      }
-    };
-
-    return {
-      isAuthenticated,
-      signOut,
-    };
-  },
 };
 </script>
 
@@ -96,18 +71,14 @@ export default {
   position: relative;
 }
 
-.links {
-
-  margin: 25px; /* Adjusts spacing from the edges */
+.links
+{
+  margin: 10px; /* Adjusts spacing from the edges */
   list-style-type: none;
-  padding: 10px, 10px;
-  text-align: center; /* Right justify the text */
 }
 
 .social-logo {
   max-width: 60px; /* Adjust size of social logos */
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .UoWLogo {
@@ -123,26 +94,52 @@ export default {
   max-width: 150px; /* Adjust size if needed */
   padding-top: 5px;
 }
-
 @media screen and (min-width:1100px) { /*When viewed on Laptop */
   .footer-logos {
+  display: flex;
+  gap: 20px; /* Space between the main logos */
+  justify-content: flex-start; /* Align logos to the left */
+}
+.container {
+  display: flex;
+  justify-content: space-between; /* Align logos on the left and socials on the right */
+  align-items: center;
+  flex-wrap: nowrap; /* Prevent wrapping */
+}
+.socials {
+  display: flex;
+  gap: 30px; /* Space between social logos */
+  justify-content: flex-end; /* Align socials to the right */
+}
+.links {
+position: absolute;
+top: 150px;
+left: 20px;
+
+}
+
+}
+
+@media screen and (max-width:1100px) /*When viewed on Phone */
+{
+  #FundingPartners{
     display: flex;
     gap: 20px; /* Space between the main logos */
     justify-content: flex-start; /* Align logos to the left */
   }
-  .container {
-    display: flex;
-    justify-content: space-between; /* Align logos on the left and socials on the right */
-    align-items: center;
-    flex-wrap: nowrap; /* Prevent wrapping */
-  }
-  .links
-  {
-    position: absolute;
-    top: 150px;
-    right: 20px;
-    margin: 10px; /* Adjusts spacing from the edges */
-    text-align: right; /* Right justify the text */
-  }
+  .social-logo {
+  max-width: 45px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+   /* Adjust size of social logos */
 }
+.UoWLogo {
+  width: 80%;
+}
+
+}
+
+
+
 </style>

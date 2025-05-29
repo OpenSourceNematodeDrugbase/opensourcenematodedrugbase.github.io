@@ -1,15 +1,18 @@
 <template>
-  <div class="blog-select">
-    <ul>
-      <li v-for="(blog, index) in blogs" :key="blog.id" class="blog-item">
-        <h3>{{ blog.name }}</h3>
-        <p><strong>Author:</strong> {{ blog.author }}</p>
-        <p><strong>Publish Date:</strong> {{ blog.publishDate }}</p>
-        <!-- Pass blog.url directly to the method -->
-        <button class="blog-button" @click="navigateToBlog(blog.url)">View Blog</button>
-      </li>
-    </ul>
-  </div>
+  <h3>Blogs coming soon!</h3>
+
+<!--  <div class="blog-select">-->
+<!--    <ul>-->
+<!--      <li v-for="(blog, index) in blogs" :key="blog.id" class="blog-item">-->
+<!--        <h3>{{ blog.name }}</h3>-->
+<!--        <p><strong>Author:</strong> {{ blog.author }}</p>-->
+<!--        <p><strong>Publish Date:</strong> {{ blog.publishDate }}</p>-->
+<!--        &lt;!&ndash; Pass blog.url directly to the method &ndash;&gt;-->
+<!--        <button class="blog-button" @click="navigateToBlog(blog.url)">View Blog</button>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+
 </template>
 
 <script>

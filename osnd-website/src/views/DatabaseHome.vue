@@ -1,111 +1,132 @@
 <template>
-  <div class="intro-banner">
-    <h1>The Nematode Drugbase</h1>
-    <p class="intro-text">
-      A comprehensive resource for researchers, healthcare professionals, and policymakers focused on understanding the critical role that nematodes play in neglected diseases.
-    </p>
+
+  <button @click="navigateToDatabaseFaq" type="submit" class="submit-button">Database FAQ</button>
+
+  <h2>
+  The database and criterion is currently being updated.
+  Please follow
+  <a href="https://www.linkedin.com/company/open-source-nematode-drugbase/about/" target="_blank" rel="noopener noreferrer">
+    our LinkedIn page
+  </a>
+  or other social media for updates.
+</h2>
+
+  <SearchComponent />
+
+  <FilterComponent :filters="filters" @update:filters="filters = $event" />
+
+  <div class="database-home-container">
+    <DrugTargetEntry :entries="paginatedEntries" />
+
+    <div class="pagination-controls">
+      <label for="entriesPerPage">Show entries:</label>
+      <select id="entriesPerPage" v-model.number="entriesPerPage">
+        <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
+      </select>
+    </div>
   </div>
 
-  <SearchComponent @text-changed="updatedValue" @filter-changed="updatedFilter" />
-
-  <LiteratureEntry v-if="filterSearch === 'documentCollection'" :entries="entries" />
-  <ProteinEntry v-if="filterSearch === 'proteinEnzymes'" :entries="entries" />
-  <DrugTargetEntry v-if="filterSearch === 'drugTargets'" :entries="entries" />
+  <div>
+    <p>Special thanks and credit goes to the following organisations and individuals for providing data for the Nematode Drugbase tool:</p>
+    <p>WormBase 2024: status and transitioning to Alliance infrastructure Paul W. Sternberg, Kimberly Van Auken, Qinghua Wang, Adam Wright, Karen Yook, Magdalena Zarowiecki, Valerio Arnaboldi , Andrés Becerra, Stephanie Brown, Scott Cain, Juancarlos Chan, Wen J. Chen, Jaehyoung Cho, Paul Davis, Stavros Diamantakis, Sarah Dyer, Dionysis Grigoriadis, Christian A. Grove, Todd Harris, Kevin Howe, Ranjana Kishore, Raymond Lee, Ian Longden, Manuel Luypaert, Hans-Michael Müller, Paulo Nuin, Mark Quinton-Tulloch, Daniela Raciti, Tim Schedl, Gary Schindelman, Lincoln Stein Genetics, Volume 227, Issue 1, May 2024, iyae050.</p>
+    <p>Data provided via WormBase BioMart (http://www.wormbase.org/tools/martview)</p>
+  </div>
 </template>
 
 <script>
-import { ref, onMounted, computed, watch } from 'vue';
-import { getDatabase, ref as dbRef, onValue, set, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database'; // Import Realtime Database functions
-import SearchComponent from '@/components/SearchComponent.vue';
-import LiteratureEntry from '@/components/DataEntryComponents/LiteratureEntry.vue';
-import ProteinEntry from "@/components/DataEntryComponents/ProteinEntry.vue";
-import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue"; // New component
+import { ref, onMounted, computed } from 'vue';
+import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database';
+import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue";
+import SearchComponent from "@/components/SearchComponent.vue";
+import FilterComponent from "@/components/FilterComponent.vue";
 
 export default {
   components: {
-    DrugTargetEntry,
-    ProteinEntry,
+    FilterComponent,
     SearchComponent,
-    LiteratureEntry, // Register component
-  },
-  data() {
-    return {
-      searchQuery: '',
-      filterSearch: 'documentCollection',
-    };
+    DrugTargetEntry,
   },
   methods: {
-    updatedValue(event) {
-      this.searchQuery = event.toLowerCase();
-    },
-    updatedFilter(event) {
-      const filterMap = {
-        'Relevant Literature': 'documentCollection',
-        'Proteins & Enzymes': 'proteinEnzymes',
-        'Drug Targets': 'drugTargets',
-      };
-      this.filterSearch = filterMap[event] || 'documentCollection';
+    navigateToDatabaseFaq() {
+      this.$router.push('/database-faq'); // Navigate to the "About" page
     },
   },
   setup() {
-    const database = getDatabase(); // Initialize Realtime Database
+    const database = getDatabase();
     const allEntries = ref([]);
-    const searchQuery = ref('');
-    const filterSearch = ref('documentCollection');
-    const realtimeData = ref(null);
+    const entriesPerPage = ref(5);
+    const options = [5, 10, 25, 50];
+
+    const filters = ref({
+      similarProtein: "",
+      hasKnownDomain: "",
+      hasGOAnnotation: "",
+      hasParalogueGeneStableID: "",
+      hasLaravalDevelopmentLink: "",
+    });
 
     const fetchEntries = () => {
-      if (!filterSearch.value) return;
-      try {
-        allEntries.value = []; // Clear the array before fetching new data
+      allEntries.value = [];
+      const entriesRef = dbRef(database, 'drugTargets');
 
-        const entriesRef = dbRef(database, filterSearch.value);
+      onChildAdded(entriesRef, (snapshot) => {
+        allEntries.value.push({ firebaseId: snapshot.key, ...snapshot.val() });
+      });
 
-        // Listen for new entries
-        onChildAdded(entriesRef, (snapshot) => {
-          allEntries.value.push({ id: snapshot.key, ...snapshot.val() });
-        });
+      onChildChanged(entriesRef, (snapshot) => {
+        const index = allEntries.value.findIndex(entry => entry.firebaseId === snapshot.key);
+        if (index !== -1) {
+          allEntries.value[index] = { firebaseId: snapshot.key, ...snapshot.val() };
+        }
+      });
 
-        // Listen for changed entries
-        onChildChanged(entriesRef, (snapshot) => {
-          const index = allEntries.value.findIndex(entry => entry.id === snapshot.key);
-          if (index !== -1) {
-            allEntries.value[index] = { id: snapshot.key, ...snapshot.val() };
-          }
-        });
-
-        // Listen for removed entries
-        onChildRemoved(entriesRef, (snapshot) => {
-          allEntries.value = allEntries.value.filter(entry => entry.id !== snapshot.key);
-        });
-
-      } catch (error) {
-        console.error('Error fetching Realtime Database data:', error);
-      }
+      onChildRemoved(entriesRef, (snapshot) => {
+        allEntries.value = allEntries.value.filter(entry => entry.firebaseId !== snapshot.key);
+      });
     };
 
-    watch(filterSearch, fetchEntries);
     onMounted(fetchEntries);
 
-    const filteredEntries = computed(() =>
-      allEntries.value.filter((entry) => {
-        const queryLower = searchQuery.value.toLowerCase();
-        return (
-          !searchQuery.value ||
-          entry.documentTitle?.toLowerCase().includes(queryLower) ||
-          entry.abstract?.toLowerCase().includes(queryLower) ||
-          (entry.keywords && entry.keywords.some((keyword) => keyword.toLowerCase().includes(queryLower))) ||
-          (entry.authors && entry.authors.some((author) => author.toLowerCase().includes(queryLower)))
-        );
-      })
-    );
+    const filteredEntries = computed(() => {
+      return allEntries.value.filter(entry => {
+        if (filters.value.similarProtein !== "" &&
+            String(entry.similar_protein_in_humans) !== filters.value.similarProtein) {
+          return false;
+        }
+
+        if (filters.value.hasKnownDomain !== "" &&
+            String(entry.has_known_protein_domain) !== filters.value.hasKnownDomain) {
+          return false;
+        }
+
+        if (filters.value.hasGOAnnotation !== "" &&
+            String(entry.has_gene_ontology_functional_annotation) !== filters.value.hasGOAnnotation) {
+          return false;
+        }
+
+        if (filters.value.hasParalogueGeneStableID !== "" &&
+            String(entry.has_paralogue_id) !== filters.value.hasParalogueGeneStableID) {
+          return false;
+        }
+
+        if (filters.value.hasLaravalDevelopmentLink !== "" &&
+            String(entry.linked_to_larval_development) !== filters.value.hasLaravalDevelopmentLink) {
+          return false;
+        }
+
+        return true;
+      });
+    });
+
+    const paginatedEntries = computed(() => {
+      return filteredEntries.value.slice(0, entriesPerPage.value);
+    });
 
     return {
-      entries: filteredEntries,
-      searchQuery,
-      filterSearch,
-      realtimeData,
-      db: database, // Pass the database instance to methods
+      filters,
+      paginatedEntries,
+      entriesPerPage,
+      options,
     };
   },
 };
@@ -113,23 +134,51 @@ export default {
 
 <style scoped>
 .database-home-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center; /* Center the entries in the container */
-  max-width: 100%; /* Ensure it takes up full width */
-}
-
-.intro-banner {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.debug-section {
-  margin-top: 40px;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  text-align: left;
 }
+
+.pagination-controls {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.pagination-controls select {
+  padding: 5px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.submit-button {
+  padding: 10px 24px;
+  background-color: #2563eb; /* Tailwind 'blue-600' */
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.submit-button:hover {
+  background-color: #1e40af; /* Tailwind 'blue-800' */
+  transform: translateY(-1px);
+}
+
+.submit-button:active {
+  background-color: #1e3a8a; /* Tailwind 'blue-900' */
+  transform: translateY(0);
+}
+
 </style>
