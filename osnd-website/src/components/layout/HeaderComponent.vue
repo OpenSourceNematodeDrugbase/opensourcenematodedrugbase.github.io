@@ -42,7 +42,7 @@
       <a id="UOWLogo" href="https://www.westminster.ac.uk/"> <img src="../../assets/UoW_Logo.png"> </a>
       <div class="PrivacyAndLogin">
         <a id ="SignIn">Sign in</a>
-        <li id=Privacy><router-link to="/privacy-policy" "@click.native="closePage">Privacy Policy</router-link></li>
+        <a id="Privacy">Privacy Policy</a>
       </div>
     </div>
     
@@ -149,10 +149,6 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
   }
   .PrivacyAndLogin{
     font-weight: bold;
-    list-style: none;
-    padding: 10px, 10px;
-    text-align: center; /* Right justify the text */
-    text-decoration: none;
   }
   #SignIn {
     float: left;
