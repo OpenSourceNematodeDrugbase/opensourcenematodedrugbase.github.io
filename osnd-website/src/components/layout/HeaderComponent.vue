@@ -17,8 +17,6 @@
           </ul>
         </nav>
 
-     
-      
         <button v-if="!BigScreen" @click="phoneMenuOpened" id="HamburgerMenuBtn">
           <img style="width: 50px;" src="../../assets/Hamburger.svg" id="HamburgerImg">
         </button>
@@ -30,19 +28,19 @@
     <div v-if="openMenu">
       <nav class="navMobile">
       <ul>
-        <li><router-link to="/" @click.native="closePage">Home</router-link></li>
-        <li><router-link to="/nematode-drugbase" @click.native="closePage">Nematode Drugbase</router-link></li>
-        <li><router-link to="/blog-dashboard" @click.native="closePage">Blog</router-link></li>
-        <li><router-link to="/funding" @click.native="closePage">Funding</router-link></li>
-        <li><router-link to="/about"@click.native="closePage">About</router-link></li>
-        <li><router-link to="/contact"@click.native="closePage">Contact</router-link></li>
+        <li><router-link to="/" @click.native="phoneMenuOpened">Home</router-link></li>
+        <li><router-link to="/nematode-drugbase" @click.native="phoneMenuOpened">Nematode Drugbase</router-link></li>
+        <li><router-link to="/blog-dashboard" @click.native="phoneMenuOpened">Blog</router-link></li>
+        <li><router-link to="/funding" @click.native="phoneMenuOpened">Funding</router-link></li>
+        <li><router-link to="/about"@click.native="phoneMenuOpened">About</router-link></li>
+        <li><router-link to="/contact"@click.native="phoneMenuOpened">Contact</router-link></li>
       </ul>
     </nav>
     <div class="BottomLinks">
       <a id="UOWLogo" href="https://www.westminster.ac.uk/"> <img src="../../assets/UoW_Logo.png"> </a>
       <div class="PrivacyAndLogin">
-        <a id ="SignIn">Sign in</a>
-        <a id="Privacy">Privacy Policy</a>
+       <!-- <a id ="SignIn">Sign in</a> -->
+        <a id="Privacy"><router-link to="/privacy-policy" @click.native="phoneMenuOpened">Privacy Policy</router-link></a>
       </div>
     </div>
     
@@ -58,10 +56,7 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
 
   const openMenu = isMenuOpened();
 
-  function closePage()
-  {
-    phoneMenuOpened();
-  }
+
 </script>
   
   <style scoped>
@@ -147,15 +142,17 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     width: 100%;
     height: auto;
   }
-  .PrivacyAndLogin{
+  .PrivacyAndLogin a{
     font-weight: bold;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
   }
   #SignIn {
     float: left;
     padding-left: 20px;
   }
   #Privacy {
-    float: Right;
+    /*float: Right;*/
     padding-right: 20px;
   }
   @media screen and (min-width:1441px) { /*Seen on Laptop*/
