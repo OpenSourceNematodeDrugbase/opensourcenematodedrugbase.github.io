@@ -26,7 +26,7 @@
         <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/hayes-polly" target="_blank">Dr Polly Hayes</a></li>
         <li class="item-text"><a class="item-text" href="https://www.westminster.ac.uk/about-us/our-people/directory/guiliano-david" target="_blank">Dr David Guiliano</a></li>
 
-        <p class="section-text">Additionally, Dr Abdulhakeem Sulyman will be joining in 2025 supported by an Africa Research Excellence Fund Research Development Fellowship.</p>
+        <p class="section-text">Dr Abdulhakeem Sulyman (KWASU, Nigeria) joined the project in 2025 supported by an Africa Research Excellence Fund Research Development Fellowship. </p>
 
     </ul>
   </section>

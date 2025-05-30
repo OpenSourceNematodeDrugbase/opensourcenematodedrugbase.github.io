@@ -1,7 +1,7 @@
 <template>
   <div class="intro-banner">
     <h1>Welcome to the Open-Source Nematode DrugBase Project </h1>
-    <p class="intro-text">Our ambition is to introduce a platform to tackle neglected diseases caused by parasitic worms (nematodes).</p>
+    <p class="intro-text">Our ambition is to create a platform to tackle neglected diseases caused by parasitic worms (nematodes).</p>
   </div>
   <section class="header-section">
     <img class="image logo-img" src="@/assets/ONDB logo.png" alt="ONDB_Logo">
@@ -20,7 +20,7 @@
   <section class="header-section">
     <h2>The Platform</h2>
     <button @click="navigateToDatabase" type="submit" class="submit-button">OPEN DATABASE</button>
-    <p class="section-text">The open-access project aims to enable discovery of medicines for neglected diseases caused by nematodes (parasitic worms).</p>
+    <p class="section-text">This open-access project aims to enable discovery of medicines for neglected diseases caused by nematodes (parasitic worms).</p>
     <hr>
   </section>
   <section class="header-section">

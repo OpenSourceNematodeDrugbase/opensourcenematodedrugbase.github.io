@@ -10,9 +10,7 @@
         <a href="https://quintinhoggtrust.org/" target="_blank">
           <img class="QHTLogo" src="@/assets/QHT_Logo.png" alt="QHT">
         </a>
-        <a href="https://africaresearchexcellencefund.org.uk/" target="_blank">
-          <img class="AREFLogo" src="@/assets/AREF_Logo.png" alt="AREF">
-        </a>
+
       </div>
       </div>
       
@@ -90,10 +88,6 @@ export default {
   max-width: 180px; /* Adjust size if needed */
 }
 
-.AREFLogo {
-  max-width: 150px; /* Adjust size if needed */
-  padding-top: 5px;
-}
 @media screen and (min-width:1100px) { /*When viewed on Laptop */
   .footer-logos {
   display: flex;
