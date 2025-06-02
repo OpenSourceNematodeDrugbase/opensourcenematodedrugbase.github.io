@@ -5,7 +5,7 @@ const menuOpened = ref(false);
 
 
 function checkScreenSize() { //Checks screen size and does actions
-    BigScreen.value = window.innerWidth >= 768; //Removes the nav bar if the screen is too small
+    BigScreen.value = window.innerWidth >= 951; //Removes the nav bar if the screen is too small
     if (menuOpened.value == true) 
     {
         if ( window.innerWidth <= 768)

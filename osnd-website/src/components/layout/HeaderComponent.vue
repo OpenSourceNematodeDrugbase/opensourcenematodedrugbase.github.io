@@ -68,6 +68,10 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     position: relative;
     z-index: 2;
   }
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
   .logo {
     font-size: 1.5em;
     font-weight: bold;
@@ -76,7 +80,7 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
   }
   
   .nav ul{
-    gap: 30px;
+    gap: clamp(10px, 0.9vw ,30px);
     display: flex;
     list-style: none;
     justify-content: center;
@@ -155,8 +159,7 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     /*float: Right;*/
     padding-right: 20px;
   }
-  @media screen and (min-width:1441px) { /*Seen on Laptop*/
-    .nav ul {
+ .nav ul {
     
     align-items: center;
   }
@@ -164,21 +167,12 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     padding-bottom: 0%; /*Remove Spacing */
   }
   .nav a{
-    font-size: 24px;
+    font-size: clamp(10.5px, 1.4vw, 24px);
   }
-  .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: left;
-  }
+  
 
-  .logo
-  {
-    position: absolute;
-    left: 150px;
-  }
-  }
-  @media screen and (max-width:767px) { /*Seen on smaller screens*/
+ 
+  @media screen and (max-width:951px) { /*Seen on smaller screens*/
     .logo{
       font-size: 3.7vw;
       display: flex;
@@ -206,5 +200,14 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     }
 
   }
+  @media screen and (min-width:952px)
+  {
+    .logo
+    {
+    position: absolute;
+    left: 150px;
+    }
+  }
+  
 
 </style>  
