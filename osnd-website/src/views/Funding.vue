@@ -1,21 +1,21 @@
 <template>
     <div class="intro-banner">
       <h1>Funding Partners</h1>
-      <p class="intro-text">The Open-Source Nematode DrugBase Project is generously funded by the Quintin Hogg Trust (QHT).</p>
+      <p class="intro-text">The Open-Source Nematode DrugBase Project is generously funded by the Quintin Hogg Trust (QHT) and the Africa Research Excellence Fund (AREF). </p>
     </div>
-    <section>
+    <section class="header-section">
         <div class = "logoSection" style="background-color: wheat;">
-            <a href="https://quintinhoggtrust.org/" class="OrgName"><h2>Quintin Hog Trust</h2></a>
-            <a href="https://quintinhoggtrust.org/" style="margin-left: auto; position: relative;"><img src="../assets/QHT_Logo.png"></a>
+            <a href="https://quintinhoggtrust.org/" class="OrgName"><h2>Quintin Hogg Trust</h2></a>
+            <a href="https://quintinhoggtrust.org/" style="width: 80%;"><img src="../assets/QHT_Logo.png"></a>
         </div>
-      
-        <div class= "fundingPeopleSection" style="background-color: gainsboro">
-            <h3>Dr Sulyman joined the team in  2025 supported by the AREF Research Development Fellowship</h3>
-            <a href="https://africaresearchexcellencefund.org.uk/"><img class="fundingPeopleLogo" src ="../assets//AREF_Logo.png"></a>
+        <br>
+        <div class= "logoSection" style="background-color: rgb(220, 220, 220)">
+          <a href="https://africaresearchexcellencefund.org.uk/"><img src ="../assets/AREF_Logo.png"></a>
+            <h3 class = "DescriptionText">Dr Abdulhakeem Sulyman (KWASU, Nigeria) joined the Team in 2025 supported by an Africa Research Excellence Fund Research Development Fellowship. </h3>
         </div>
-        <div class= "fundingPeopleSection" style="background-color: gainsboro">
-            <h3>One of the main scientists Magdalena Ruiz Perez has been awarded a 10-week vacation studentship by the British Pharmacological Society</h3>
-            <a href="https://www.bps.ac.uk/"><img class="fundingPeopleLogo" src ="../assets/BPS logo.png"></a>
+        <div class= "logoSection" style="background-color: rgb(220, 220, 220)">
+          <a href="https://africaresearchexcellencefund.org.uk/"><img src ="../assets/BPS logo.png"></a>
+            <h3 class = "DescriptionText">We are delighted to share that Magdalena Ruiz Perez has been awarded a 10-week vacation studentship by the British Pharmacological Society  </h3>
         </div>
     </section>
   </template>
@@ -23,62 +23,47 @@
 
   <style scoped>
   
-  
-  .item-text {
-    font-size: 24px;
-    line-height: 0.7;
-    margin-bottom: 1.5rem;
-    list-style: none;
-    color:black;
-    padding: 15px;
-  }
     .logoSection {
         display: flex;
         flex-direction: row;
-        margin-left:  10%;
-        margin-right: 10%;
-        border-radius: 13px;
-        margin-top: 2%;
-        align-items: center; /* Centres vertically */
-    }
-    img {
-        width: 18.4vw;
-        max-height: 1000px;
-        max-width: 1000px;
-    }
-    h2 {
-        font-size: clamp(1.5rem, 3.2vw, 13rem);
-    }
-    .OrgName {
-      line-height: 0.7;
-      padding-top: 50%;
-      padding-bottom: 50%;
-      margin-left: 2.5%;
-      list-style: none;
-      color:black;
-      padding: 15px;
-      text-decoration-line: none;
-    }
-    .fundingPeopleSection {
-      border-radius: 13px;
         margin-left: 10%;
         margin-right: 10%;
+        border-radius: 13px;
+        align-items: center; /* Centres vertically */
+        margin-top: 10px;
     }
-  .fundingPeopleSection h3 {
-     font-size: clamp(9px, 2vw, 6rem);
-  }
-
-  .fundingPeopleLogo {
-    width: 15%;
-    margin-top: 2%;
-  }
-    @media screen and (max-width:1000px) {
-      img {
+    
+     img {
         width:80%;
         height: auto;
       }
+
+    .OrgName h2 {
+      list-style: none;
+      color:black;
+      margin-top: 50%;
+      margin-bottom: 50%;
+      font-size: clamp(8px, 3.7vw, 48px)
+      
+    }
+    .OrgName {
+       text-decoration-line: none;
+    }
+
+    .DescriptionText h3 {
+      margin-top: 50%;
+      margin-bottom: 50%;
+      list-style: none;
+      color:black;
+      text-decoration-line: none;
+    }
+    @media screen and (max-width:1000px) {
+     
       h2{
         font-size: 6vw;
+      }
+      h3 {
+        font-size: 2.4vw;
       }
       
     }
