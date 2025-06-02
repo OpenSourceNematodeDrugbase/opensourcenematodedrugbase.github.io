@@ -10,11 +10,11 @@
         </div>
       
         <div class= "fundingPeopleSection" style="background-color: gainsboro">
-            <h3>Dr Sullyman joined the team in  2025 supported by the AREF Research Development Fellowship</h3>
+            <h3>Dr Sulyman joined the team in  2025 supported by the AREF Research Development Fellowship</h3>
             <a href="https://africaresearchexcellencefund.org.uk/"><img class="fundingPeopleLogo" src ="../assets//AREF_Logo.png"></a>
         </div>
         <div class= "fundingPeopleSection" style="background-color: gainsboro">
-            <h3>One of the main sciencetists Magdalena Ruiz Perez has been awarded a 10-week vacation studentship by the British Pharmacological Society</h3>
+            <h3>One of the main scientists Magdalena Ruiz Perez has been awarded a 10-week vacation studentship by the British Pharmacological Society</h3>
             <a href="https://www.bps.ac.uk/"><img class="fundingPeopleLogo" src ="../assets/BPS logo.png"></a>
         </div>
     </section>
