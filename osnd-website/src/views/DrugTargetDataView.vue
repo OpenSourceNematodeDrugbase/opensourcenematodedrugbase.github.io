@@ -15,6 +15,9 @@
         <p><strong>InterPro ID:</strong> {{ entry.interpro_id }}</p>
         <p><strong>Human Protein Stable ID:</strong> {{ entry.human_protein_stable_id }}</p>
         <p><strong>Paralogue Gene Stable ID:</strong> {{ entry.paralogue_gene_stable_id }}</p>
+        <div>
+        <strong>Wormbase Gene URI:</strong> <a :href="entry.URI" target="_blank" rel="noopener noreferrer">{{ entry.URI }}</a>
+        </div>
       </section>
 
       <section class="criteria-section">

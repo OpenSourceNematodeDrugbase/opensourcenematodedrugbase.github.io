@@ -13,9 +13,6 @@
 
       </div>
       </div>
-      
-      
-
        <!-- Right-aligned Social Icons -->
 
        <div class="socials">
@@ -45,6 +42,10 @@
     </div>
 
     <div class="links">
+      <li v-if="isAuthenticated"><router-link to="/user-dashboard">User Dashboard</router-link></li>
+
+      <li v-if="!isAuthenticated"><router-link to="/sign-in">Sign In</router-link></li>
+      <li v-else><a href="#" @click="signOut">Sign Out</a></li>
     <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
   </div>
   </footer>

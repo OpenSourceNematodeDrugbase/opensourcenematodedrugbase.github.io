@@ -90,10 +90,10 @@ export default {
 <style scoped>
 .filter-box {
   background-color: #f9f9f9;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  margin: 20px auto;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 16px auto;
   max-width: 1000px;
   border: 1px solid #e0e0e0;
 }
@@ -102,11 +102,11 @@ export default {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 13px;
   cursor: pointer;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   transition: background-color 0.2s;
 }
 
@@ -116,27 +116,28 @@ export default {
 
 .filters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px; /* tighter spacing between filters */
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px; /* tighter label-select spacing */
   font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 
 .filter-group label {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   color: #444;
 }
 
 .filter-group select {
-  padding: 8px 10px;
-  font-size: 14px;
-  border-radius: 6px;
+  padding: 5px 7px;
+  font-size: 12px;
+  border-radius: 4px;
   border: 1px solid #ccc;
   background-color: white;
   cursor: pointer;
@@ -169,3 +170,5 @@ export default {
   max-height: 1000px;
 }
 </style>
+
+
