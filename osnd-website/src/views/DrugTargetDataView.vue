@@ -15,6 +15,8 @@
         <p><strong>InterPro ID:</strong> {{ entry.interpro_id }}</p>
         <p><strong>Human Protein Stable ID:</strong> {{ entry.human_protein_stable_id }}</p>
         <p><strong>Paralogue Gene Stable ID:</strong> {{ entry.paralogue_gene_stable_id }}</p>
+        <p><strong>Identity:</strong> {{entry.identity}}%</p>
+        <p><strong>Nematodes with Similar Identity (+-5):</strong>{{entry.similar_identity_species}}</p>
         <div>
         <strong>Wormbase Gene URI:</strong> <a :href="entry.URI" target="_blank" rel="noopener noreferrer">{{ entry.URI }}</a>
         </div>
@@ -54,6 +56,14 @@
             <strong title="Identify genes linked to larval development via GO Term Accession. Valid GO Term Accession: [GO: GO:0007275, GO:0002168, GO:0002119, GO:0061062]">Linked to Larval Development:</strong>
             <span :class="{'yes': entry.linked_to_larval_development, 'no': !entry.linked_to_larval_development}">
               {{ entry.linked_to_larval_development ? ' True' : ' False' }}
+            </span>
+          </div>
+
+          <div>
+            <strong title="Drug targets that are shared by many different parasitic worms -> this means the same treatment could work for more than one parasite.">Has Similar Identity Across Species
+              :</strong>
+            <span :class="{'yes': entry.has_similar_identity, 'no': !entry.has_similar_identity}">
+              {{ entry.has_similar_identity ? ' True' : ' False' }}
             </span>
           </div>
 

@@ -63,6 +63,7 @@ export default {
       hasGOAnnotation: "",
       hasParalogueGeneStableID: "",
       hasLaravalDevelopmentLink: "",
+      hasSimilarIdentity: "",
     });
 
     const fetchEntries = () => {
@@ -111,6 +112,11 @@ export default {
 
         if (filters.value.hasLaravalDevelopmentLink !== "" &&
             String(entry.linked_to_larval_development) !== filters.value.hasLaravalDevelopmentLink) {
+          return false;
+        }
+
+        if (filters.value.hasSimilarIdentity !== "" &&
+            String(entry.has_similar_identity) !== filters.value.hasSimilarIdentity) {
           return false;
         }
 

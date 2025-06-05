@@ -55,6 +55,16 @@
             <option value="false">False</option>
           </select>
         </div>
+
+        <!-- Has Similar % Identity -->
+        <div class="filter-group">
+          <label for="goFilter">Has % Identity Similarity to Other Species:</label>
+          <select id="goFilter" v-model="localFilters.hasSimilarIdentity">
+            <option value="">All</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
       </div>
     </transition>
   </div>
