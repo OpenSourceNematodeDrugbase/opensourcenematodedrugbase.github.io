@@ -20,3 +20,10 @@ A Quintin Hogg Trust funded project that aims to enable the discovery of medicin
 
 ## Contribute
 Would you like to help develop this project? Contact a.barr1@westminster.ac.uk for more information.
+
+### How to run the website on your machine
+```bash
+cd osnd-website\src\router #Navigate to the router directory
+npm install #If not installed already
+npm run dev #Run the website on localhost
+```
