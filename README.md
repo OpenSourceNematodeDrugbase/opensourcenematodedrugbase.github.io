@@ -25,6 +25,6 @@ Would you like to help develop this project? Contact a.barr1@westminster.ac.uk f
 You will need Node.js 18.3 or higher so that Vue.js can run
 ```bash
 cd osnd-website\src\router #Navigate to the router directory
-npm install #If not installed already
+npm install #Install the required plugins
 npm run dev #Run the website on localhost
 ```

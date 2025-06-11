@@ -28,10 +28,9 @@
 
   <div>
     <p>Special thanks and credit goes to the following organisations and individuals for providing data for the Nematode Drugbase tool:</p>
-    <p><a href="https://parasite.wormbase.org/"WormBase ParaSite</a> and everyone how has contributed data to this resource. 
+    <p><a href="https://parasite.wormbase.org/">WormBase ParaSite</a>  and everyone who has contributed data to this resource.</p> 
     Citation: Kevin L. Howe, Bruce J. Bolt, Myriam Shafie, Paul Kersey, and Matthew Berriman. 
-    <a href="http://dx.doi.org/10.1016/j.molbiopara.2016.11.005">WormBase ParaSite − a comprehensive resource 
-    for helminth genomics</a> <em>Molecular and Biochemical Parasitology</em> 2017 215 2-10</p>
+    <p><a href="http://dx.doi.org/10.1016/j.molbiopara.2016.11.005">WormBase ParaSite − a comprehensive resource for helminth genomics</a> <em>Molecular and Biochemical Parasitology</em> 2017 215 2-10</p>
     <p><a href="https://wormbase.org/">WormBase</a> 
     Citation: Paul W> Sternberg et al <a href="https://doi.org/10.1093/genetics/iyae050">WormBase 2024: status and transitioning to Alliance infrastructure</a>
     <em>Genetics</em> Volume 227, Issue 1, May 2024, iyae050,</p>
