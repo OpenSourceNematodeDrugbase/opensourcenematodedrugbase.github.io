@@ -1,4 +1,5 @@
 <template>
+  
   <div class="entry-display-container">
     <div v-for="entry in entries" :key="entry.firebaseId" class="entry-text">
       <h3>{{ entry.gene_stable_id || "No Gene ID" }} — {{ entry.genome_project || "No Genome Project Found" }}</h3>
@@ -52,7 +53,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 24px; /* Increased gap for better spacing */
-  padding: 30px;
   max-width: 1100px; /* Slightly wider for better content display */
   width: 100%;
   margin: 0 auto;
@@ -79,7 +79,7 @@ export default {
 
 /* Headings */
 .entry-text h3 {
-  font-size: 20px;
+  font-size: clamp(5px, 3.7vw, 20px);
   font-weight: 700;
   margin-bottom: 12px; /* Add more spacing below the title */
   color: #333;
@@ -88,7 +88,7 @@ export default {
 /* Paragraphs */
 .entry-text p {
   margin-bottom: 10px;
-  font-size: 16px;
+  font-size: clamp(5px, 3.5vw, 16px);
   color: #555;
   line-height: 1.6;
 }
@@ -120,7 +120,7 @@ export default {
   padding: 12px 18px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: clamp(5px, 3.65vw, 16px);
   display: block;
   width: 100%;
   text-align: center;
@@ -151,7 +151,7 @@ export default {
 
 .source-button:hover {
   color: #0056b3;
-}
+} 
 
 /* Responsive Design */
 @media (max-width: 768px) {

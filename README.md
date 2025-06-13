@@ -17,7 +17,14 @@ A Quintin Hogg Trust funded project that aims to enable the discovery of medicin
 <h3>Work in Progress</h3>
 <p>Database (in March development branch)</p>
 <p>Blog (in March development branch)</p>
-<p>Modern Mobile Website (in Mobile Website branch)</p>
 
 ## Contribute
 Would you like to help develop this project? Contact a.barr1@westminster.ac.uk for more information.
+
+### How to run the website on your machine
+You will need Node.js 18.3 or higher so that Vue.js can run
+```bash
+cd osnd-website\src\router #Navigate to the router directory
+npm install #Install the required plugins
+npm run dev #Run the website on localhost
+```
