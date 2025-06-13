@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="db8d2d6b-30a6-4861-98e2-e49ad3fe7a74" name="Changes" comment="" />
+    <list default="true" id="db8d2d6b-30a6-4861-98e2-e49ad3fe7a74" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/firebase_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/firebase_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/firebase_auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/firebase_auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/firebase_firestore.js" beforeDir="false" afterPath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/firebase_firestore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/vue-router.js" beforeDir="false" afterPath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/vue-router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/osnd-website/node_modules/.vite/deps/vue.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,9 +16,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2xxLAaT8bpLNSBiovRMdsisVBa8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -22,7 +28,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Build-Test",
     "last_opened_file_path": "F:/opensourcenematodedrugbase.github.io",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -33,8 +39,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
-        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26053.29" />
+        <option value="bundled-python-sdk-b1dbf8ef85a6-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26053.29" />
       </set>
     </attachedChunks>
   </component>
@@ -47,7 +53,11 @@
       <option name="presentableId" value="Default" />
       <updated>1748874635774</updated>
       <workItem from="1748874637035" duration="7000" />
+      <workItem from="1749819882785" duration="105000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
