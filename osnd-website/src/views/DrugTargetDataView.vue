@@ -17,6 +17,8 @@
         <p><strong>Paralogue Gene Stable ID:</strong> {{ entry.paralogue_gene_stable_id }}</p>
         <p><strong>Identity:</strong> {{entry.identity}}%</p>
         <p><strong>Nematodes with Similar Identity (+-5):</strong>{{entry.similar_identity_species}}</p>
+
+        <!-- has_enzymatic_activity-->
         <div>
         <strong>Wormbase Gene URI:</strong> <a :href="entry.URI" target="_blank" rel="noopener noreferrer">{{ entry.URI }}</a>
         </div>
@@ -67,7 +69,13 @@
             </span>
           </div>
 
-
+          <div>
+            <strong title="Enzymes often make good drug targets because their active sites can be inhibited by small molecules.">Has Enzymatic Activity
+              :</strong>
+            <span :class="{'yes': entry.has_enzymatic_activity, 'no': !entry.has_enzymatic_activity}">
+              {{ entry.has_enzymatic_activity ? ' True' : ' False' }}
+            </span>
+          </div>
 
         </div>
       </section>

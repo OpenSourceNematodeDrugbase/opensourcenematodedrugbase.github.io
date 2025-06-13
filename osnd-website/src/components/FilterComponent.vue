@@ -65,6 +65,16 @@
             <option value="false">False</option>
           </select>
         </div>
+
+        <!-- Has Enzymatic Activity -->
+        <div class="filter-group">
+          <label for="goFilter">Has Enzymatic Activity:</label>
+          <select id="goFilter" v-model="localFilters.hasEnzymaticActivity">
+            <option value="">All</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
+        </div>
       </div>
     </transition>
   </div>

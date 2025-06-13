@@ -64,6 +64,7 @@ export default {
       hasParalogueGeneStableID: "",
       hasLaravalDevelopmentLink: "",
       hasSimilarIdentity: "",
+      hasEnzymaticActivity: "",
     });
 
     const fetchEntries = () => {
@@ -117,6 +118,11 @@ export default {
 
         if (filters.value.hasSimilarIdentity !== "" &&
             String(entry.has_similar_identity) !== filters.value.hasSimilarIdentity) {
+          return false;
+        }
+
+        if (filters.value.hasEnzymaticActivity !== "" &&
+            String(entry.has_enzymatic_activity) !== filters.value.hasEnzymaticActivity) {
           return false;
         }
 
