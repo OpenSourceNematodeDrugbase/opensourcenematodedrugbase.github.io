@@ -20,7 +20,7 @@
 
         <!-- has_enzymatic_activity-->
         <div>
-        <strong>Wormbase Gene URI:</strong> <a :href="entry.URI" target="_blank" rel="noopener noreferrer">{{ entry.URI }}</a>
+        <strong>Wormbase Gene URI:</strong> <a  style="overflow-wrap: break-word;" :href="entry.URI" target="_blank" rel="noopener noreferrer">{{ entry.URI }}</a>
         </div>
       </section>
 
