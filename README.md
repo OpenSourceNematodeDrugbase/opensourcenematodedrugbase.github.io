@@ -28,3 +28,5 @@ cd osnd-website\src\router #Navigate to the router directory
 npm install #Install the required plugins
 npm run dev #Run the website on localhost
 ```
+### Need help? 
+Feel free to ask any questions by opening up a new Q&A discussion through our <a href="https://github.com/OpenSourceNematodeDrugbase/opensourcenematodedrugbase.github.io/discussions">Discussions page</a> 
