@@ -9,5 +9,8 @@
     <li><a href="https://www.linkedin.com/company/open-source-nematode-drugbase/posts/"> Linkedin page </a></li>
     <li>Email address <a href="mailto:ondb@westminster.ac.uk">ondb@westminster.ac.uk</a></li> 
   </ul>
+
+  <h2>Is this project Open-Source</h2>
+  <p>Yes and you can find our repository through <a href="https://github.com/OpenSourceNematodeDrugbase/opensourcenematodedrugbase.github.io">GitHub</a></p>
 </div>
 </template>
