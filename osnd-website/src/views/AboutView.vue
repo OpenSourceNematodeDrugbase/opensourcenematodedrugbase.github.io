@@ -40,7 +40,7 @@ ul{
 }
 
 .item-text {
-  font-size: 28px;
+  font-size: clamp(5px, 3.5vw, 28px);
   line-height: 0.7;
   margin-bottom: 1.5rem;
   list-style: none;

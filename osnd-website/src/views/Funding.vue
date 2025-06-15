@@ -14,7 +14,7 @@
             <h3 class = "DescriptionText">Dr Abdulhakeem Sulyman (KWASU, Nigeria) joined the Team in 2025 supported by an Africa Research Excellence Fund Research Development Fellowship. </h3>
         </div>
         <div class= "logoSection" style="background-color: rgb(220, 220, 220)">
-          <a href="https://africaresearchexcellencefund.org.uk/"><img src ="../assets/BPS logo.png"></a>
+          <a href="https://www.bps.ac.uk/"><img src ="../assets/BPS logo.png"></a>
             <h3 class = "DescriptionText">We are delighted to share that Magdalena Ruiz Perez has been awarded a 10-week vacation studentship by the British Pharmacological Society.  </h3>
         </div>
     </section>
