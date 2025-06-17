@@ -41,6 +41,12 @@
       <div class="PrivacyAndLogin">
        <!-- <a id ="SignIn">Sign in</a> -->
         <a id="Privacy"><router-link to="/privacy-policy" @click.native="phoneMenuOpened">Privacy Policy</router-link></a>
+        <a v-if="!isAuthenticated" id="SignIn"><router-link to="/sign-in" @click.native="phoneMenuOpened">Sign In</router-link></a>
+
+        <a v-if="isAuthenticated" id="SignIn"><router-link to="/user-dashboard" @click.native="phoneMenuOpened">User Dashboard</router-link></a>
+        <a  v-if="isAuthenticated"  href="#" id="SignIn"@click="signOut"> Sign Out</a> <!--Need to include a button that makes the hamburger close !-->
+
+
       </div>
     </div>
     
@@ -151,12 +157,12 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     color: rgb(0, 0, 0);
     text-decoration: none;
   }
-  #SignIn {
+  SignIn {
     float: left;
     padding-left: 20px;
   }
   #Privacy {
-    /*float: Right;*/
+    float: Right;
     padding-right: 20px;
   }
  .nav ul {

@@ -11,9 +11,9 @@
   or other social media for updates.
 </h2>
 
-  <SearchComponent />
-
-  <FilterComponent :filters="filters" @update:filters="filters = $event" />
+<SearchComponent />
+<FilterComponent :filters="filters" @update:filters="filters = $event" />
+<!--<p>Found {{paginatedEntries.length }} results</p> Something like this could be implemented later-->
 
   <div class="database-home-container">
     <DrugTargetEntry :entries="paginatedEntries" />
