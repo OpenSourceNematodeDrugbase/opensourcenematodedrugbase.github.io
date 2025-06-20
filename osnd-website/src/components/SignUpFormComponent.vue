@@ -38,7 +38,7 @@
         <input
           v-model="confirmPassword"
           placeholder="Confirm Password"
-          type="text"
+          type="password"
           id="confirm-password"
           required
         />
@@ -51,7 +51,7 @@
           id="privacy-policy"
           required
         />
-        <label for="privacy-policy">I agree to the <a href="/privacy-policy" target="_blank">Privacy Policy</a></label>
+        <label for="privacy-policy">I agree to the <RouterLink to="/privacy-policy" target="_blank">Privacy Policy</RouterLink></label>
       </div>
   
       <div class="form-group">
@@ -135,12 +135,13 @@
     margin-bottom: 15px;
   }
   
-  input[type="text"],
+  input[type="text"],input[type="password"],
   .button {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
   }
+  
   
   .checkbox-group {
     display: flex;
