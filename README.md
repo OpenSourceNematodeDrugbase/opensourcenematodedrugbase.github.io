@@ -43,7 +43,7 @@ Then navigate to the repository (Example of how it may look)
 ```bash
 cd opensourcenematodedrugbase.github.io-main\opensourcenematodedrugbase.github.io-main> 
 ```
-Once you are in the repository you can start to run the website by navigating to the router folder and installing the packages
+Once you are in the repository you can start to run the website by navigating to the router folder and installing the packages\
 <img width="269" height="136" alt="Untitled" src="https://github.com/user-attachments/assets/3694fce8-6d5d-47ff-b5f0-faa728b4c30e" />
 ```bash
 cd osnd-website\src\router
