@@ -12,11 +12,11 @@
 </h2>
 
 <SearchComponent />
-<FilterComponent :filters="filters" @update:filters="filters = $event" />
+<!--<FilterComponent :filters="filters" @update:filters="filters = $event" /> -->
 <!--<p>Found {{paginatedEntries.length }} results</p> Something like this could be implemented later-->
 
   <div class="database-home-container">
-    <DrugTargetEntry :entries="paginatedEntries" />
+    <DrugTargetEntry :entries="genes"/>
 
     <div class="pagination-controls">
       <label for="entriesPerPage">Show entries:</label>
@@ -37,115 +37,121 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted, computed } from 'vue';
-import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved } from 'firebase/database';
+import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get, child } from 'firebase/database';
 import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
 import FilterComponent from "@/components/FilterComponent.vue";
+import { useDatabaseList, useDatabaseObject, useDatabase } from 'vuefire';
+import { firebaseApp, todosRef } from '@/main';
 
-export default {
-  components: {
-    FilterComponent,
-    SearchComponent,
-    DrugTargetEntry,
-  },
-  methods: {
-    navigateToDatabaseFaq() {
-      this.$router.push('/database-faq'); // Navigate to the "About" page
-    },
-  },
-  setup() {
-    const database = getDatabase();
-    const allEntries = ref([]);
-    const entriesPerPage = ref(5);
-    const options = [5, 10, 25, 50];
+const genes = useDatabaseList(todosRef)
 
-    const filters = ref({
-      similarProtein: "",
-      hasKnownDomain: "",
-      hasGOAnnotation: "",
-      hasParalogueGeneStableID: "",
-      hasLaravalDevelopmentLink: "",
-      hasSimilarIdentity: "",
-      hasEnzymaticActivity: "",
-    });
+console.log(genes)
+// export default {
+//   components: {
+//     FilterComponent,
+//     SearchComponent,
+//     DrugTargetEntry,
+//   },
+//   methods: {
+//     navigateToDatabaseFaq() {
+//       this.$router.push('/database-faq'); // Navigate to the "About" page
+//     },
+//   },
+//   setup() {
+//     const database = getDatabase();
+//     const allEntries = ref([]);
+//     const entriesPerPage = ref(5);
+//     const options = [5, 10, 25, 50];
 
-    const fetchEntries = () => {
-      allEntries.value = [];
-      const entriesRef = dbRef(database, 'drugTargets');
+//     const filters = ref({
+//       similarProtein: "",
+//       hasKnownDomain: "",
+//       hasGOAnnotation: "",
+//       hasParalogueGeneStableID: "",
+//       hasLaravalDevelopmentLink: "",
+//       hasSimilarIdentity: "",
+//       hasEnzymaticActivity: "",
+//     });
 
-      onChildAdded(entriesRef, (snapshot) => {
-        allEntries.value.push({ firebaseId: snapshot.key, ...snapshot.val() });
-      });
+//     const fetchEntries = () => {
+//       allEntries.value = [];
+//       const entriesRef = dbRef(database, 'drugTargets');
 
-      onChildChanged(entriesRef, (snapshot) => {
-        const index = allEntries.value.findIndex(entry => entry.firebaseId === snapshot.key);
-        if (index !== -1) {
-          allEntries.value[index] = { firebaseId: snapshot.key, ...snapshot.val() };
-        }
-      });
+//       onChildAdded(entriesRef, (snapshot) => {
+//         allEntries.value.push({ firebaseId: snapshot.key, ...snapshot.val() });
+//       });
 
-      onChildRemoved(entriesRef, (snapshot) => {
-        allEntries.value = allEntries.value.filter(entry => entry.firebaseId !== snapshot.key);
-      });
-    };
+//       onChildChanged(entriesRef, (snapshot) => {
+//         const index = allEntries.value.findIndex(entry => entry.firebaseId === snapshot.key);
+//         if (index !== -1) {
+//           allEntries.value[index] = { firebaseId: snapshot.key, ...snapshot.val() };
+//         }
+//       });
 
-    onMounted(fetchEntries);
+//       onChildRemoved(entriesRef, (snapshot) => {
+//         allEntries.value = allEntries.value.filter(entry => entry.firebaseId !== snapshot.key);
+//       });
+//     };
 
-    const filteredEntries = computed(() => {
-      return allEntries.value.filter(entry => {
-        if (filters.value.similarProtein !== "" &&
-            String(entry.similar_protein_in_humans) !== filters.value.similarProtein) {
-          return false;
-        }
+//     onMounted(fetchEntries);
 
-        if (filters.value.hasKnownDomain !== "" &&
-            String(entry.has_known_protein_domain) !== filters.value.hasKnownDomain) {
-          return false;
-        }
+//      const filteredEntries = computed(() => {
+//        return allEntries.value.filter(entry => {
+//          if (filters.value.similarProtein !== "" &&
+//              String(entry.similar_protein_in_humans) !== filters.value.similarProtein) {
+//            return false;
+//          }
 
-        if (filters.value.hasGOAnnotation !== "" &&
-            String(entry.has_gene_ontology_functional_annotation) !== filters.value.hasGOAnnotation) {
-          return false;
-        }
+//          if (filters.value.hasKnownDomain !== "" &&
+//              String(entry.has_known_protein_domain) !== filters.value.hasKnownDomain) {
+//            return false;
+//          }
 
-        if (filters.value.hasParalogueGeneStableID !== "" &&
-            String(entry.has_paralogue_id) !== filters.value.hasParalogueGeneStableID) {
-          return false;
-        }
+//          if (filters.value.hasGOAnnotation !== "" &&
+//              String(entry.has_gene_ontology_functional_annotation) !== filters.value.hasGOAnnotation) {
+//            return false;
+//          }
 
-        if (filters.value.hasLaravalDevelopmentLink !== "" &&
-            String(entry.linked_to_larval_development) !== filters.value.hasLaravalDevelopmentLink) {
-          return false;
-        }
+//          if (filters.value.hasParalogueGeneStableID !== "" &&
+//              String(entry.has_paralogue_id) !== filters.value.hasParalogueGeneStableID) {
+//            return false;
+//          }
 
-        if (filters.value.hasSimilarIdentity !== "" &&
-            String(entry.has_similar_identity) !== filters.value.hasSimilarIdentity) {
-          return false;
-        }
+//          if (filters.value.hasLaravalDevelopmentLink !== "" &&
+//              String(entry.linked_to_larval_development) !== filters.value.hasLaravalDevelopmentLink) {
+//            return false;
+//          }
 
-        if (filters.value.hasEnzymaticActivity !== "" &&
-            String(entry.has_enzymatic_activity) !== filters.value.hasEnzymaticActivity) {
-          return false;
-        }
+//          if (filters.value.hasSimilarIdentity !== "" &&
+//              String(entry.has_similar_identity) !== filters.value.hasSimilarIdentity) {
+//            return false;
+//          }
 
-        return true;
-      });
-    });
+//          if (filters.value.hasEnzymaticActivity !== "" &&
+//              String(entry.has_enzymatic_activity) !== filters.value.hasEnzymaticActivity) {
+//            return false;
+//          }
 
-    const paginatedEntries = computed(() => {
-      return filteredEntries.value.slice(0, entriesPerPage.value);
-    });
+//          return true;
+//        });
+//      });
 
-    return {
-      filters,
-      paginatedEntries,
-      entriesPerPage,
-      options,
-    };
-  },
-};
+//     const paginatedEntries = computed(() => {
+//       console.log(allEntries.value)
+//       return allEntries.value.slice(0, entriesPerPage.value);
+//     });
+
+//     return {
+//       filters,
+//       paginatedEntries,
+//       entriesPerPage,
+//       options,
+//     };
+//   },
+// };
 </script>
 
 <style scoped>

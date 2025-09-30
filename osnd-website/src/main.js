@@ -5,7 +5,8 @@ import router from './router'  // Import the router setup
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
-import { getDatabase } from 'firebase/database'; // Import Realtime Database
+import { getDatabase, ref as dbRef } from 'firebase/database'; // Import Realtime Database
+import { VueFire, VueFireAuth } from 'vuefire'
 
 const firebaseConfig = 
 {
@@ -38,8 +39,18 @@ catch (error)
     console.error('Firebase intialisation failed. Error:' + error);
 }
 
+const db = getDatabase(firebaseApp)
+export const todosRef = dbRef(db, '/')
 const app = createApp(App);
 app.use(router);
+app.use(VueFire, { //Vuefire Config
+  // imported above but could also just be created here
+  firebaseApp,
+  modules: [
+    // we will see other modules later on
+    VueFireAuth(),
+  ],
+})
 app.mount('#app');
 
 export { app, firebaseApp, firestore, auth, database }; // Export database instance

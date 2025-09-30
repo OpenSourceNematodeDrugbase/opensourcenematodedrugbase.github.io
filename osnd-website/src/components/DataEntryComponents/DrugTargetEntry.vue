@@ -2,10 +2,12 @@
   
   <div class="entry-display-container">
     <div v-for="entry in entries" :key="entry.firebaseId" class="entry-text">
-      <h3>{{ entry.gene_stable_id || "No Gene ID" }} — {{ entry.genome_project || "No Genome Project Found" }}</h3>
+      <h3>{{ entry["Genome name"]|| "No Gene ID" }} — {{ entry["Transcript stable ID"] || "No Genome Project Found" }}</h3>
 
-      <p><strong>Genome Name:</strong> {{ entry.genome_name || 'N/A' }}</p>
-      <p><strong>Gene Biotype:</strong> {{ entry.gene_biotype || 'N/A' }}</p>
+      <p><strong>Is enzyme:</strong> {{ entry.is_enzyme || 'N/A' }}</p>
+      <p><strong>Test 2:</strong> {{ entry.is_gpcr || 'N/A' }}</p>
+      <p><strong>Test 3:</strong> {{ entry.is_kinase || 'N/A' }}</p>
+      <p><strong>Test 4:</strong> {{ entry.is_nuclear_receptor || 'N/A' }}</p>
 
       <button class="document-button" @click="viewDataEntry(entry)">View Drug Target</button>
     </div>
@@ -44,6 +46,9 @@ export default {
       window.open(url, "_blank");
     },
   },
+  mounted() {
+
+  } 
 };
 </script>
 
