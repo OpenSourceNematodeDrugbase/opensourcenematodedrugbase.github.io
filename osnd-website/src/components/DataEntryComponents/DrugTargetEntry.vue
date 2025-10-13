@@ -4,10 +4,13 @@
     <div v-for="entry in entries" :key="entry.firebaseId" class="entry-text">
       <h3>{{ entry["Genome name"]|| "No Gene ID" }} — {{ entry["Transcript stable ID"] || "No Genome Project Found" }}</h3>
 
-      <p><strong>Is enzyme:</strong> {{ entry.is_enzyme || 'N/A' }}</p>
-      <p><strong>Test 2:</strong> {{ entry.is_gpcr || 'N/A' }}</p>
-      <p><strong>Test 3:</strong> {{ entry.is_kinase || 'N/A' }}</p>
-      <p><strong>Test 4:</strong> {{ entry.is_nuclear_receptor || 'N/A' }}</p>
+      <p><strong>Is enzyme:</strong> {{ entry.is_enzyme || 'N/A' }} {{ entry.is_enzyme_evidence }}</p>
+      <p><strong>Human Orthologue:</strong>{{ entry.lacks_WBP_human_orthologue }} {{ entry.lacks_WBP_human_orthologue_evidence || 'N/A' }} <br></br> {{ entry.best_WBP_human_orthologue_lt_40pct_identity_evidence || 'N/A' }}</p>
+      <p><strong>kinase:</strong> {{ entry.is_kinase || 'N/A' }} {{entry.is_kinase_evidence}}</p>
+      <p><strong>nuclear receptor:</strong> {{ entry.is_nuclear_receptor || 'N/A' }} {{ entry.is_nuclear_receptor_evidence }} </p>
+      <p><strong>ion channel:</strong> {{entry.is_ion_channel || 'N/A'}} {{ entry.is_ion_channel_evidence }}</p>
+      <p><strong>GPCR Evidence</strong> {{entry.is_gpcr || 'N/A'}} {{ entry.is_gpcr_evidence}}</p>
+      <p><strong>Privileged Target Family</strong> {{entry.is_privileged_target_family || 'N/A'}} {{ entry.is_privileged_target_family_evidence}}</p>
 
       <button class="document-button" @click="viewDataEntry(entry)">View Drug Target</button>
     </div>

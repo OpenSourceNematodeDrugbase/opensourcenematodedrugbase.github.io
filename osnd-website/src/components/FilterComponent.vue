@@ -8,17 +8,17 @@
       <div v-if="showFilters" class="filters-grid">
         <!-- Similar Protein Filter -->
         <div class="filter-group">
-          <label for="proteinFilter">Similar Protein in Humans:</label>
+          <label for="proteinFilter">Has Human orthologue:</label> <!--Is part of the lacks_WBP_human_orthologue section -->
           <select id="proteinFilter" v-model="localFilters.similarProtein">
             <option value="">All</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
+            <option value="true">True</option> <!--If True then show data that is false in the data-->
+            <option value="false">False</option> <!--Vice versa thing here-->
           </select>
         </div>
 
         <!-- Has Known Protein Domain -->
         <div class="filter-group">
-          <label for="domainFilter">Has Known Protein Domain:</label>
+          <label for="domainFilter">Has human_orthologue_evidence</label>
           <select id="domainFilter" v-model="localFilters.hasKnownDomain">
             <option value="">All</option>
             <option value="true">True</option>

@@ -12,12 +12,11 @@
 </h2>
 
 <SearchComponent />
-<!--<FilterComponent :filters="filters" @update:filters="filters = $event" /> -->
-<!--<p>Found {{paginatedEntries.length }} results</p> Something like this could be implemented later-->
+<FilterComponent :filters="filters" @update:filters="filters = $event" /> 
+<p>Found {{genes.length }} results</p> 
 
   <div class="database-home-container">
     <DrugTargetEntry :entries="genes"/>
-
     <div class="pagination-controls">
       <label for="entriesPerPage">Show entries:</label>
       <select id="entriesPerPage" v-model.number="entriesPerPage">
@@ -39,14 +38,16 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get, child } from 'firebase/database';
+import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get, child, query, equalTo, orderByChild, limitToFirst } from 'firebase/database';
 import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
 import FilterComponent from "@/components/FilterComponent.vue";
 import { useDatabaseList, useDatabaseObject, useDatabase } from 'vuefire';
 import { firebaseApp, todosRef } from '@/main';
 
-const genes = useDatabaseList(todosRef)
+const enzymesQuery = query(todosRef, limitToFirst(30)) //.limitToFirst(However much I want)
+
+const genes = useDatabaseList(enzymesQuery)
 
 console.log(genes)
 // export default {
