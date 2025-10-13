@@ -43,21 +43,22 @@ Open the Command Prompt
 <img width="886" height="330" alt="image" src="https://github.com/user-attachments/assets/a6673a05-3a8a-4f1b-839b-8440de19ccf7" />
 Using the command Prompt navigate to your Downloads Folder first
 
+```bash
 cd Downloads 
-
+```
 
 Then navigate to the repository (Example of how it may look)
-
+```bash
 cd opensourcenematodedrugbase.github.io-main\opensourcenematodedrugbase.github.io-main> 
-
+```
 
 Once you are in the repository you can start to run the website by navigating to the router folder and installing the packages
 <img width="269" height="136" alt="Untitled" src="https://github.com/user-attachments/assets/3694fce8-6d5d-47ff-b5f0-faa728b4c30e" />
-
+```bash
 cd osnd-website\src\router
 npm install 
 npm run dev 
-
+```
 #### Step 4 Temporarily Disable Firebase to Run Frontend Locally (Optional)
 
 Before you can run the frontend without errors, you need to temporarily disable Firebase in some files. This allows the app to load even if Firebase isn’t configured on your machine.
