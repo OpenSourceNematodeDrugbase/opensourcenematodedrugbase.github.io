@@ -104,9 +104,10 @@ Keep all non-Firebase logic intact, including template code, computed properties
 
 After doing this, you should be able to run:
 
+```bash
 npm install
 npm run dev
-
+```
 
 and see the frontend without Firebase errors.
 
