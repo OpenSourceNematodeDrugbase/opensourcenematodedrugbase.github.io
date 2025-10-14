@@ -19,44 +19,105 @@ A Quintin Hogg Trust funded project that aims to enable the discovery of medicin
 <p>Blog (in March development branch)</p>
 
 ## Contribute
-Would you like to help develop this project, fork our repository to get started. 
+
+Would you like to help develop this project, fork our repository to get started.
 
 ### How to run the website on your machine (For Windows)
-Before starting you will need [Node.js](https://nodejs.org/en) or higher so that Vue.js can run
+
+Before starting you will need Node.js
+ or higher so that Vue.js can run
+
 #### Step 1 Download your Fork
-<img width="480" height="341" alt="image" src="https://github.com/user-attachments/assets/65d20645-4ad0-460e-ab40-4447d73a7fb6"> \
-Using Github Desktop is recommended for editing repositories (Example Below)\
+
+<img width="480" height="341" alt="image" src="https://github.com/user-attachments/assets/65d20645-4ad0-460e-ab40-4447d73a7fb6">\
+Using Github Desktop is recommended for editing repositories (Example Below)
 <img width="492" height="358" alt="image" src="https://github.com/user-attachments/assets/6c5dd0ae-3000-4953-87da-042a551923ad" />
 
-
 #### Step 2 Extract the Zip file (You can ignore if downloading if using Github Desktop)
-Right click on the folder and hit Extract which uncompresses the file and turns it into a navigable folder 
+
+Right click on the folder and hit Extract which uncompresses the file and turns it into a navigable folder
 
 #### Step 3 Open the command line
+
 Open the Command Prompt
 <img width="886" height="330" alt="image" src="https://github.com/user-attachments/assets/a6673a05-3a8a-4f1b-839b-8440de19ccf7" />\
 Using the command Prompt navigate to your Downloads Folder first
+
 ```bash
 cd Downloads 
 ```
+
 Then navigate to the repository (Example of how it may look)
 ```bash
-cd opensourcenematodedrugbase.github.io-main\opensourcenematodedrugbase.github.io-main> 
+cd opensourcenematodedrugbase.github.io-main\opensourcenematodedrugbase.github.io-main 
 ```
-Once you are in the repository you can start to run the website by navigating to the router folder and installing the packages\
+
+Once you are in the repository you can start to run the website by navigating to the router folder and installing the packages
 <img width="269" height="136" alt="Untitled" src="https://github.com/user-attachments/assets/3694fce8-6d5d-47ff-b5f0-faa728b4c30e" />
 ```bash
 cd osnd-website\src\router
 npm install 
 npm run dev 
 ```
-#### Final Step 
-Open the link provided in your preferred browser \
+#### Step 4 Temporarily Disable Firebase to Run Frontend Locally (Optional)
+
+Before you can run the frontend without errors, you need to temporarily disable Firebase in some files. This allows the app to load even if Firebase isn’t configured on your machine.
+
+##### Files to update:
+
+#### Vue files (.vue)
+
+UserDashboard.vue\
+DrugTargetEntry.vue\
+LoginFormComponent.vue\
+SignUpFormComponent.vue\
+DatabaseHome.vue\
+DrugTargetDataView.vue\
+DrugTargetEntryForm.vue\
+LiteratureDataView.vue\
+ProteinDataView.vue\
+
+#### JavaScript files (.js)
+
+changeScreenSize.js\
+main.js
+
+Instructions:
+
+Comment out Firebase imports at the top of each file. This includes anything imported from firebase/* or vuefire.
+
+```js
+/* import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, doc, getDoc, Timestamp } from 'firebase/firestore'; */
+```
+
+Comment out or mock Firebase-dependent code inside setup(), methods, or other functions that use auth, firestore, database, dbRef, VueFire, signInWithEmailAndPassword, or similar. Wrap the code in /* ... */.
+
+Replace dynamic Firebase IDs in router paths or methods with placeholders. For example:
+```js
+// Original:
+router.push({ path: `/drug-target-entry/${entry.firebaseId}` });
+// Temporary:
+router.push({ path: `/drug-target-entry/demo-id` });
+```
+
+Keep all non-Firebase logic intact, including template code, computed properties, and router navigation, so the app still runs.
+
+After doing this, you should be able to run:
+
+```bash
+npm install
+npm run dev
+```
+
+and see the frontend without Firebase errors.
+
+#### Final Step
+
+Open the link provided in your preferred browser\
 <img width="362" height="77" alt="image" src="https://github.com/user-attachments/assets/0ef8c133-b3f9-488e-8418-39f5f445cb51" />
 
+### Need help?
 
-If you're having any issues you can always ask us for help in our <a href="https://github.com/OpenSourceNematodeDrugbase/opensourcenematodedrugbase.github.io/discussions/categories/q-a"> Q&A page.</a> \
+Feel free to ask any questions by opening up a new Q&A discussion through our <a href="https://github.com/OpenSourceNematodeDrugbase/opensourcenematodedrugbase.github.io/discussions">Discussions page</a>\
 Contact a.barr1@westminster.ac.uk for more information.
-
-### Need help? 
-Feel free to ask any questions by opening up a new Q&A discussion through our <a href="https://github.com/OpenSourceNematodeDrugbase/opensourcenematodedrugbase.github.io/discussions">Discussions page</a> 
