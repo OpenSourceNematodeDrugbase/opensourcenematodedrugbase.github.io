@@ -8,7 +8,7 @@
       <div v-if="showFilters" class="filters-grid">
         <!-- Similar Protein Filter -->
         <div class="filter-group">
-          <label for="proteinFilter">Has Human orthologue:</label> <!--Is part of the lacks_WBP_human_orthologue section -->
+          <label for="proteinFilter">Is Enzyme:</label> <!--Is part e section -->
           <select id="proteinFilter" v-model="localFilters.similarProtein">
             <option value="">All</option>
             <option value="true">True</option> <!--If True then show data that is false in the data-->
@@ -18,7 +18,7 @@
 
         <!-- Has Known Protein Domain -->
         <div class="filter-group">
-          <label for="domainFilter">Has human_orthologue_evidence</label>
+          <label for="domainFilter">Has Human Orthologue </label>
           <select id="domainFilter" v-model="localFilters.hasKnownDomain">
             <option value="">All</option>
             <option value="true">True</option>
@@ -28,7 +28,7 @@
 
         <!-- Has Gene Ontology Functional Annotation -->
         <div class="filter-group">
-          <label for="goFilter">Has Gene Ontology Functional Annotation:</label>
+          <label for="goFilter">Is Kinase:</label>
           <select id="goFilter" v-model="localFilters.hasGOAnnotation">
             <option value="">All</option>
             <option value="true">True</option>
@@ -38,7 +38,7 @@
 
         <!-- Has Paralogue Stable ID -->
         <div class="filter-group">
-          <label for="goFilter">Has Paralogue Gene Stable ID:</label>
+          <label for="goFilter">Has Nuclear Receptor:</label>
           <select id="goFilter" v-model="localFilters.hasParalogueGeneStableID">
             <option value="">All</option>
             <option value="true">True</option>
@@ -48,7 +48,7 @@
 
         <!-- Is Linked to Larval Development -->
         <div class="filter-group">
-          <label for="goFilter">Has Link to Larval Development:</label>
+          <label for="goFilter">Has Ion Channel:</label>
           <select id="goFilter" v-model="localFilters.hasLaravalDevelopmentLink">
             <option value="">All</option>
             <option value="true">True</option>
@@ -58,7 +58,7 @@
 
         <!-- Has Similar % Identity -->
         <div class="filter-group">
-          <label for="goFilter">Has % Identity Similarity to Other Species:</label>
+          <label for="goFilter">Has GPCR domains:</label>
           <select id="goFilter" v-model="localFilters.hasSimilarIdentity">
             <option value="">All</option>
             <option value="true">True</option>
@@ -68,7 +68,7 @@
 
         <!-- Has Enzymatic Activity -->
         <div class="filter-group">
-          <label for="goFilter">Has Enzymatic Activity:</label>
+          <label for="goFilter">Has Privileged Target Family:</label>
           <select id="goFilter" v-model="localFilters.hasEnzymaticActivity">
             <option value="">All</option>
             <option value="true">True</option>
