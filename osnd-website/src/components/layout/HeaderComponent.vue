@@ -4,7 +4,7 @@
         <router-link to="/" class="LogoAnchor">
         <img class="header-logo" src="@/assets/ONDB logo.png" alt="Logo">
         </router-link>
-        <h1 class="logo">Open Nematode Drug Base</h1>
+        <h1 class="logo">Open-source Nematode DrugBase</h1>
         <!--Desktop nav bar-->
         <nav class="nav" v-if="BigScreen">
           <ul>
@@ -79,7 +79,7 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
     justify-content: space-between;
   }
   .logo {
-    font-size: 1.5em;
+    font-size: clamp(1px,2vw,1.5em);
     font-weight: bold;
     color: #000000;
     text-shadow: 0.75px 0.75px 0.75px rgb(255, 255, 255), -0.75px -0.75px 0px rgb(255, 255, 255), 0.75px -0.75px 0px rgb(255, 255, 255), -0.75px 0.75px 0px rgb(255, 255, 255);
@@ -180,7 +180,7 @@ import { phoneMenuOpened } from '../Modules/changeScreenSize'; //Button Js
  
   @media screen and (max-width:951px) { /*Seen on smaller screens*/
     .logo{
-      font-size: 3.7vw;
+      font-size: 3.2vw;
       display: flex;
     }
     .container{
