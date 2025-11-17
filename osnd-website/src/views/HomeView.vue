@@ -1,6 +1,6 @@
 <template>
   <div class="intro-banner">
-    <h1>Welcome to the Open-Source Nematode DrugBase Project </h1>
+    <h1>Welcome to the Open-source Nematode DrugBase Project </h1>
     <p class="intro-text">Our ambition is to create a platform to tackle neglected diseases caused by parasitic worms (nematodes).</p>
   </div>
   <section class="header-section">
