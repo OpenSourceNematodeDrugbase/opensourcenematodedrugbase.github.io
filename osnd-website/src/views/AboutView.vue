@@ -1,7 +1,7 @@
 <template>
   <div class="intro-banner">
     <h1>About</h1>
-    <p class="intro-text">Learn more about the Open-Source Nematode DrugBase Project</p>
+    <p class="intro-text">Learn more about the Open-source Nematode DrugBase Project</p>
   </div>
   <section class="header-section">
     <h2>Project Overview</h2>
