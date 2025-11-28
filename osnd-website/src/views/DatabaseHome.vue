@@ -11,7 +11,7 @@
   or other social media for updates.
 </h2>
 
-<SearchComponent />
+<!-- <SearchComponent />
 <FilterComponent :filters="filters" @update:filters="filters = $event" /> 
 <p>Found {{genes.length }} results</p> 
 
@@ -23,7 +23,7 @@
         <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
       </select>
     </div>
-  </div>
+  </div> -->
 
   <div>
     <p>Special thanks and credit goes to the following organisations and individuals for providing data for the Nematode Drugbase tool:</p>
