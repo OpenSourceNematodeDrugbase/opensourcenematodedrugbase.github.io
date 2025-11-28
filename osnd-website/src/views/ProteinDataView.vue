@@ -57,94 +57,9 @@
 <script>
 import { ref, onMounted, watch, nextTick, onUnmounted, unref } from "vue";
 import { useRoute } from "vue-router";
-import { getDatabase, ref as dbRef, onValue } from "firebase/database";
 import * as NGL from "ngl";
 
-export default {
-  setup() {
-    const route = useRoute();
-    const db = getDatabase();
-    const entry = ref(null);
-    const nglStage = ref(null);
 
-    const fetchEntry = () => {
-      const entryId = route.params.id;
-      if (!entryId) return;
-
-      try {
-        console.log(`Fetching data for entry ID: ${entryId}`);
-        const dataRef = dbRef(db, `proteinEnzymes/${entryId}`);
-
-        onValue(dataRef, (snapshot) => {
-          if (snapshot.exists()) {
-            entry.value = { id: entryId, ...snapshot.val() };
-          } else {
-            console.error("No such document found!");
-            entry.value = null;
-          }
-        });
-      } catch (error) {
-        console.error("Error fetching document:", error);
-      }
-    };
-
-    const renderNGLViewer = async (pdbId) => {
-      await nextTick();
-
-      const container = document.getElementById("ngl-container");
-      if (!container) return;
-
-      if (nglStage.value) {
-        nglStage.value.dispose();
-        nglStage.value = null;
-      }
-
-      nglStage.value = new NGL.Stage("ngl-container", { backgroundColor: "black" });
-
-      container.addEventListener("wheel", preventScroll, { passive: false });
-
-      setTimeout(() => {
-        nglStage.value
-          .loadFile(`https://files.rcsb.org/download/${pdbId}.pdb`, { defaultRepresentation: true })
-          .then((component) => {
-            component.autoView();
-          })
-          .catch((err) => {
-            console.error("Error loading PDB file:", err);
-          });
-      }, 500);
-    };
-
-    const preventScroll = (event) => {
-      event.preventDefault();
-    };
-
-    watch(
-      () => unref(entry)?.pdb_id,
-      async (newPdbId) => {
-        if (newPdbId) {
-          await nextTick();
-          renderNGLViewer(newPdbId);
-        }
-      }
-    );
-
-    onMounted(fetchEntry);
-
-    onUnmounted(() => {
-      if (nglStage.value) {
-        nglStage.value.dispose();
-        nglStage.value = null;
-        const container = document.getElementById("ngl-container");
-        if (container) {
-          container.removeEventListener("wheel", preventScroll);
-        }
-      }
-    });
-
-    return { entry };
-  },
-};
 </script>
 
 <style scoped>

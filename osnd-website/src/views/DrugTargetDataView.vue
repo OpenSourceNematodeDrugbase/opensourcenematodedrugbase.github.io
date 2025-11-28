@@ -90,41 +90,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { getDatabase, ref as dbRef, get, child } from "firebase/database";
 
-export default {
-  setup() {
-    const route = useRoute();
-    const entry = ref(null);
-    const loading = ref(true);
-
-    onMounted(async () => {
-      // Extract the ID from the route, which is the last part of the URL
-      const id = route.params.id;
-
-      try {
-        const db = getDatabase();
-        // Retrieve the entry from Firebase Realtime Database at /entries/:id
-        const snapshot = await get(child(dbRef(db), `drugTargets/${id}`));
-        if (snapshot.exists()) {
-          entry.value = snapshot.val();
-        } else {
-          console.warn(`Entry not found for ID: ${id}`);
-          console.log("Route ID:", id);
-        }
-      } catch (error) {
-        console.error("Error fetching entry:", error);
-      } finally {
-        loading.value = false;
-      }
-    });
-
-    return {
-      entry,
-      loading,
-    };
-  },
-};
 </script>
 
 <style scoped>

@@ -30,51 +30,10 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
 export default {
-  setup() {
-    const route = useRoute();
-    const db = getFirestore();
-    const entry = ref(null);
-
-    // Fetch entry data from Firestore
-    const fetchEntry = async () => {
-      const entryId = route.params.id;
-      if (!entryId) return;
-
-      try {
-        console.log(`Fetching data for entry ID: ${entryId}`);
-        const docRef = doc(db, "document-collection", entryId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          entry.value = { id: docSnap.id, ...docSnap.data() };
-        } else {
-          console.error("No such document!");
-        }
-      } catch (error) {
-        console.error("Error fetching document:", error);
-      }
-    };
-
-    // Download document method
-    const downloadDocument = (path) => {
-      if (!path) return console.error("No document path provided");
-      window.open(path, "_blank");
-    };
-
-    // Open source URL
-    const accessSource = (url) => {
-      if (!url) return console.error("No source provided");
-      window.open(url, "_blank");
-    };
-
-    onMounted(fetchEntry);
-
-    return { entry, downloadDocument, accessSource };
-  },
-};
+  
+}
 </script>
 
 <style scoped>
