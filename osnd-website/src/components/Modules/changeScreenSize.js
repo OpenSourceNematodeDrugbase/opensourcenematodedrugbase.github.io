@@ -1,4 +1,3 @@
-import { doc } from 'firebase/firestore';
 import { ref, onMounted, onUnmounted } from 'vue';
 const BigScreen = ref(false);
 const menuOpened = ref(false);

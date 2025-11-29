@@ -2,55 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'  // Import the router setup
 
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from "firebase/auth";
-import { getDatabase, ref as dbRef } from 'firebase/database'; // Import Realtime Database
-import { VueFire, VueFireAuth } from 'vuefire'
 
-const firebaseConfig = 
-{
-    apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_APP_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_APP_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_APP_FIREBASE_APP_ID,
-    databaseURL: import.meta.env.VITE_APP_FIREBASE_DATABASE_URL // Add Realtime Database URL
-};
-
-let firebaseApp;
-let firestore;
-let auth;
-let database; // Realtime Database instance
-
-try
-{
-    console.log(import.meta.env);
-
-    firebaseApp = initializeApp(firebaseConfig);
-    firestore = getFirestore(firebaseApp);
-    auth = getAuth(firebaseApp);
-    database = getDatabase(firebaseApp); // Initialize Realtime Database
-    console.log('Firebase initialised.');
-}
-catch (error) 
-{
-    console.error('Firebase intialisation failed. Error:' + error);
-}
-
-const db = getDatabase(firebaseApp)
-export const todosRef = dbRef(db, '/')
 const app = createApp(App);
 app.use(router);
-app.use(VueFire, { //Vuefire Config
-  // imported above but could also just be created here
-  firebaseApp,
-  modules: [
-    // we will see other modules later on
-    VueFireAuth(),
-  ],
-})
 app.mount('#app');
 
-export { app, firebaseApp, firestore, auth, database }; // Export database instance
+export {app}; // Export database instance

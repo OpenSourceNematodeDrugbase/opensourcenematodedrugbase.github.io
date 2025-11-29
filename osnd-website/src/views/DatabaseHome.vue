@@ -11,7 +11,7 @@
   or other social media for updates.
 </h2>
 
-<SearchComponent />
+<!-- <SearchComponent />
 <FilterComponent :filters="filters" @update:filters="filters = $event" /> 
 <p>Found {{genes.length }} results</p> 
 
@@ -23,7 +23,7 @@
         <option v-for="option in options" :key="option" :value="option">{{ option }}</option>
       </select>
     </div>
-  </div>
+  </div> -->
 
   <div>
     <p>Special thanks and credit goes to the following organisations and individuals for providing data for the Nematode Drugbase tool:</p>
@@ -38,18 +38,11 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { getDatabase, ref as dbRef, onChildAdded, onChildChanged, onChildRemoved, get, child, query, equalTo, orderByChild, limitToFirst } from 'firebase/database';
 import DrugTargetEntry from "@/components/DataEntryComponents/DrugTargetEntry.vue";
 import SearchComponent from "@/components/SearchComponent.vue";
 import FilterComponent from "@/components/FilterComponent.vue";
-import { useDatabaseList, useDatabaseObject, useDatabase } from 'vuefire';
-import { firebaseApp, todosRef } from '@/main';
 
-const enzymesQuery = query(todosRef, limitToFirst(30)) //.limitToFirst(However much I want)
 
-const genes = useDatabaseList(enzymesQuery)
-
-console.log(genes)
 // export default {
 //   components: {
 //     FilterComponent,

@@ -10,80 +10,21 @@
         <div class="admin-text">Account Created: {{ formattedCreatedAt }}</div>
       </section>
 
+      <!-- 
       <div class="button-container">
         <h2>Database Options</h2>
         <button class="admin-button" @click="navigateToDrugTargetForm">Add Drug Target Entry</button>
         <button class="admin-button" @click="navigateToLiteratureForm">Add Literature Entry</button>
         <button class="admin-button" @click="navigateToProteinEnzymeForm">Add Protein/Enzyme Entry</button>
       </div>
+      -->
     </section>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, getDoc, Timestamp } from 'firebase/firestore';
 
-export default {
-  methods: {
-    navigateToBlogEditor() {
-      this.$router.push('/blog-select');
-    },
-    navigateToDrugTargetForm() {
-      this.$router.push('/drug-target-form');
-    },
-    navigateToLiteratureForm() {
-      this.$router.push('/literature-form');
-    },
-    navigateToProteinEnzymeForm() {
-      this.$router.push('/protein-enzyme-form');
-    },
-  },
-  name: 'UserDashboard',
-  setup() {
-    const username = ref(null);
-    const canEditBlog = ref(false);
-    const createdAt = ref(null);
-    const formattedCreatedAt = ref(null);
-    const auth = getAuth();
-    const db = getFirestore();
-
-    onMounted(() => {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const userDoc = await getDoc(doc(db, 'user-collection', user.uid));
-          if (userDoc.exists()) {
-            username.value = userDoc.data().username;
-            canEditBlog.value = userDoc.data().canEditBlog;
-            createdAt.value = userDoc.data().createdAt;
-
-            if (createdAt.value instanceof Timestamp) {
-              const date = createdAt.value.toDate();
-              formattedCreatedAt.value = date.toLocaleDateString();
-            } else {
-              formattedCreatedAt.value = createdAt.value;
-            }
-          } else {
-            username.value = 'Unknown User';
-            canEditBlog.value = false;
-            formattedCreatedAt.value = '00/00/00';
-          }
-        } else {
-          username.value = null;
-          canEditBlog.value = null;
-          formattedCreatedAt.value = null;
-        }
-      });
-    });
-
-    return {
-      username,
-      canEditBlog,
-      formattedCreatedAt,
-    };
-  },
-};
 </script>
 
 <style scoped>
