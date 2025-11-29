@@ -50,7 +50,7 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const response = await fetch("https://formspree.io/f/mjkkdekr", {
+        const response = await fetch("https://formspree.io/f/mangzvya", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
